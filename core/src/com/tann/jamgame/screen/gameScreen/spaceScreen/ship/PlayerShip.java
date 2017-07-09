@@ -16,19 +16,17 @@ import com.tann.jamgame.util.Particle;
 public class PlayerShip extends Ship{
 
 
-    private static final float MAX_SPEED = 25;
-
     public PlayerShip() {
+        super(.3f,25);
         setPosition(500,500);
-        setSize(40, 20);
+        setSize(32, 15);
         weapon1 = new DoubleShot();
         weapon1.setShip(this);
         weapon2 = new Blaster();
         weapon2.setShip(this);
     }
 
-    static final float ACCEL = .3f;
-    static final float DRAG = .985f;
+
 
 
     @Override
@@ -43,31 +41,19 @@ public class PlayerShip extends Ship{
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             float dxChange = (float)Math.cos(getRotation());
             float dyChange = (float)Math.sin(getRotation());
-            dx += ACCEL * dxChange;
-            dy += ACCEL * dyChange;
+            dx += accel * dxChange;
+            dy += accel * dyChange;
             makeParticle= true;
         }
-        weapon1.update();
+
         if(Gdx.input.isKeyPressed(Input.Keys.Z)){
             weapon1.fire();
         }
 
-        weapon2.update();
         if(Gdx.input.isKeyPressed(Input.Keys.X)){
             weapon2.fire();
         }
 
-
-        dx *= DRAG;
-        dy *= DRAG;
-        while(getSpeed()>MAX_SPEED) {
-            dx *= DRAG;
-            dy *= DRAG;
-        }
-
-        setPosition(
-                getX()+dx,
-                getY()+dy);
         if(makeParticle){
             EngineParticle ep = Pools.obtain(EngineParticle.class);
             ep.setup();
@@ -81,6 +67,11 @@ public class PlayerShip extends Ship{
             SpaceScreen.get().addParticle(ep);
         }
         super.act(delta);
+    }
+
+    @Override
+    protected void internalAct(float delta) {
+
     }
 
     @Override

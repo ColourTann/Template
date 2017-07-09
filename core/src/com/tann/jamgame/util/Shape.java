@@ -47,7 +47,7 @@ public class Shape {
                 return overlaps(d, (Polygon)s2);
             }
         }
-        System.err.println("Can't collide "+s.getClass()+":"+s2.getClass());
+        System.err.println("Can't collide "+s.getClass()+" with "+s2.getClass());
         return false;
     }
 

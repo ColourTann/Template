@@ -16,7 +16,7 @@ public class Map extends Group{
     public Array<Obstacle> obstacles = new Array<>();
     public Map() {
         setSize(5000,4000);
-        for(int i=0;i<800;i++){
+        for(int i=0;i<0;i++){
             Star s = new Star((float)Math.random()*getWidth(), (float)Math.random()*getHeight());
             stars.add(s);
         }

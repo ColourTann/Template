@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.Obstacle.Obstacle;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.PlayerShip;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Tanker;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
@@ -23,6 +24,7 @@ public class SpaceScreen extends Screen {
 
     Map map;
     PlayerShip playerShip;
+    Tanker tanker;
 
     private static SpaceScreen self;
     public static SpaceScreen get(){
@@ -33,6 +35,8 @@ public class SpaceScreen extends Screen {
     private SpaceScreen() {
         map = new Map();
         addActor(map);
+        tanker = new Tanker();
+        map.addActor(tanker);
         playerShip = new PlayerShip();
         map.addActor(playerShip);
     }
@@ -68,8 +72,14 @@ public class SpaceScreen extends Screen {
     public void act(float delta) {
         super.act(delta);
         temp.set(playerShip.getX(), playerShip.getY(),0);
+//        temp.set(playerShip.getX()/2+tanker.getX()/2, playerShip.getY()/2+tanker.getY()/2, 0);
         Main.orthoCam.position.interpolate(temp, .05f, Interpolation.pow2Out);
-        Main.orthoCam.zoom=Interpolation.linear.apply(Main.orthoCam.zoom, playerShip.getSpeed()*.03f+1, .09f);;
+        float targetZoom = playerShip.getSpeed()*.03f+1;
+//        float xDiff = tanker.getX()-playerShip.getX();
+//        float yDiff = tanker.getY()-playerShip.getY();
+//        targetZoom = (float) Math.sqrt(xDiff*xDiff+yDiff*yDiff)/(Main.height*.8f);
+//        targetZoom = Math.max(1, targetZoom);
+        Main.orthoCam.zoom=Interpolation.linear.apply(Main.orthoCam.zoom, targetZoom, .08f);;
         Main.orthoCam.update();
         tickBullets();
         map.tick();

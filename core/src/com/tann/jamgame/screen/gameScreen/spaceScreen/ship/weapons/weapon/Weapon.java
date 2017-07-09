@@ -28,7 +28,7 @@ public abstract class Weapon {
 
     protected abstract void internalFire();
 
-    public void setShip(PlayerShip ship) {
+    public void setShip(Ship ship) {
         this.ship = ship;
     }
 }
