@@ -17,6 +17,8 @@ public class Colours {
     public static final Color light = new Color(.9f,.91f,.94f,1);
     public static final Color dark = new Color(.01f,.05f,.08f,1);
     public static final Color green = new Color(.2f,.6f, .31f,1);
+    public static final Color red = new Color(.7f,.2f, .1f,1);
+    public static final Color yellow = new Color(.7f,.6f, .1f,1);
 	public static final Color transparent = new Color(0,0,0,0);
 	private static Pixmap p;
 

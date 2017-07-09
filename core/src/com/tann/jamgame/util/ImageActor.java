@@ -30,7 +30,6 @@ public class ImageActor extends Group{
 
     boolean flash;
     public void flash(boolean flash) {
-        System.out.println("flash");
         this.flash=flash;
     }
 

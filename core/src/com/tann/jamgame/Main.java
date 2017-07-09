@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,11 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.tann.jamgame.screen.gameScreen.GameScreen;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.util.*;
 
 public class Main extends ApplicationAdapter {
@@ -27,7 +22,7 @@ public class Main extends ApplicationAdapter {
     public static String version = "0";
     SpriteBatch batch;
     Stage stage;
-    OrthographicCamera orthoCam;
+    public static OrthographicCamera orthoCam;
     public static TextureAtlas atlas;
     public static Main self;
     public static boolean debug = false;
@@ -65,6 +60,7 @@ public class Main extends ApplicationAdapter {
         Main.height=height;
         orthoCam.setToOrtho(false, width, height);
         stage.getViewport().update(width, height);
+        System.out.println("resize");
         Fonts.setup();
     }
 
@@ -87,7 +83,7 @@ public class Main extends ApplicationAdapter {
                 return true;
             }
         });
-        setScreen(new GameScreen());
+        setScreen(SpaceScreen.get());
     }
 
 

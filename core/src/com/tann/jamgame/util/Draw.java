@@ -139,10 +139,9 @@ public class Draw {
 				lineWidth, height - lineWidth * 2);
 	}
 
-	public static void fillRectangle(Batch batch, float x, float y,
-                                     float width, float height) {
-		Draw.drawScaled(batch, Draw.getSq(), x, y, width, height);
-	}
+	public static void fillRectangle(Batch batch, float x, float y, float width, float height) {
+        Draw.drawScaled(batch, Draw.getSq(), x, y, width, height);
+    }
 
     public static TextureRegion circle150;
     public static TextureRegion circle300;
@@ -200,8 +199,8 @@ public class Draw {
 	}
 
 	public static void fillActor(Batch batch, Actor a) {
-		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
-	}
+        Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
+    }
 
 	public static void fillActor(Batch batch, Actor a, Color bg, Color border, float borderSize) {
 		batch.setColor(border);

@@ -64,14 +64,14 @@ public abstract class Screen extends Group{
 		particles.addAll(newParticles);
 		newParticles.clear();
 		for(int i=particles.size()-1;i>=0;i--){
-			Particle p = particles.get(i);
+            Particle p = particles.get(i);
 			p.act(delta);
-			if(p.dead)particles.remove(p);
+            if(p.dead)particles.remove(p);
 		}
 	}
 
 	public void drawParticles(Batch batch){
-		for(Particle p : particles) p.draw(batch);
+        for(Particle p : particles) p.draw(batch);
 	}
 
 	public abstract void keyPress(int keycode);

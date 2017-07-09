@@ -25,7 +25,6 @@ public class GameScreen extends Screen{
     }
 
     private void toggleEscMenu() {
-        System.out.println("togg");
         if(stack.size==0 || stack.get(stack.size-1)!=EscMenu.get()){
             push(EscMenu.get());
         }
@@ -82,7 +81,6 @@ public class GameScreen extends Screen{
 
     @Override
     public void keyPress(int keycode) {
-        System.out.println("keypress");
         switch(keycode){
             case Input.Keys.ESCAPE:
                 toggleEscMenu();
