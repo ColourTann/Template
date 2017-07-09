@@ -53,6 +53,7 @@ public class Colours {
 		return new Color(c.r, c.g, c.b, alpha);
 	}
 
+	static Color temp = new Color();
 	public static Color shiftedTowards(Color source, Color target, float amount) {
 		if (amount > 1)
 			amount = 1;
@@ -61,7 +62,7 @@ public class Colours {
 		float r = source.r + ((target.r - source.r) * amount);
 		float g = source.g + (target.g - source.g) * amount;
 		float b = source.b + (target.b - source.b) * amount;
-		return new Color(r, g, b, 1);
+		return temp.set(r, g, b, 1);
 	}
 
 	public static Color multiply(Color source, Color target) {

@@ -1,6 +1,8 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
@@ -21,6 +23,11 @@ public class BoringBullet extends Bullet {
     }
 
     @Override
+    public Shape2D getShape() {
+        return getDefaultBulletShape();
+    }
+
+    @Override
     public void internalUpdate() {
 
     }
@@ -30,5 +37,10 @@ public class BoringBullet extends Bullet {
     public void draw(Batch batch) {
         batch.setColor(Colours.yellow);
         Draw.fillEllipse(batch, x-size/2, y-size/2, size, size);
+    }
+
+    @Override
+    public int getDamage() {
+        return 4;
     }
 }

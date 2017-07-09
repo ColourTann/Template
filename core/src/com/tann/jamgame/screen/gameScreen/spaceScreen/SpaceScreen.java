@@ -1,16 +1,22 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.Obstacle.Obstacle;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.PlayerShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Screen;
+import com.tann.jamgame.util.Shape;
 
 
 public class SpaceScreen extends Screen {
@@ -43,6 +49,15 @@ public class SpaceScreen extends Screen {
         for(int i=bullets.size-1;i>=0;i--){
             Bullet bill = bullets.get(i);
             bill.update();
+            for(Obstacle o:map.obstacles){
+                if(Shape.overlaps(bill.getShape(), o.getShape())){
+                    bill.dead = true;
+                    o.damage(bill.getDamage());
+                    break;
+                }
+            }
+
+
             if(bill.dead){
                 bullets.removeValue(bill, true);
             }
@@ -66,7 +81,7 @@ public class SpaceScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-        for(Bullet bill:bullets){
+        for(Bullet bill:bullets) {
             bill.draw(batch);
         }
     }

@@ -3,6 +3,9 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.ship;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.BoringBullet;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
@@ -88,5 +91,22 @@ public class PlayerShip extends Ship{
         batch.setColor(Colours.green);
         Draw.drawCenteredRotatedScaled(batch, Draw.getSq(), getX(), getY(), getWidth(), getHeight(), getRotation());
         super.draw(batch, parentAlpha);
+    }
+
+    Polygon p = new Polygon();
+    float[] points = new float[]{0,0,0,0,0,0,0,0};
+    @Override
+    public Shape2D getShape() {
+        for(int i=0;i<points.length;i++){
+            points[i]=(i%2==0)?-getWidth()/2:-getHeight()/2;
+        }
+        points[2]+= getWidth();
+        points[4]+= getWidth();
+        points[5]+=getHeight();
+        points[7]+= getHeight();
+        p.setVertices(points);
+        p.setRotation((float) (getRotation()*360/(Math.PI*2)));
+        p.setPosition(getX(), getY());
+        return p;
     }
 }

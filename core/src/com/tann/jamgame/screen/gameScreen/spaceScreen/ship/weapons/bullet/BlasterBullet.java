@@ -2,6 +2,9 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
@@ -21,6 +24,11 @@ public class BlasterBullet extends Bullet {
     }
 
     @Override
+    public Shape2D getShape() {
+        return getDefaultBulletShape();
+    }
+
+    @Override
     public void internalUpdate() {
 
     }
@@ -32,5 +40,10 @@ public class BlasterBullet extends Bullet {
         c.a=1-(1-ratio)*(1-ratio);
         batch.setColor(c);
         Draw.fillEllipse(batch, x-size/2, y-size/2, size, size);
+    }
+
+    @Override
+    public int getDamage() {
+        return 1;
     }
 }

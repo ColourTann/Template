@@ -13,7 +13,7 @@ import com.tann.jamgame.util.Particle;
 public class Map extends Group{
 
     Array<Star> stars = new Array<>();
-
+    public Array<Obstacle> obstacles = new Array<>();
     public Map() {
         setSize(5000,4000);
         for(int i=0;i<2000;i++){
@@ -22,6 +22,7 @@ public class Map extends Group{
         }
         for(int i=0;i<20;i++){
             Obstacle o = new Obstacle(Particle.rand(0, getWidth()), Particle.rand(0, getHeight()));
+            obstacles.add(o);
             addActor(o);
         }
     }

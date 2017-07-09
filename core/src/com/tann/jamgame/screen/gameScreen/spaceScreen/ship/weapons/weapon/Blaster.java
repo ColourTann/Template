@@ -3,20 +3,17 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.BlasterBullet;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.BoringBullet;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.util.Particle;
-
-import java.util.regex.Pattern;
 
 public class Blaster extends Weapon {
     public Blaster() {
         super(40);
     }
 
-    static final int NUM_SHOTS=20;
-    static final float ANGLE_RAND = .3f;
-
+    private static final int NUM_SHOTS=20;
+    private static final float ANGLE_RAND = .3f;
+    private static final float KNOCKBACK = 5;
 
     @Override
     protected void internalFire() {
@@ -28,5 +25,7 @@ public class Blaster extends Weapon {
             b.setLife(35);
             SpaceScreen.get().addBullet(b);
         }
+        ship.dx -= Math.cos(ship.getRotation())*KNOCKBACK;
+        ship.dy -= Math.sin(ship.getRotation())*KNOCKBACK;
     }
 }

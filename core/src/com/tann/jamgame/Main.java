@@ -27,7 +27,7 @@ public class Main extends ApplicationAdapter {
     public static Main self;
     public static boolean debug = false;
     public static boolean showFPS = true;
-    public static boolean chadwick = false;
+    public static boolean chadwick = true;
     Screen currentScreen;
     Screen previousScreen;
     public static float ticks;
@@ -85,9 +85,6 @@ public class Main extends ApplicationAdapter {
         });
         setScreen(SpaceScreen.get());
     }
-
-
-
 
     private MainState state = MainState.Normal;
 
@@ -151,15 +148,17 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
 
+        logTime(null);
 
         long startTime = System.currentTimeMillis();
 
         update(Gdx.graphics.getDeltaTime());
+        logTime("update");
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
-
+        logTime("draw");
 //		BulletStuff.render();
 
         drawVersion();
@@ -174,6 +173,7 @@ public class Main extends ApplicationAdapter {
         if(Main.showFPS){
             updateFPS(System.currentTimeMillis()-startTime);
         }
+        logTime("fps");
     }
 
     private void drawVersion() {

@@ -1,11 +1,14 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Shape2D;
 
 public abstract class Bullet{
 
     public boolean dead;
-
     float x,y,dx,dy, size;
 
     float drag=1, life=100, startingLife=100;
@@ -33,7 +36,15 @@ public abstract class Bullet{
         internalUpdate();
     }
 
+    public abstract Shape2D getShape();
+
+    static Circle c = new Circle();
+    protected Shape2D getDefaultBulletShape() {
+        c.set(x+size/2,y+size/2,size/2);
+        return c;
+    }
+
     public abstract void internalUpdate();
     public abstract void draw(Batch batch);
-
+    public abstract int getDamage();
 }
