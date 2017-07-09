@@ -1,5 +1,6 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon;
 
+import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.BoringBullet;
@@ -17,12 +18,14 @@ public class DoubleShot extends Weapon {
         float bXDiff = (float) (Math.cos(ship.getRotation()+Math.PI/2)*dist);
         float bYDiff = (float) (Math.sin(ship.getRotation()+Math.PI/2)*dist);
         {
-            Bullet b = new BoringBullet();
+            Bullet b = Pools.obtain(BoringBullet.class);
+            b.init();
             b.setup(ship.getNoseX()+bXDiff, ship.getNoseY()+bYDiff, ship.dx, ship.dy, ship.getRotation(), 17);
             SpaceScreen.get().addBullet(b);
         }
         {
-            Bullet b = new BoringBullet();
+            Bullet b = Pools.obtain(BoringBullet.class);
+            b.init();
             b.setup(ship.getNoseX()-bXDiff, ship.getNoseY()-bYDiff, ship.dx, ship.dy, ship.getRotation(), 17);
             SpaceScreen.get().addBullet(b);
         }

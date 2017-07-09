@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.utils.Pools;
 
 public abstract class Bullet{
 
@@ -22,6 +23,12 @@ public abstract class Bullet{
         this.life=life;
     }
 
+    public void init(){
+        dead=false;x=0;y=0;dx=0;dy=0;size=0;drag=1;life=100;startingLife=100;
+        specificInit();
+    }
+
+    public abstract void specificInit();
     public abstract void setup(float x, float y, float shipDX, float shipDY, double angle, float speed);
 
     public void update(){
@@ -32,6 +39,7 @@ public abstract class Bullet{
         this.life--;
         if(life<=0){
             dead=true;
+            Pools.free(this);
         }
         internalUpdate();
     }

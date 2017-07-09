@@ -21,12 +21,17 @@ public abstract class Screen extends Group{
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+	    Main.logTime(null);
 		preDraw(batch);
+		Main.logTime("pre");
 		batch.end();
 		batch.begin();
 		super.draw(batch, parentAlpha);
+		Main.logTime("super");
 		drawParticles(batch);
+		Main.logTime("partcles");
 		postDraw(batch);
+		Main.logTime("post");
 	}
 	public abstract void preDraw(Batch batch);
 	public abstract void postDraw(Batch batch);

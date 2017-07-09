@@ -11,7 +11,8 @@ import com.tann.jamgame.util.Draw;
 public class Obstacle extends Actor implements Damageable{
     int maxHP = 10;
     int hp = 10;
-    boolean dead;
+    public boolean dead;
+
     public Obstacle(float x, float y) {
         setPosition(x,y);
         setSize(60, 60);

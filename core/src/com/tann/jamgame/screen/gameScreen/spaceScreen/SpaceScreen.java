@@ -69,10 +69,10 @@ public class SpaceScreen extends Screen {
         super.act(delta);
         temp.set(playerShip.getX(), playerShip.getY(),0);
         Main.orthoCam.position.interpolate(temp, .05f, Interpolation.pow2Out);
-
         Main.orthoCam.zoom=Interpolation.linear.apply(Main.orthoCam.zoom, playerShip.getSpeed()*.03f+1, .09f);;
         Main.orthoCam.update();
         tickBullets();
+        map.tick();
     }
 
     @Override

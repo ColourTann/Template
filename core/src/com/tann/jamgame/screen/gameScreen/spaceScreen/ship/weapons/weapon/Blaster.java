@@ -1,5 +1,6 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon;
 
+import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.BlasterBullet;
@@ -19,7 +20,8 @@ public class Blaster extends Weapon {
     protected void internalFire() {
         Ship ship = getShip();
         for(int i=0;i<NUM_SHOTS;i++){
-            Bullet b = new BlasterBullet();
+            Bullet b = Pools.obtain(BlasterBullet.class);
+            b.init();
             b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation()+ Particle.rand(-ANGLE_RAND, ANGLE_RAND), Particle.rand(40,60));
             b.setDrag(.90f);
             b.setLife(35);

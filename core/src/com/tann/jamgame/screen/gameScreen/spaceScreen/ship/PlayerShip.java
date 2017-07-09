@@ -4,14 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.BoringBullet;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.Blaster;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.DoubleShot;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.Weapon;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Particle;
@@ -72,7 +69,7 @@ public class PlayerShip extends Ship{
                 getX()+dx,
                 getY()+dy);
         if(makeParticle){
-            EngineParticle ep = new EngineParticle();
+            EngineParticle ep = Pools.obtain(EngineParticle.class);
             ep.setup();
             ep.x=getButtX(); ep.y=getButtY();
             float rand = .9f;

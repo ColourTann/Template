@@ -11,7 +11,7 @@ public class EngineParticle extends Particle {
 
 
     @Override
-    public void setup() {
+    public void specificSetup() {
         setupLife(.5f);
         size =6;
     }

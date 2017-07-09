@@ -10,6 +10,11 @@ import com.tann.jamgame.util.Draw;
 
 public class BlasterBullet extends Bullet {
     @Override
+    public void specificInit() {
+
+    }
+
+    @Override
     public void setup(float x, float y, float shipDX, float shipDY, double angle, float speed) {
         this.x=x;
         this.y=y;

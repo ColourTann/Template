@@ -27,11 +27,10 @@ public class Main extends ApplicationAdapter {
     public static Main self;
     public static boolean debug = false;
     public static boolean showFPS = true;
-    public static boolean chadwick = true;
+    public static boolean chadwick = false;
     Screen currentScreen;
     Screen previousScreen;
     public static float ticks;
-    public static int coloursUnlocked = 2;
 
     public enum MainState {
         Normal, Paused
@@ -60,7 +59,6 @@ public class Main extends ApplicationAdapter {
         Main.height=height;
         orthoCam.setToOrtho(false, width, height);
         stage.getViewport().update(width, height);
-        System.out.println("resize");
         Fonts.setup();
     }
 
@@ -179,7 +177,7 @@ public class Main extends ApplicationAdapter {
     private void drawVersion() {
         batch.begin();
         Fonts.fontSmall.setColor(Colours.white);
-        Fonts.fontSmall.draw(batch, version, 0, Fonts.fontSmall.getLineHeight());
+        Fonts.fontSmall.draw(batch, version, orthoCam.position.x-Main.width/2, orthoCam.position.y-Main.height/2+Fonts.fontSmall.getLineHeight());
         batch.end();
     }
 
@@ -200,7 +198,7 @@ public class Main extends ApplicationAdapter {
         }
         average/=values.length;
 
-        Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), 0, 60);
+        Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), orthoCam.position.x-Main.width/2, orthoCam.position.y-Main.height/2+60);
     }
 
     public static float tickMult=1;
