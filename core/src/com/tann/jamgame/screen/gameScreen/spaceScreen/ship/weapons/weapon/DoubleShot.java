@@ -7,8 +7,8 @@ import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Boring
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 
 public class DoubleShot extends Weapon {
-    public DoubleShot() {
-        super(12);
+    public DoubleShot(boolean friend) {
+        super(12, friend);
     }
 
     @Override
@@ -17,16 +17,12 @@ public class DoubleShot extends Weapon {
         float dist = ship.getHeight()/2;
         float bXDiff = (float) (Math.cos(ship.getRotation()+Math.PI/2)*dist);
         float bYDiff = (float) (Math.sin(ship.getRotation()+Math.PI/2)*dist);
-        {
+        for(int i=0;i<2;i++){
             Bullet b = Pools.obtain(BoringBullet.class);
             b.init();
-            b.setup(ship.getNoseX()+bXDiff, ship.getNoseY()+bYDiff, ship.dx, ship.dy, ship.getRotation(), 17);
-            SpaceScreen.get().addBullet(b);
-        }
-        {
-            Bullet b = Pools.obtain(BoringBullet.class);
-            b.init();
-            b.setup(ship.getNoseX()-bXDiff, ship.getNoseY()-bYDiff, ship.dx, ship.dy, ship.getRotation(), 17);
+            b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
+            int mult = i*2-1;
+            b.setup(ship.getNoseX()+bXDiff*mult, ship.getNoseY()+bYDiff*mult, ship.dx, ship.dy, ship.getRotation(), 22);
             SpaceScreen.get().addBullet(b);
         }
     }

@@ -9,11 +9,14 @@ import com.badlogic.gdx.utils.Pools;
 
 public abstract class Bullet{
 
+    public enum BulletType{
+        Friendly, Enemy
+    }
+    public BulletType type;
     public boolean dead;
     float x,y,dx,dy, size;
-
     float drag=1, life=100, startingLife=100;
-
+    boolean firstUpdate;
     public void setDrag(float drag){
         this.drag=drag;
     }
@@ -24,24 +27,48 @@ public abstract class Bullet{
     }
 
     public void init(){
-        dead=false;x=0;y=0;dx=0;dy=0;size=0;drag=1;life=100;startingLife=100;
+        dead=false;x=0;y=0;dx=0;dy=0;size=0;drag=1;life=100;startingLife=100;type=null;firstUpdate=true;
         specificInit();
     }
 
     public abstract void specificInit();
     public abstract void setup(float x, float y, float shipDX, float shipDY, double angle, float speed);
 
-    public void update(){
-        this.dx *= drag;
-        this.dy *= drag;
-        this.x+=dx;
-        this.y+=dy;
-        this.life--;
-        if(life<=0){
-            dead=true;
-            Pools.free(this);
+    float stepX;
+    float stepY;
+    int steps;
+    public boolean update(){
+        if(dead){
+            return true;
         }
-        internalUpdate();
+        if(firstUpdate){
+            firstUpdate=false;
+            this.dx *= drag;
+            this.dy *= drag;
+            steps=1;
+            if(Math.abs(this.dx)>size||Math.abs(this.dy)>size){
+                steps = (int) (Math.max(Math.abs(this.dx), Math.abs(this.dy))/size);
+            }
+            if(steps<=0) steps=1;
+            stepX = dx/(float)steps;
+            stepY = dy/(float)steps;
+        }
+
+        this.x+=stepX;
+        this.y+=stepY;
+
+        steps--;
+        if(steps==0){
+            this.life--;
+            if(life<=0){
+                dead=true;
+                Pools.free(this);
+            }
+            internalUpdate();
+            firstUpdate=true;
+            return true;
+        }
+        return false;
     }
 
     public abstract Shape2D getShape();

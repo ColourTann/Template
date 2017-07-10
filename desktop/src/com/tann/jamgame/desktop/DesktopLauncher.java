@@ -10,6 +10,7 @@ public class DesktopLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.resizable=true;
         config.vSyncEnabled=true;
+        config.samples=3;
         config.foregroundFPS=60;
         config.width=Main.width;
         config.height=Main.height;

@@ -48,12 +48,13 @@ public class Colours {
 	public static Color palette(int x, int y){
 		return new Color(p.getPixel(x, y));
 	}
-	
+
+    static Color temp = new Color();
+
 	public static Color withAlpha(Color c, float alpha) {
-		return new Color(c.r, c.g, c.b, alpha);
+        return temp.set(c.r, c.g, c.b, alpha);
 	}
 
-	static Color temp = new Color();
 	public static Color shiftedTowards(Color source, Color target, float amount) {
 		if (amount > 1)
 			amount = 1;

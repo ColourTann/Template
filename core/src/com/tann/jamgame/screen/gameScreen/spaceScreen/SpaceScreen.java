@@ -1,49 +1,53 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.Obstacle.Obstacle;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.PlayerShip;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Tanker;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.map.Map;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.MiniMap;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
-import com.tann.jamgame.util.Colours;
-import com.tann.jamgame.util.Draw;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.TankerHealth;
 import com.tann.jamgame.util.Screen;
 import com.tann.jamgame.util.Shape;
 
 
 public class SpaceScreen extends Screen {
 
-    Map map;
-    PlayerShip playerShip;
-    Tanker tanker;
-
+    public Map map;
+    public MiniMap miniMap;
     private static SpaceScreen self;
     public static SpaceScreen get(){
         if(self==null) self = new SpaceScreen();
         return self;
     }
 
+    Stage spaceStage;
+    OrthographicCamera spaceCam;
+    Batch spaceBatch;
     private SpaceScreen() {
+        spaceStage = new Stage();
+        spaceCam = (OrthographicCamera) spaceStage.getCamera();
+        spaceBatch = (SpriteBatch) spaceStage.getBatch();
         map = new Map();
-        addActor(map);
-        tanker = new Tanker();
-        map.addActor(tanker);
-        playerShip = new PlayerShip();
-        map.addActor(playerShip);
+        spaceStage.addActor(map);
+        specialStage = spaceStage;
+        miniMap = new MiniMap(map);
+        miniMap.setPosition(4,4);
+        addActor(miniMap);
+        TankerHealth th = new TankerHealth(map.tanker);
+        addActor(th);
     }
 
     Vector3 temp = new Vector3();
 
-    private Array<Bullet> bullets = new Array<>();
+    public Array<Bullet> bullets = new Array<>();
 
     public void addBullet(Bullet b){
         bullets.add(b);
@@ -52,16 +56,26 @@ public class SpaceScreen extends Screen {
     private void tickBullets(){
         for(int i=bullets.size-1;i>=0;i--){
             Bullet bill = bullets.get(i);
-            bill.update();
-            for(Obstacle o:map.obstacles){
-                if(Shape.overlaps(bill.getShape(), o.getShape())){
-                    bill.dead = true;
-                    o.damage(bill.getDamage());
-                    break;
+            boolean done = false;
+            while(!done) {
+                done = bill.update();
+                for (Obstacle o : map.obstacles) {
+                    if(o.dead) continue;
+                    if (Shape.overlaps(bill.getShape(), o.getShape())) {
+                        bill.dead = true;
+                        o.damage(bill.getDamage());
+                        break;
+                    }
+                }
+                for (Ship s : map.ships) {
+                    if (!s.affectedBy(bill.type) || s.dead) continue;
+                    if (Shape.overlaps(bill.getShape(), s.getShape())) {
+                        bill.dead = true;
+                        s.damage(bill.getDamage());
+                        break;
+                    }
                 }
             }
-
-
             if(bill.dead){
                 bullets.removeValue(bill, true);
             }
@@ -71,16 +85,21 @@ public class SpaceScreen extends Screen {
     @Override
     public void act(float delta) {
         super.act(delta);
-        temp.set(playerShip.getX(), playerShip.getY(),0);
+        spaceStage.act(delta);
+        Ship ship = map.getControlledShip();
+        temp.set(ship.getX(), ship.getY(),0);
 //        temp.set(playerShip.getX()/2+tanker.getX()/2, playerShip.getY()/2+tanker.getY()/2, 0);
-        Main.orthoCam.position.interpolate(temp, .05f, Interpolation.pow2Out);
-        float targetZoom = playerShip.getSpeed()*.03f+1;
+        spaceCam.position.interpolate(temp, .05f, Interpolation.pow2Out);
+
+        float baseZoom = ship.getBaseZoom();
+
+        float targetZoom = map.playerShip.getSpeed()*.05f+baseZoom;
 //        float xDiff = tanker.getX()-playerShip.getX();
 //        float yDiff = tanker.getY()-playerShip.getY();
 //        targetZoom = (float) Math.sqrt(xDiff*xDiff+yDiff*yDiff)/(Main.height*.8f);
 //        targetZoom = Math.max(1, targetZoom);
-        Main.orthoCam.zoom=Interpolation.linear.apply(Main.orthoCam.zoom, targetZoom, .08f);;
-        Main.orthoCam.update();
+        spaceCam.zoom=Interpolation.linear.apply(spaceCam.zoom, targetZoom, .08f);;
+        spaceCam.update();
         tickBullets();
         map.tick();
     }
@@ -91,9 +110,7 @@ public class SpaceScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-        for(Bullet bill:bullets) {
-            bill.draw(batch);
-        }
+
     }
 
     @Override
@@ -109,13 +126,8 @@ public class SpaceScreen extends Screen {
     @Override
     public void keyPress(int keycode) {
         switch(keycode){
-            case Input.Keys.NUM_1:
-                Main.orthoCam.zoom-=.3f;
-                Main.orthoCam.update();
-                break;
-            case Input.Keys.NUM_2:
-                Main.orthoCam.zoom+=.3f;
-                Main.orthoCam.update();
+            case Input.Keys.TAB:
+                map.swapShips();
                 break;
         }
 

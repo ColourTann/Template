@@ -3,12 +3,16 @@ package com.tann.jamgame.util;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 
 import java.util.ArrayList;
 
 public abstract class Screen extends Group{
 	//screenshake stuff//
+    public Stage specialStage;
 	private float shakeMagnitude=0;
 	private static float shakeFrequency=100;
 	private static float shakeDrag=.005f;
@@ -21,6 +25,17 @@ public abstract class Screen extends Group{
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+	    if(specialStage!=null){
+	        batch.end();
+	        specialStage.draw();
+            specialStage.getBatch().begin();
+	        drawParticles(specialStage.getBatch());
+            for(Bullet bill: SpaceScreen.get().bullets) {
+                bill.draw(specialStage.getBatch());
+            }
+            specialStage.getBatch().end();
+	        batch.begin();
+        }
 	    Main.logTime(null);
 		preDraw(batch);
 		Main.logTime("pre");
@@ -28,7 +43,7 @@ public abstract class Screen extends Group{
 		batch.begin();
 		super.draw(batch, parentAlpha);
 		Main.logTime("super");
-		drawParticles(batch);
+
 		Main.logTime("partcles");
 		postDraw(batch);
 		Main.logTime("post");

@@ -8,8 +8,9 @@ public abstract class Weapon {
     final int cooldown;
     int reload;
     Ship ship;
-    public Weapon(int cooldown){
-       this.cooldown=cooldown; 
+    boolean friend;
+    public Weapon(int cooldown, boolean friend){
+       this.cooldown=cooldown;this.friend = friend;
     }
 
     public Ship getShip(){

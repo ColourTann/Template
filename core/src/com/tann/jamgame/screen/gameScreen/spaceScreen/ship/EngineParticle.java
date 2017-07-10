@@ -1,5 +1,6 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
@@ -25,7 +26,10 @@ public class EngineParticle extends Particle {
 
     @Override
     public void draw(Batch batch) {
-        batch.setColor(Colours.red);
+        Color c = Colours.shiftedTowards(Colours.red, Colours.white, ratio);
+        c.a=ratio;
+        batch.setColor(c);
+
         Draw.fillRectangle(batch, x-size/2, y-size/2, size, size);
 
     }

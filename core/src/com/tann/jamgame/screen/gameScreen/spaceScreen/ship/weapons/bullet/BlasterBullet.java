@@ -25,7 +25,7 @@ public class BlasterBullet extends Bullet {
             this.dx/=speedRatio;
             this.dy/=speedRatio;
         }
-        this.size= 5;
+        this.size= 8;
     }
 
     @Override

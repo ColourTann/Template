@@ -159,7 +159,6 @@ public class Main extends ApplicationAdapter {
         logTime("draw");
 //		BulletStuff.render();
 
-        drawVersion();
 
         if (Main.showFPS) {
             batch.begin();
@@ -172,13 +171,6 @@ public class Main extends ApplicationAdapter {
             updateFPS(System.currentTimeMillis()-startTime);
         }
         logTime("fps");
-    }
-
-    private void drawVersion() {
-        batch.begin();
-        Fonts.fontSmall.setColor(Colours.white);
-        Fonts.fontSmall.draw(batch, version, orthoCam.position.x-Main.width/2, orthoCam.position.y-Main.height/2+Fonts.fontSmall.getLineHeight());
-        batch.end();
     }
 
     int sampleSize=60;
@@ -198,7 +190,7 @@ public class Main extends ApplicationAdapter {
         }
         average/=values.length;
 
-        Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), orthoCam.position.x-Main.width/2, orthoCam.position.y-Main.height/2+60);
+        Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), orthoCam.position.x-Main.width/2, orthoCam.position.y+Main.height/2-60);
     }
 
     public static float tickMult=1;
