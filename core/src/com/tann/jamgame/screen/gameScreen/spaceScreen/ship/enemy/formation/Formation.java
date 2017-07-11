@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Tanker;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyShip;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
@@ -26,7 +25,7 @@ public abstract class Formation {
     }
 
     public boolean dead;
-    public void checkAggro(Tanker tanker){
+    public void checkAggro(Ship ship){
         if(triggered) {
             alpha-=.03f;
             if(alpha<=0){
@@ -34,7 +33,7 @@ public abstract class Formation {
             }
             return;
         }
-        if(Maths.distance(tanker.getX(), tanker.getY(), x, y)<aggroRadius){
+        if(Maths.distance(ship.getX(), ship.getY(), x, y)<aggroRadius){
             trigger();
         }
     }

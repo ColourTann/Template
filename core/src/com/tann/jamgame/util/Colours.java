@@ -13,11 +13,14 @@ public class Colours {
 	
 	public static final Color black = Color.BLACK;
     public static final Color white = Color.WHITE;
-    public static final Color blue = new Color(.3f,.4f,.8f,1);
+    public static final Color blue = make(25,47,110);
+    public static final Color neonBlue = make(58, 123, 206);
     public static final Color light = new Color(.9f,.91f,.94f,1);
     public static final Color dark = new Color(.01f,.05f,.08f,1);
     public static final Color green = new Color(.2f,.6f, .31f,1);
-    public static final Color red = new Color(.7f,.2f, .1f,1);
+    public static final Color red = make(113,10,10);
+    public static final Color grey = make(70,60,65);
+
     public static final Color yellow = new Color(.7f,.6f, .1f,1);
 	public static final Color transparent = new Color(0,0,0,0);
 	private static Pixmap p;

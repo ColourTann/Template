@@ -8,12 +8,15 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.Obstacle.Obstacle;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.obstacle.Obstacle;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.map.Map;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.MiniMap;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.TankerHealth;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.WeaponIcon;
+import com.tann.jamgame.util.Layoo;
 import com.tann.jamgame.util.Screen;
 import com.tann.jamgame.util.Shape;
 
@@ -24,14 +27,21 @@ public class SpaceScreen extends Screen {
     public MiniMap miniMap;
     private static SpaceScreen self;
     public static SpaceScreen get(){
-        if(self==null) self = new SpaceScreen();
+        if(self==null){
+            self = new SpaceScreen();
+            self.init();
+        }
         return self;
     }
 
     Stage spaceStage;
     OrthographicCamera spaceCam;
     Batch spaceBatch;
+
     private SpaceScreen() {
+    }
+
+    private void init(){
         spaceStage = new Stage();
         spaceCam = (OrthographicCamera) spaceStage.getCamera();
         spaceBatch = (SpriteBatch) spaceStage.getBatch();
@@ -88,16 +98,11 @@ public class SpaceScreen extends Screen {
         spaceStage.act(delta);
         Ship ship = map.getControlledShip();
         temp.set(ship.getX(), ship.getY(),0);
-//        temp.set(playerShip.getX()/2+tanker.getX()/2, playerShip.getY()/2+tanker.getY()/2, 0);
         spaceCam.position.interpolate(temp, .05f, Interpolation.pow2Out);
 
         float baseZoom = ship.getBaseZoom();
 
-        float targetZoom = map.playerShip.getSpeed()*.05f+baseZoom;
-//        float xDiff = tanker.getX()-playerShip.getX();
-//        float yDiff = tanker.getY()-playerShip.getY();
-//        targetZoom = (float) Math.sqrt(xDiff*xDiff+yDiff*yDiff)/(Main.height*.8f);
-//        targetZoom = Math.max(1, targetZoom);
+        float targetZoom = map.fighter.getSpeed()*.05f+baseZoom;
         spaceCam.zoom=Interpolation.linear.apply(spaceCam.zoom, targetZoom, .08f);;
         spaceCam.update();
         tickBullets();
@@ -131,5 +136,16 @@ public class SpaceScreen extends Screen {
                 break;
         }
 
+    }
+
+    public void addWeaponIcons(PlayerShip ship) {
+        Layoo l = new Layoo(this);
+        for(WeaponIcon w:ship.getWeaponIcons()){
+            l.actor(w);
+            l.gap(500);
+            l.row(1);
+        }
+        l.row(10);
+        l.layoo();
     }
 }

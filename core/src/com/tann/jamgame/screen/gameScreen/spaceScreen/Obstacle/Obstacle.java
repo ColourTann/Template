@@ -1,4 +1,4 @@
-package com.tann.jamgame.screen.gameScreen.spaceScreen.Obstacle;
+package com.tann.jamgame.screen.gameScreen.spaceScreen.obstacle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Circle;

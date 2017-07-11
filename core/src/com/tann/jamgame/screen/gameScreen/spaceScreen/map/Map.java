@@ -3,19 +3,20 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.map;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.Obstacle.Obstacle;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.Star;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.PlayerShip;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.obstacle.Obstacle;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerFighter;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Tanker;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.Tanker;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyFighter;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.Formation;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.WeaponIcon;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Particle;
@@ -24,7 +25,7 @@ public class Map extends Group{
 
     public Array<Obstacle> obstacles = new Array<>();
     Texture bg;
-    public PlayerShip playerShip;
+    public PlayerFighter fighter;
     public Tanker tanker;
     public Array<Ship> ships = new Array<>();
     public Array<Formation> formations = new Array<>();
@@ -45,16 +46,16 @@ public class Map extends Group{
         }
 
         tanker = new Tanker();
-        tanker.setPosition(200, getHeight()/2);
+        tanker.setPosition(700, getHeight()/2);
         addActor(tanker);
         ships.add(tanker);
-        playerShip = new PlayerShip();
-        addActor(playerShip);
-        playerShip.setPosition(200, getHeight()/2);
-        ships.add(playerShip);
-        control(playerShip);
+        fighter = new PlayerFighter();
+        addActor(fighter);
+        fighter.setPosition(700, getHeight()/2+70);
+        ships.add(fighter);
+        control(fighter);
 
-        for(int i=0;i<50;i++){
+        for(int i=0;i<150;i++){
             EnemyShip e = new EnemyFighter();
             ships.add(e);
             e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
@@ -63,7 +64,7 @@ public class Map extends Group{
         setTransform(false);
         dropZone = new DropZone(getWidth()*.98f, getHeight()*.5f, 1400);
 
-        for(int i=0;i<8;i++){
+        for(int i=0;i<0;i++){
             Formation f = new BasicFormation(Particle.rand(0,getWidth()), Particle.rand(0,getHeight()));
             formations.add(f);
             for(Ship s:f.ships){
@@ -77,7 +78,8 @@ public class Map extends Group{
     public void draw(Batch batch, float parentAlpha) {
         Main.logTime(null);
         batch.setColor(Colours.dark);
-        Draw.fillActor(batch,this);
+        float border = Main.width*2;
+        Draw.fillRectangle(batch, getX()-border, getY()-border, getWidth()+border*2, getHeight()+border*2);
         batch.setColor(Colours.white);
         for(int x=0;x<getWidth();x+=texSize){
             for(int y=0;y<getHeight();y+=texSize){
@@ -110,27 +112,32 @@ public class Map extends Group{
         for(int i=formations.size-1;i>=0;i--){
             Formation f =formations.get(i);
             f.checkAggro(tanker);
+            f.checkAggro(fighter);
             if(f.dead){
                 formations.removeValue(f,true);
             }
         }
     }
 
-    private Ship controlledShip;
-    public void control(Ship ship){
+    private PlayerShip controlledShip;
+    public void control(PlayerShip ship){
         if(controlledShip!=null){
             controlledShip.setControl(false);
+            for(WeaponIcon w:controlledShip.getWeaponIcons()){
+                w.remove();
+            }
         }
         controlledShip=ship;
         controlledShip.setControl(true);
+        SpaceScreen.get().addWeaponIcons(ship);
     }
 
     public void swapShips() {
-        if(playerShip.isControlled()){
+        if(fighter.isControlled()){
             control(tanker);
         }
         else{
-            control(playerShip);
+            control(fighter);
         }
     }
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 import com.tann.jamgame.Main;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Tanker;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.Tanker;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Fonts;

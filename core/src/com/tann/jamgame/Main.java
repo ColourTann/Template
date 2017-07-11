@@ -190,10 +190,10 @@ public class Main extends ApplicationAdapter {
         }
         average/=values.length;
 
-        Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), orthoCam.position.x-Main.width/2, orthoCam.position.y+Main.height/2-60);
+        Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), orthoCam.position.x, orthoCam.position.y+Main.height/2);
     }
 
-    public static float tickMult=1;
+    private static float tickMult=1;
 
     public void update(float delta) {
         tickMult= Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)?0.2f:1;

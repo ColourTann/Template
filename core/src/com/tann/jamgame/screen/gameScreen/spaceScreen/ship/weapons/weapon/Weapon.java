@@ -1,16 +1,17 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon;
 
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.PlayerShip;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 
 public abstract class Weapon {
     
-    final int cooldown;
+    public final int cooldown;
     int reload;
     Ship ship;
-    boolean friend;
-    public Weapon(int cooldown, boolean friend){
-       this.cooldown=cooldown;this.friend = friend;
+    public boolean friend;
+    public Weapon(int cooldown){
+       this.cooldown=cooldown;
     }
 
     public Ship getShip(){
@@ -18,7 +19,9 @@ public abstract class Weapon {
     }
 
     public void update(){
-        reload--;
+        if(reload>0){
+            reload--;
+        }
     }
     
     public void fire(){
@@ -31,5 +34,15 @@ public abstract class Weapon {
 
     public void setShip(Ship ship) {
         this.ship = ship;
+    }
+
+    public abstract String getName();
+
+    public TextureRegion getImage(){
+        return Main.atlas.findRegion("weapon/"+getName().toLowerCase());
+    }
+
+    public float getCooldownRatio() {
+        return 1-((float)reload/cooldown);
     }
 }

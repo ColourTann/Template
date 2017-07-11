@@ -6,4 +6,11 @@ public class Maths {
         float yDiff = y1-y2;
         return (float) Math.sqrt(xDiff*xDiff+yDiff*yDiff);
     }
+    public static float angleDiff(float a1, float a2)
+    {
+        double difference = a1 - a2;
+        while (difference < -Math.PI) difference += Math.PI*2;
+        while (difference > Math.PI) difference -= Math.PI*2;
+        return (float)difference;
+    }
 }

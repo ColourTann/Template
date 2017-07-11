@@ -1,4 +1,4 @@
-package com.tann.jamgame.screen.gameScreen.spaceScreen.ship;
+package com.tann.jamgame.screen.gameScreen.spaceScreen.particle;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,28 +9,30 @@ import com.tann.jamgame.util.Particle;
 public class EngineParticle extends Particle {
 
     float size;
-
+    public Color col = Colours.blue;
 
     @Override
     public void specificSetup() {
-        setupLife(.5f);
-        size =6;
+        setupLife(.4f);
+        size =3;
     }
 
     @Override
     public void tick(float delta) {
+        this.dx *=.95f;
+        this.dy *=.95f;
         this.x+=dx;
         this.y+=dy;
-        size -= 0.07f;
+        size += 0.2f;
     }
 
     @Override
     public void draw(Batch batch) {
-        Color c = Colours.shiftedTowards(Colours.red, Colours.white, ratio);
+        Color c = Colours.shiftedTowards(col, Colours.white, ratio);
         c.a=ratio;
         batch.setColor(c);
 
-        Draw.fillRectangle(batch, x-size/2, y-size/2, size, size);
+        Draw.fillEllipse(batch, x-size/2, y-size/2, size, size);
 
     }
 }

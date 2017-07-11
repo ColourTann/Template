@@ -11,20 +11,13 @@ public abstract class EnemyShip extends Ship {
 
     boolean aggroed;
 
-    public EnemyShip(float accel, float maxSpeed) {
-        super(accel, maxSpeed);
+    public EnemyShip(float accel, float maxSpeed, float turnSpeed) {
+        super(accel, maxSpeed, turnSpeed);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.red);
-        Draw.drawCenteredRotatedScaled(batch, Draw.getSq(), getX(), getY(), getWidth(), getHeight(), getRotation());
-        super.draw(batch, parentAlpha);
     }
 
     @Override

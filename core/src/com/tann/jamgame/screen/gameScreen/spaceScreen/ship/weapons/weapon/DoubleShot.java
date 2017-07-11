@@ -1,14 +1,16 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pools;
+import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.BoringBullet;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 
 public class DoubleShot extends Weapon {
-    public DoubleShot(boolean friend) {
-        super(12, friend);
+    public DoubleShot() {
+        super(12);
     }
 
     @Override
@@ -26,4 +28,10 @@ public class DoubleShot extends Weapon {
             SpaceScreen.get().addBullet(b);
         }
     }
+
+    @Override
+    public String getName() {
+        return "DoubleShot";
+    }
+
 }

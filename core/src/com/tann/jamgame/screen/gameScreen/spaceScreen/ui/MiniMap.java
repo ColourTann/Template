@@ -14,8 +14,6 @@ public class MiniMap extends Group {
     public MiniMap(Map map) {
         this.map = map;
         float widthScale = map.getWidth()/map.getHeight();
-        float heightScale = 1/widthScale;
-        System.out.println(widthScale+":"+heightScale);
         setSize(180*widthScale, 180);
     }
 

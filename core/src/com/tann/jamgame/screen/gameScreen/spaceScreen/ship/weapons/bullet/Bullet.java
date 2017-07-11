@@ -14,7 +14,11 @@ public abstract class Bullet{
     }
     public BulletType type;
     public boolean dead;
-    float x,y,dx,dy, size;
+    float x;
+    float y;
+    float dx;
+    float dy;
+    public float size;
     float drag=1, life=100, startingLife=100;
     boolean firstUpdate;
     public void setDrag(float drag){

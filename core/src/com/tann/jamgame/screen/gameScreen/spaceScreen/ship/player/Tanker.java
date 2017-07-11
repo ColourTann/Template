@@ -1,37 +1,42 @@
-package com.tann.jamgame.screen.gameScreen.spaceScreen.ship;
+package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.Blaster;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.BroadSide;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.DoubleShot;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
-public class Tanker extends Ship {
+public class Tanker extends PlayerShip {
 
-    TextureRegion tr;
+    static TextureRegion tr = Main.atlas.findRegion("ship/bus");;
+    static final float AUTO_ACCEL = .07f;
     public Tanker() {
-        super(.07f, 4);
-        this.tr= Main.atlas.findRegion("bustanker");
+        super(0, 4, .004f);
         setPosition(500,500);
         setSize(370, 70);
-        weapon1 = new DoubleShot(true);
-        weapon1.setShip(this);
-        weapon2 = new Blaster(true);
-        weapon2.setShip(this);
-        setHp(1500);
+        addWeapon(new BroadSide());
+        addWeapon(new Blaster());
+        setHp(4000);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
         Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
+        float dist = 15;
+        for(int i=0;i<2;i++){
+            drawThrustAt(batch,
+                    (float) (getButtX() +Math.cos(getRotation()+Math.PI/2*(i*2-1))*dist),
+                    (float) (getButtY() +Math.sin(getRotation()+Math.PI/2*(i*2-1))*dist), 4);
+        }
         super.draw(batch, parentAlpha);
     }
 
@@ -39,17 +44,8 @@ public class Tanker extends Ship {
     protected void internalAct(float delta) {
         float dxChange = (float)Math.cos(getRotation());
         float dyChange = (float)Math.sin(getRotation());
-        dx += accel * dxChange;
-        dy += accel * dyChange;
-        if(control){
-            float turnSpeed = .0035f;
-            if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-                rotateBy(-turnSpeed);
-            }
-            if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                rotateBy(+turnSpeed);
-            }
-        }
+        dx += AUTO_ACCEL * dxChange;
+        dy += AUTO_ACCEL * dyChange;
     }
 
     @Override
@@ -70,6 +66,6 @@ public class Tanker extends Ship {
     }
 
     public float getBaseZoom() {
-        return 1f;
+        return 1.2f;
     }
 }

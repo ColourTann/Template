@@ -41,7 +41,7 @@ public class BlasterBullet extends Bullet {
     @Override
     public void draw(Batch batch) {
         float ratio = life/startingLife;
-        Color c = Colours.shiftedTowards(Colours.red, Colours.yellow, 1-(ratio));
+        Color c = Colours.shiftedTowards(type==BulletType.Friendly?Colours.light:Colours.red, Colours.yellow, 1-(ratio));
         c.a=1-(1-ratio)*(1-ratio);
         batch.setColor(c);
         Draw.fillEllipse(batch, x-size/2, y-size/2, size, size);
@@ -49,6 +49,6 @@ public class BlasterBullet extends Bullet {
 
     @Override
     public int getDamage() {
-        return 1;
+        return 2;
     }
 }

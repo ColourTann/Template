@@ -1,5 +1,6 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
@@ -8,11 +9,11 @@ import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet
 import com.tann.jamgame.util.Particle;
 
 public class Blaster extends Weapon {
-    public Blaster(boolean friend) {
-        super(40, friend);
+    public Blaster() {
+        super(40);
     }
 
-    private static final int NUM_SHOTS=22;
+    private static final int NUM_SHOTS=16;
     private static final float ANGLE_RAND = .28f;
     private static final float KNOCKBACK = 5;
 
@@ -31,4 +32,10 @@ public class Blaster extends Weapon {
         ship.dx -= Math.cos(ship.getRotation())*KNOCKBACK;
         ship.dy -= Math.sin(ship.getRotation())*KNOCKBACK;
     }
+
+    @Override
+    public String getName() {
+        return "Blaster";
+    }
+
 }
