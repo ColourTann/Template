@@ -39,7 +39,7 @@ public class Map extends Group{
             p.fillRectangle((int)(Math.random()*texSize), (int)(Math.random()*texSize), 3, 3);
         }
         bg = new Texture(p);
-        for(int i=0;i<20;i++){
+        for(int i=0;i<0;i++){
             Obstacle o = new Obstacle(Particle.rand(0, getWidth()), Particle.rand(0, getHeight()));
             obstacles.add(o);
             addActor(o);

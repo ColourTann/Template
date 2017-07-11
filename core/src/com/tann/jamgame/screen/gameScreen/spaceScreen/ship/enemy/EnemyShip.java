@@ -34,9 +34,9 @@ public abstract class EnemyShip extends Ship {
 
     @Override
     public void drawMinimap(Batch batch, float x, float y) {
-        batch.setColor(Colours.red);
-        float size = 1;
-        Draw.fillEllipse(batch, x-size/2, y-size/2, size, size);
+//        batch.setColor(Colours.red);
+//        float size = 1;
+//        Draw.fillEllipse(batch, x-size/2, y-size/2, size, size);
     }
 
     public void aggro(){

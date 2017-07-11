@@ -53,6 +53,7 @@ public class SpaceScreen extends Screen {
         addActor(miniMap);
         TankerHealth th = new TankerHealth(map.tanker);
         addActor(th);
+        spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);
     }
 
     Vector3 temp = new Vector3();

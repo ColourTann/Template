@@ -3,6 +3,7 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.ui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.map.Map;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.obstacle.Obstacle;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.Formation;
 import com.tann.jamgame.util.Colours;
@@ -33,6 +34,9 @@ public class MiniMap extends Group {
         }
         for(Formation f:map.formations){
             f.drawMinimap(batch, xScale, yScale);
+        }
+        for(Obstacle o:map.obstacles){
+            o.drawMinimap(batch, xScale, yScale);
         }
         map.dropZone.drawMinimap(batch, xScale, yScale);
         super.draw(batch, parentAlpha);
