@@ -16,7 +16,7 @@ import com.tann.jamgame.util.Draw;
 
 public class Tanker extends PlayerShip {
 
-    static TextureRegion tr = Main.atlas.findRegion("ship/bus");;
+    static TextureRegion tr = Main.atlas.findRegion("ship/ss_brewballs1");;
     static final float AUTO_ACCEL = .07f;
     public Tanker() {
         super(0, 4, .004f);
@@ -31,11 +31,11 @@ public class Tanker extends PlayerShip {
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
         Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
-        float dist = 15;
-        for(int i=0;i<2;i++){
+        float dist = 18;
+        for(int i=-1;i<2;i++){
             drawThrustAt(batch,
-                    (float) (getButtX() +Math.cos(getRotation()+Math.PI/2*(i*2-1))*dist),
-                    (float) (getButtY() +Math.sin(getRotation()+Math.PI/2*(i*2-1))*dist), 4);
+                    (float) (getButtX() +Math.cos(getRotation()+Math.PI/2)*dist*i),
+                    (float) (getButtY() +Math.sin(getRotation()+Math.PI/2)*dist*i), 2);
         }
         super.draw(batch, parentAlpha);
     }
