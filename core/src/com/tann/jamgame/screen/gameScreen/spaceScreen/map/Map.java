@@ -31,8 +31,9 @@ public class Map extends Group{
     public Array<Formation> formations = new Array<>();
     public DropZone dropZone;
     static final int texSize = 2048;
+    public static final float HEIGHT = 5000;
     public Map() {
-        setSize(25000,15000);
+        setSize(13000,HEIGHT);
         Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA4444);
         for(int i=0;i<500;i++){
             p.setColor(Colours.light);
@@ -55,7 +56,7 @@ public class Map extends Group{
         ships.add(fighter);
         control(fighter);
 
-        for(int i=0;i<150;i++){
+        for(int i=0;i<20;i++){
             EnemyShip e = new EnemyFighter();
             ships.add(e);
             e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
@@ -64,8 +65,14 @@ public class Map extends Group{
         setTransform(false);
         dropZone = new DropZone(getWidth()*.98f, getHeight()*.5f, 1400);
 
-        for(int i=0;i<0;i++){
-            Formation f = new BasicFormation(Particle.rand(0,getWidth()), Particle.rand(0,getHeight()));
+        int numFormations = 1;
+        float xRand = 200;
+        int offset = 0;
+        for(int i=0;i<numFormations;i++){
+
+            float x= getWidth()/(numFormations+1+offset)*(i+1+offset);
+            x += Particle.rand(-xRand, xRand);
+            Formation f = new BasicFormation(x);
             formations.add(f);
             for(Ship s:f.ships){
                 ships.add(s);

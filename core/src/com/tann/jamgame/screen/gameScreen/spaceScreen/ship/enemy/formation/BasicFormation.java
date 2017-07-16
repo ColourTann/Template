@@ -6,8 +6,8 @@ import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyShip;
 
 public class BasicFormation extends Formation{
 
-    public BasicFormation(float x, float y) {
-        super(x, y, 3000);
+    public BasicFormation(float x) {
+        super(x);
     }
 
     @Override
