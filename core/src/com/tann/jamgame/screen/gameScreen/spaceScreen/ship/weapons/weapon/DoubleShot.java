@@ -10,7 +10,7 @@ import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet
 
 public class DoubleShot extends Weapon {
     public DoubleShot() {
-        super(12);
+        super(30);
     }
 
     @Override

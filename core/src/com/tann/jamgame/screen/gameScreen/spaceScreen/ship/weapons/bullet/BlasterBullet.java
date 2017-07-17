@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.utils.Pools;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.particle.ExplosionAnimationParticle;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
@@ -26,6 +29,10 @@ public class BlasterBullet extends Bullet {
             this.dy/=speedRatio;
         }
         this.size= 8;
+    }
+
+    @Override
+    public void impactEffect() {
     }
 
     @Override

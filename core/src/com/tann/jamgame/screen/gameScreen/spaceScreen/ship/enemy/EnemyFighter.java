@@ -15,7 +15,7 @@ public class EnemyFighter extends  EnemyShip{
     static TextureRegion tr = Main.atlas.findRegion("ship/enemyFighter");
 
     public EnemyFighter() {
-        super(0.2f, 30, .1f);
+        super(0.2f, 30, .04f);
         float sizeMult = 1.2f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new DoubleShot());
@@ -49,7 +49,7 @@ public class EnemyFighter extends  EnemyShip{
             targetRotation+=Math.PI*2;
         }
         float rotationDelta = targetRotation-getRotation();
-        setRotation(getRotation()+(Math.signum(rotationDelta))*.02f);
+        setRotation(getRotation()+(Math.signum(rotationDelta))*turnSpeed);
         float move  = accel/2*(1-Math.abs(rotationDelta));
         move = Math.max(0,move);
         if(move > 0){

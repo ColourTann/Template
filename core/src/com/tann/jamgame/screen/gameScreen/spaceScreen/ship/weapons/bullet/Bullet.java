@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Pools;
 
 public abstract class Bullet{
 
+
+
     public enum BulletType{
         Friendly, Enemy
     }
@@ -74,6 +76,13 @@ public abstract class Bullet{
         }
         return false;
     }
+
+    public void impact(){
+        dead=true;
+        impactEffect();
+    }
+
+    public abstract void impactEffect();
 
     public abstract Shape2D getShape();
 

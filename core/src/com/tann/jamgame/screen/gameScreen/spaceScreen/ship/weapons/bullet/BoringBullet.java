@@ -3,6 +3,9 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.utils.Pools;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.particle.ExplosionAnimationParticle;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
@@ -25,6 +28,16 @@ public class BoringBullet extends Bullet {
             this.dy/=speedRatio;
         }
         this.size= 8;
+    }
+
+    @Override
+    public void impactEffect() {
+        ExplosionAnimationParticle eap = Pools.obtain(ExplosionAnimationParticle.class);
+        eap.setup();
+        eap.x=x+dx;
+        eap.y=y+dy;
+        eap.dx = SpaceScreen.get().map.tanker.dx;
+        SpaceScreen.get().addParticle(eap);
     }
 
     @Override
