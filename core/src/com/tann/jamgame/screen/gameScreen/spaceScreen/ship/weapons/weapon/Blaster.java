@@ -15,7 +15,7 @@ public class Blaster extends Weapon {
 
     private static final int NUM_SHOTS=16;
     private static final float ANGLE_RAND = .48f, MIN_SPEED = 40, MAX_SPEED = 60;
-    private static final float KNOCKBACK = 5;
+    private static final float KNOCKBACK = 3;
 
     @Override
     protected void internalFire() {

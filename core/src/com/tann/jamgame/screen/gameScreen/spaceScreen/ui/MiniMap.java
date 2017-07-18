@@ -3,7 +3,6 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.ui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.map.Map;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.obstacle.Obstacle;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.Formation;
 import com.tann.jamgame.util.Colours;

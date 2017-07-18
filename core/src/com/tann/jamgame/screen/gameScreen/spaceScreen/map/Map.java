@@ -7,11 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyRammer;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerFighter;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.Tanker;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyFighter;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemySpeeder;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.Formation;
@@ -50,7 +51,13 @@ public class Map extends Group{
         control(fighter);
 
         for(int i=0;i<20;i++){
-            EnemyShip e = new EnemyFighter();
+            EnemyShip e = new EnemySpeeder();
+            ships.add(e);
+            e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
+            addActor(e);
+        }
+        for(int i=0;i<0;i++){
+            EnemyShip e = new EnemyRammer();
             ships.add(e);
             e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
             addActor(e);
@@ -62,7 +69,6 @@ public class Map extends Group{
         float xRand = 200;
         int offset = 0;
         for(int i=0;i<numFormations;i++){
-
             float x= getWidth()/(numFormations+1+offset)*(i+1+offset);
             x += Particle.rand(-xRand, xRand);
             Formation f = new BasicFormation(x);
