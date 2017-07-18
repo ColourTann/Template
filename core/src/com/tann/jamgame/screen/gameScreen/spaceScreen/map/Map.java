@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.obstacle.Obstacle;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerFighter;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerShip;
@@ -23,7 +22,6 @@ import com.tann.jamgame.util.Particle;
 
 public class Map extends Group{
 
-    public Array<Obstacle> obstacles = new Array<>();
     Texture bg;
     public PlayerFighter fighter;
     public Tanker tanker;
@@ -40,11 +38,6 @@ public class Map extends Group{
             p.fillRectangle((int)(Math.random()*texSize), (int)(Math.random()*texSize), 3, 3);
         }
         bg = new Texture(p);
-        for(int i=0;i<0;i++){
-            Obstacle o = new Obstacle(Particle.rand(0, getWidth()), Particle.rand(0, getHeight()));
-            obstacles.add(o);
-            addActor(o);
-        }
 
         tanker = new Tanker();
         tanker.setPosition(700, getHeight()/2);
@@ -103,11 +96,6 @@ public class Map extends Group{
     }
 
     public void tick() {
-        for(int i=obstacles.size-1;i>=0;i--){
-            if(obstacles.get(i).dead){
-                obstacles.removeValue(obstacles.get(i), true);
-            }
-        }
         for(int i=ships.size-1;i>=0;i--){
             if(ships.get(i).dead){
                 ships.removeValue(ships.get(i), true);

@@ -56,6 +56,6 @@ public class BlasterBullet extends Bullet {
 
     @Override
     public int getDamage() {
-        return 2;
+        return 1;
     }
 }

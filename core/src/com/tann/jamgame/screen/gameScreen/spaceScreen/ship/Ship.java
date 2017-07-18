@@ -51,7 +51,7 @@ public abstract class Ship extends Group implements Damageable{
         this.turnSpeed=turnSpeed;
     }
 
-    int hp = 8, maxHp=8;
+    int hp = 1, maxHp=1;
     public void damage(int amount){
         flash();
         hp -= amount;

@@ -3,6 +3,8 @@ package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
@@ -31,16 +33,12 @@ public abstract class PlayerShip extends Ship {
                 makeParticle = true;
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-                weapons.get(0).fire();
-            }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.X)) {
-                weapons.get(1).fire();
-            }
         }
         super.act(delta);
     }
+
+
 
     @Override
     protected void internalAct(float delta) {
@@ -77,6 +75,20 @@ public abstract class PlayerShip extends Ship {
         return weaponIcons;
     }
 
+    public void keyPress(int keycode){
+        switch(keycode){
+            case Input.Keys.Z:
+                if(weapons.size>0 && weapons.get(0)!=null) {
+                    weapons.get(0).fire();
+                }
+                break;
+            case Input.Keys.X:
+                if(weapons.size>1 && weapons.get(1)!=null) {
+                    weapons.get(1).fire();
+                }
+                break;
+        }
+    }
 
 
     public float getBaseZoom() {

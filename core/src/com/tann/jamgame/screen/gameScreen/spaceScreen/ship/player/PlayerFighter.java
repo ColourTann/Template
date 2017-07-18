@@ -20,7 +20,6 @@ public class PlayerFighter extends PlayerShip {
         setPosition(500,500);
         float sizeMult = 1.2f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
-        addWeapon(new DoubleShot());
         addWeapon(new Blaster());
         setHp(150);
     }

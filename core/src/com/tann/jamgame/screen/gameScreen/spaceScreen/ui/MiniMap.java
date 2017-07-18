@@ -36,9 +36,6 @@ public class MiniMap extends Group {
         for(Formation f:map.formations){
             f.drawMinimap(batch, xScale, yScale);
         }
-        for(Obstacle o:map.obstacles){
-            o.drawMinimap(batch, xScale, yScale);
-        }
         map.dropZone.drawMinimap(batch, xScale, yScale);
         super.draw(batch, parentAlpha);
     }

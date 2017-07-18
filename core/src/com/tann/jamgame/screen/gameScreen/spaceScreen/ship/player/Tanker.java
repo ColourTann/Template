@@ -24,7 +24,7 @@ public class Tanker extends PlayerShip {
         setSize(370, 70);
         addWeapon(new BroadSide());
         addWeapon(new Blaster());
-        setHp(4000);
+        setHp(200);
     }
 
     @Override

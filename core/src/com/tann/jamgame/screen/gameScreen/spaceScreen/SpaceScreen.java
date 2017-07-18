@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.obstacle.Obstacle;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.map.Map;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.MiniMap;
@@ -127,6 +126,9 @@ public class SpaceScreen extends Screen {
             case Input.Keys.TAB:
                 map.swapShips();
                 break;
+        }
+        if(map.fighter!=null){
+            map.fighter.keyPress(keycode);
         }
 
     }

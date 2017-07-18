@@ -6,12 +6,16 @@ import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 
 public abstract class Weapon {
     
-    public final int cooldown;
+    public final int cooldown, maxCharges;
+    public int charges;
     int reload;
     Ship ship;
     public boolean friend;
+    public Weapon(int cooldown, int maxCharges){
+        this.cooldown=cooldown; this.maxCharges=maxCharges;
+    }
     public Weapon(int cooldown){
-       this.cooldown=cooldown;
+       this(cooldown, 1);
     }
 
     public Ship getShip(){
@@ -19,14 +23,20 @@ public abstract class Weapon {
     }
 
     public void update(){
-        if(reload>0){
+        if(reload>0 && charges<maxCharges){
             reload--;
+        }
+        if(reload==0){
+            if(charges<maxCharges){
+                charges++;
+                reload=cooldown;
+            }
         }
     }
     
     public void fire(){
-        if(reload>0)return;
-        reload=cooldown;
+        if(charges==0)return;
+        charges--;
         internalFire();
     }
 
@@ -43,6 +53,6 @@ public abstract class Weapon {
     }
 
     public float getCooldownRatio() {
-        return 1-((float)reload/cooldown);
+        return (float)charges/maxCharges+(1-((float)reload/cooldown))/(float)maxCharges;
     }
 }

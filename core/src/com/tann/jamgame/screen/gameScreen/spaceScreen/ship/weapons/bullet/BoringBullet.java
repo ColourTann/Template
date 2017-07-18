@@ -59,6 +59,6 @@ public class BoringBullet extends Bullet {
 
     @Override
     public int getDamage() {
-        return 4;
+        return 1;
     }
 }
