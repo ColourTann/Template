@@ -71,10 +71,7 @@ public abstract class EnemyShip extends Ship {
 
 
     public void pursueTanker(){
-        if(!aggroed) {
-            checkAggro(SpaceScreen.get().map.fighter);
-            checkAggro(SpaceScreen.get().map.tanker);
-        }
+        checkAggros();
         if(!aggroed)return;
         float rotationDelta = getTankerTargetRotation()-getRotation();
         setRotation(getRotation()+(Math.signum(rotationDelta))*turnSpeed);
@@ -85,6 +82,26 @@ public abstract class EnemyShip extends Ship {
         }
         accelerate(move+accel/2);
     }
+
+    public void tailTanker(float dist){
+        checkAggros();
+        if(!aggroed)return;
+        float rotationDelta = getTankerTargetRotation()-getRotation();
+        setRotation(getRotation()+(Math.signum(rotationDelta))*turnSpeed);
+        float move  = accel/2*(1-Math.abs(rotationDelta))*(getTankerDist()<dist?.1f:1);
+        move = Math.max(0,move);
+        if(move > 0){
+            makeParticle=true;
+        }
+        accelerate(move+accel/2);
+    }
+
+    protected void checkAggros(){
+        if(!aggroed) {
+            checkAggro(SpaceScreen.get().map.fighter);
+            checkAggro(SpaceScreen.get().map.tanker);
+        }
+    };
 
     public void aggro(){
         aggroed=true;

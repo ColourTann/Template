@@ -4,27 +4,29 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.Main;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.DoubleShot;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.SpikeLauncher;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
-public class EnemySpeeder extends EnemyShip{
+public class Hulk extends EnemyShip{
 
-    static TextureRegion tr = Main.atlas.findRegion("ship/enemyFighter");
-
-    public EnemySpeeder() {
-        super(0.25f, 60, .05f);
-        float sizeMult = 1.2f;
-        setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
-        addWeapon(new DoubleShot());
+    TextureRegion tr = Main.atlas.findRegion("ship/shitship");
+    float seed = (float) (Math.random()*500);
+    static final float BASE_DIST = 450;
+    static final float DIST_RAND = 350;
+    float dist = BASE_DIST+(float)Math.random()*DIST_RAND;
+    public Hulk() {
+        super(.1f, 7, .08f);
+        setSize(tr.getRegionWidth(), tr.getRegionHeight());
+        addWeapon(new SpikeLauncher());
+        setHp(40);
     }
 
     @Override
     protected void internalAct(float delta) {
-        pursueTanker();
-        if(getTankerDist()<700 && Math.abs(getTankerTargetRotation()-getRotation())<1){
+        tailTanker(dist);
+        setY((float) (getY()+Math.sin(Main.ticks*1.2+seed)*2.5f));
+        if(getTankerDist()<dist+50 && Math.abs(getTankerTargetRotation()-getRotation())<.4f){
             weapons.get(0).fire();
         }
     }
