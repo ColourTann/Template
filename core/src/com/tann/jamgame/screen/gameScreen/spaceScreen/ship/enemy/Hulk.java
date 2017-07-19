@@ -16,7 +16,7 @@ public class Hulk extends EnemyShip{
     static final float DIST_RAND = 350;
     float dist = BASE_DIST+(float)Math.random()*DIST_RAND;
     public Hulk() {
-        super(.1f, 7, .08f);
+        super(.2f, 7, .01f);
         setSize(tr.getRegionWidth(), tr.getRegionHeight());
         addWeapon(new SpikeLauncher());
         setHp(40);

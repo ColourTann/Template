@@ -26,7 +26,7 @@ public abstract class Ship extends Group implements Damageable{
 
     protected Array<Weapon> weapons = new Array<>();
 
-    static final float DRAG = .985f;
+    static final float DRAG = .95f;
     static final float THRUST_DRAG = .9f;
     static final float THRUST_FACTOR = .6f;
     protected final float accel;

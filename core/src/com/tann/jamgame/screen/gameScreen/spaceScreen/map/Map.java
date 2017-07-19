@@ -57,7 +57,7 @@ public class Map extends Group{
             e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
             addActor(e);
         }
-        for(int i=0;i<5;i++){
+        for(int i=0;i<3;i++){
             EnemyShip e = new Hulk();
             ships.add(e);
             e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));

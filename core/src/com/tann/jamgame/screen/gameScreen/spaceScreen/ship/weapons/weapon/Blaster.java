@@ -10,7 +10,7 @@ import com.tann.jamgame.util.Particle;
 
 public class Blaster extends Weapon {
     public Blaster() {
-        super(55, 5);
+        super(45, 5);
     }
 
     private static final int NUM_SHOTS=16;

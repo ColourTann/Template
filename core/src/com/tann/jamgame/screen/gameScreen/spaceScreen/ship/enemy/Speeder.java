@@ -15,7 +15,7 @@ public class Speeder extends EnemyShip{
     static TextureRegion tr = Main.atlas.findRegion("ship/enemyFighter");
 
     public Speeder() {
-        super(0.25f, 60, .05f);
+        super(0.65f, 60, .04f);
         float sizeMult = 1.2f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new DoubleShot());

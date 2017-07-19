@@ -17,14 +17,14 @@ import com.tann.jamgame.util.Draw;
 public class Tanker extends PlayerShip {
 
     static TextureRegion tr = Main.atlas.findRegion("ship/ss_brewballs1");;
-    static final float AUTO_ACCEL = .07f;
+    static final float AUTO_ACCEL = .2f;
     public Tanker() {
         super(0, 4, .004f);
         setPosition(500,500);
         setSize(370, 70);
         addWeapon(new BroadSide());
         addWeapon(new Blaster());
-        setHp(500);
+        setHp(700);
     }
 
     @Override
