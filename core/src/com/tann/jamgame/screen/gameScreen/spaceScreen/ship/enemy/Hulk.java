@@ -10,16 +10,17 @@ import com.tann.jamgame.util.Draw;
 
 public class Hulk extends EnemyShip{
 
-    TextureRegion tr = Main.atlas.findRegion("ship/shitship");
+    TextureRegion hulk = Main.atlas.findRegion("ship/shitship");
     float seed = (float) (Math.random()*500);
     static final float BASE_DIST = 450;
     static final float DIST_RAND = 350;
     float dist = BASE_DIST+(float)Math.random()*DIST_RAND;
     public Hulk() {
-        super(.2f, 7, .01f);
+        super(.3f, 7, .03f);
+        this.tr=hulk;
         setSize(tr.getRegionWidth(), tr.getRegionHeight());
         addWeapon(new SpikeLauncher());
-        setHp(40);
+        setHp(25);
     }
 
     @Override
@@ -36,10 +37,4 @@ public class Hulk extends EnemyShip{
         return getDefaultShape();
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.white);
-        Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
-        super.draw(batch, parentAlpha);
-    }
 }

@@ -12,11 +12,12 @@ import com.tann.jamgame.util.Draw;
 
 public class Speeder extends EnemyShip{
 
-    static TextureRegion tr = Main.atlas.findRegion("ship/enemyFighter");
+    static TextureRegion speeder = Main.atlas.findRegion("ship/enemyFighter");
 
     public Speeder() {
         super(0.65f, 60, .04f);
         float sizeMult = 1.2f;
+        this.tr=speeder;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new DoubleShot());
     }
@@ -34,10 +35,4 @@ public class Speeder extends EnemyShip{
         return getDefaultShape();
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.white);
-        Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
-        super.draw(batch, parentAlpha);
-    }
 }

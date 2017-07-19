@@ -1,6 +1,7 @@
 package com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
@@ -10,7 +11,7 @@ import com.tann.jamgame.util.Draw;
 public abstract class EnemyShip extends Ship {
 
     boolean aggroed;
-
+    TextureRegion tr;
     public EnemyShip(float accel, float maxSpeed, float turnSpeed) {
         super(accel, maxSpeed, turnSpeed);
     }
@@ -73,8 +74,12 @@ public abstract class EnemyShip extends Ship {
     public void pursueTanker(){
         checkAggros();
         if(!aggroed)return;
+        rotateTwowardsTanker();
+        moveTowardsTanker();
+    }
+
+    private void moveTowardsTanker() {
         float rotationDelta = getTankerTargetRotation()-getRotation();
-        setRotation(getRotation()+(Math.signum(rotationDelta))*turnSpeed);
         float move  = accel/2*(1-Math.abs(rotationDelta));
         move = Math.max(0,move);
         if(move > 0){
@@ -83,17 +88,23 @@ public abstract class EnemyShip extends Ship {
         accelerate(move+accel/2);
     }
 
+    protected void rotateTwowardsTanker(){
+        float rotationDelta = getTankerTargetRotation()-getRotation();
+        setRotation(getRotation()+(Math.signum(rotationDelta))*turnSpeed);
+    };
+
     public void tailTanker(float dist){
         checkAggros();
         if(!aggroed)return;
         float rotationDelta = getTankerTargetRotation()-getRotation();
         setRotation(getRotation()+(Math.signum(rotationDelta))*turnSpeed);
-        float move  = accel/2*(1-Math.abs(rotationDelta))*(getTankerDist()<dist?.1f:1);
+        System.out.println(getTankerDist()+":"+dist);
+        float move  = accel/2*(getTankerDist()<dist?.001f:1);
         move = Math.max(0,move);
         if(move > 0){
             makeParticle=true;
         }
-        accelerate(move+accel/2);
+        accelerate(accel/2+move);
     }
 
     protected void checkAggros(){
@@ -105,5 +116,12 @@ public abstract class EnemyShip extends Ship {
 
     public void aggro(){
         aggroed=true;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
+        Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
+        super.draw(batch, parentAlpha);
     }
 }

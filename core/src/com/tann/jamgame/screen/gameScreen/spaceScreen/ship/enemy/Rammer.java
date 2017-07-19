@@ -9,7 +9,7 @@ import com.tann.jamgame.util.Draw;
 
 public class Rammer extends EnemyShip{
 
-    static TextureRegion tr = Main.atlas.findRegion("ship/enemyFighter");
+    static TextureRegion tr = Main.atlas.findRegion("ship/rammer");
 
     public Rammer() {
         super(.15f, 30, .5f);
