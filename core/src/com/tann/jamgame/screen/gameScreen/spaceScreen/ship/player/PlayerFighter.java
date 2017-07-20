@@ -8,6 +8,7 @@ import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.Blaster;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.DoubleShot;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.Reversinator;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.weapon.Speedinator;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
@@ -22,7 +23,7 @@ public class PlayerFighter extends PlayerShip {
         float sizeMult = 1.2f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new Blaster());
-        addWeapon(new Reversinator());
+        addWeapon(new Speedinator());
         setHp(150);
     }
 

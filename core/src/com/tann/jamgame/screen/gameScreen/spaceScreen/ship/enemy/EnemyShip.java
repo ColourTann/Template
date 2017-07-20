@@ -98,7 +98,6 @@ public abstract class EnemyShip extends Ship {
         if(!aggroed)return;
         float rotationDelta = getTankerTargetRotation()-getRotation();
         setRotation(getRotation()+(Math.signum(rotationDelta))*turnSpeed);
-        System.out.println(getTankerDist()+":"+dist);
         float move  = accel/2*(getTankerDist()<dist?.001f:1);
         move = Math.max(0,move);
         if(move > 0){

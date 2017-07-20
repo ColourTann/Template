@@ -46,7 +46,9 @@ public abstract class Weapon {
         this.ship = ship;
     }
 
-    public abstract String getName();
+    public  String getName(){
+        return getClass().getSimpleName().toLowerCase();
+    }
 
     public TextureRegion getImage(){
         return Main.atlas.findRegion("weapon/"+getName().toLowerCase());
