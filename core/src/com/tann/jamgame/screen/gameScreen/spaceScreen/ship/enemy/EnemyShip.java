@@ -56,6 +56,13 @@ public abstract class EnemyShip extends Ship {
         return (float) Math.sqrt(xDiff*xDiff+yDiff*yDiff);
     }
 
+    public float getPlayerDist(){
+        Ship tanker = SpaceScreen.get().map.fighter;
+        float xDiff = tanker.getX()-getX();
+        float yDiff = tanker.getY()-getY();
+        return (float) Math.sqrt(xDiff*xDiff+yDiff*yDiff);
+    }
+
     public float getTankerTargetRotation(){
         Ship tanker = SpaceScreen.get().map.tanker;
         float xDiff = tanker.getX()-getX();

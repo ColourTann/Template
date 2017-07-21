@@ -7,14 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.Hulk;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.Rammer;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.*;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerFighter;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.player.Tanker;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.Speeder;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.EnemyShip;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.formation.Formation;
 import com.tann.jamgame.screen.gameScreen.spaceScreen.ui.WeaponIcon;
@@ -59,6 +56,12 @@ public class Map extends Group{
         }
         for(int i=0;i<3;i++){
             EnemyShip e = new Hulk();
+            ships.add(e);
+            e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
+            addActor(e);
+        }
+        for(int i=0; i < 10; i++) {
+            EnemyShip e = new Bomber();
             ships.add(e);
             e.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
             addActor(e);
