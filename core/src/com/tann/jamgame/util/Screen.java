@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.tann.jamgame.Main;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.weapons.bullet.Bullet;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 
 import java.util.ArrayList;
 

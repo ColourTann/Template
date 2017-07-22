@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.util.*;
 
 public class Main extends ApplicationAdapter {
