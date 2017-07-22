@@ -55,9 +55,9 @@ public class SpaceScreen extends Screen {
         TankerHealth th = new TankerHealth(map.tanker);
         addActor(th);
         spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);
-        ShipUpgradeGroup sug = new ShipUpgradeGroup();
-        addActor(sug);
-        sug.setPosition(getWidth()/2, getHeight()/2, Align.center);
+//        ShipUpgradeGroup sug = new ShipUpgradeGroup();
+//        addActor(sug);
+//        sug.setPosition(getWidth()/2, getHeight()/2, Align.center);
     }
 
     Vector3 temp = new Vector3();

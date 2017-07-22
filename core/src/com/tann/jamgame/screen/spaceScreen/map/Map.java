@@ -16,6 +16,7 @@ import com.tann.jamgame.screen.spaceScreen.ship.player.Tanker;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.Speeder;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.Formation;
+import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.*;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
@@ -58,6 +59,9 @@ public class Map extends Group{
         }
         for(int i=0;i<10;i++){
             addShip(new Rammer());
+        }
+        for(int i=0; i < 10; i++) {
+            addShip(new Bomber());
         }
         setTransform(false);
         dropZone = new DropZone(getWidth()*.98f, getHeight()*.5f, 1400);
