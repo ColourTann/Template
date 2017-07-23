@@ -18,8 +18,6 @@ public class Tanker extends PlayerShip {
         super(tanker, 0, 4, .004f);
         setPosition(500,500);
         setSize(370, 70);
-        addWeapon(new BroadSide());
-        addWeapon(new Blaster());
         setHp(700);
     }
 

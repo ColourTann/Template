@@ -45,6 +45,6 @@ public class TextButton extends Group {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         Draw.fillActor(batch,this, Colours.white, Colours.black, 3);
-        Fonts.draw(batch, text, Fonts.fontSmall, Colours.black, getX(), getY(), getWidth(), getHeight());
+        Fonts.draw(batch, text, Fonts.font, Colours.black, getX(), getY(), getWidth(), getHeight());
     }
 }

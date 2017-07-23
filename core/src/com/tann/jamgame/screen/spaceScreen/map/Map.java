@@ -25,7 +25,7 @@ import com.tann.jamgame.util.Particle;
 public class Map extends Group{
 
     Texture bg;
-    public Defender fighter;
+    public Defender defender;
     public Tanker tanker;
     public Array<Ship> ships = new Array<>();
     public Array<Formation> formations = new Array<>();
@@ -45,11 +45,11 @@ public class Map extends Group{
         tanker.setPosition(700, getHeight()/2);
         addActor(tanker);
         ships.add(tanker);
-        fighter = new Defender();
-        addActor(fighter);
-        fighter.setPosition(700, getHeight()/2+70);
-        ships.add(fighter);
-        control(fighter);
+        defender = new Defender();
+        addActor(defender);
+        defender.setPosition(700, getHeight()/2+70);
+        ships.add(defender);
+        control(defender);
 
         for(int i=0;i<15;i++){
            addShip(new Speeder());
@@ -120,7 +120,7 @@ public class Map extends Group{
         for(int i=formations.size-1;i>=0;i--){
             Formation f =formations.get(i);
             f.checkAggro(tanker);
-            f.checkAggro(fighter);
+            f.checkAggro(defender);
             if(f.dead){
                 formations.removeValue(f,true);
             }
@@ -137,15 +137,14 @@ public class Map extends Group{
         }
         controlledShip=ship;
         controlledShip.setControl(true);
-        SpaceScreen.get().addWeaponIcons(ship);
     }
 
     public void swapShips() {
-        if(fighter.isControlled()){
+        if(defender.isControlled()){
             control(tanker);
         }
         else{
-            control(fighter);
+            control(defender);
         }
     }
 

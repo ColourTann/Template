@@ -14,14 +14,14 @@ public class Speeder extends EnemyShip{
         float sizeMult = 1.2f;
         this.tr=speeder;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
-        addWeapon(new DoubleShot());
+        addWeapon(new DoubleShot(),0);
     }
 
     @Override
     protected void internalAct(float delta) {
         pursueTanker();
         if(getTankerDist()<700 && Math.abs(getTankerTargetRotation()-getRotation())<1){
-            weapons.get(0).fire();
+            weapons[0].fire();
         }
     }
 

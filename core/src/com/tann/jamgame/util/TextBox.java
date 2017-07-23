@@ -25,7 +25,7 @@ public class TextBox extends Group{
 	GlyphLayout layout = new GlyphLayout();
 	BitmapFont font;
 	int align;
-	Color textCol = Colours.black;
+	Color textCol = Colours.light;
 	Color bgCol = Colours.transparent;
 	float maxWidth;
 	public TextBox(String text, BitmapFont font, float maxWidth, int align){

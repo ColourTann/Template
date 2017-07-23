@@ -64,30 +64,28 @@ public abstract class PlayerShip extends Ship {
     Array<WeaponIcon> weaponIcons;
 
     public Array<WeaponIcon> getWeaponIcons(){
-        if(weaponIcons == null){
             weaponIcons = new Array<>();
-            for(int i=0;i<weapons.size;i++){
-                Weapon  w = weapons.get(i);
-                weaponIcons.add(new WeaponIcon(Ship.keyFromWeapon(i), w));
+            for(int i=0;i<weapons.length;i++){
+                Weapon  w = weapons[i];
+                if(w!=null){
+                    weaponIcons.add(new WeaponIcon(Ship.keyFromWeapon(i), w));
+                }
             }
-        }
         return weaponIcons;
     }
 
     public void keyPress(int keycode){
         switch(keycode){
             case Input.Keys.Z:
-                if(weapons.size>0 && weapons.get(0)!=null) {
-                    weapons.get(0).fire();
-                }
+                fireWeapon(0);
                 break;
             case Input.Keys.X:
-                if(weapons.size>1 && weapons.get(1)!=null) {
-                    weapons.get(1).fire();
-                }
+                fireWeapon(1);
                 break;
         }
     }
+
+
 
 
     public float getBaseZoom() {

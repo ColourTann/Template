@@ -15,7 +15,7 @@ public class Hulk extends EnemyShip{
     public Hulk() {
         super(hulk, .3f, 7, .03f);
         setSize(tr.getRegionWidth(), tr.getRegionHeight());
-        addWeapon(new SpikeLauncher());
+        addWeapon(new SpikeLauncher(), 0);
         setHp(25);
     }
 
@@ -24,7 +24,7 @@ public class Hulk extends EnemyShip{
         tailTanker(dist);
         setY((float) (getY()+Math.sin(Main.ticks*1.2+seed)*2.5f));
         if(getTankerDist()<dist+50 && Math.abs(getTankerTargetRotation()-getRotation())<.4f){
-            weapons.get(0).fire();
+            fireWeapon(0);
         }
     }
 

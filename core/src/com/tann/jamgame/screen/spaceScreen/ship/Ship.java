@@ -25,7 +25,7 @@ public abstract class Ship extends Group implements Damageable{
 
     public float dx, dy;
 
-    protected Array<Weapon> weapons = new Array<>();
+    protected Weapon[] weapons = new Weapon[3];
     protected TextureRegion tr;
     static final float DRAG = .95f;
     static final float THRUST_DRAG = .9f;
@@ -94,7 +94,7 @@ public abstract class Ship extends Group implements Damageable{
         y = Math.max(0,Math.min(SpaceScreen.get().map.getHeight(), y));
         setPosition(x,y);
         for(Weapon w:weapons){
-            w.update();
+            if(w!=null)w.update();
         }
         internalAct(delta);
         thrustAmount *= THRUST_DRAG;
@@ -216,8 +216,8 @@ public abstract class Ship extends Group implements Damageable{
         return (float)hp/maxHp;
     }
 
-    public void addWeapon (Weapon w){
-        weapons.add(w);
+    public void addWeapon (Weapon w, int slot){
+        weapons[slot]=w;
         w.setShip(this);
         w.friend = this instanceof PlayerShip;
     }
@@ -235,6 +235,15 @@ public abstract class Ship extends Group implements Damageable{
     public static Tanker getTanker(){
         return SpaceScreen.get().map.tanker;
     }
+
+
+    protected void fireWeapon(int index){
+        if(index>=weapons.length) return;
+        Weapon w = weapons[index];
+        if(w==null) return;
+        w.fire();
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

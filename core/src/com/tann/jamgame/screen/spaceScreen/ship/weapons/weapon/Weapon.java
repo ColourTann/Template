@@ -1,8 +1,10 @@
 package com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
+import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;
 
 public abstract class Weapon {
     
@@ -11,6 +13,7 @@ public abstract class Weapon {
     int reload;
     Ship ship;
     public boolean friend;
+    Array<Upgrade> upgrades = new Array<>();
     public Weapon(int cooldown, int maxCharges){
         this.cooldown=cooldown; this.maxCharges=maxCharges;
     }
@@ -56,5 +59,23 @@ public abstract class Weapon {
 
     public float getCooldownRatio() {
         return (float)charges/maxCharges+(1-((float)reload/cooldown))/(float)maxCharges;
+    }
+
+    public float getBonus(Upgrade.UpgradeType type){
+        float total = 0;
+        for(Upgrade u:upgrades){
+            if(u.type==type){
+                total+=u.upgradeAmount;
+            }
+        }
+        return total;
+    }
+
+    public void addUpgrade(Upgrade u) {
+        upgrades.add(u);
+    }
+
+    public void clearUpgrades(){
+        upgrades.clear();
     }
 }

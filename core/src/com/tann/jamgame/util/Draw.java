@@ -199,14 +199,14 @@ public class Draw {
 	}
 
 	public static void fillActor(Batch batch, Actor a) {
-        Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
+        Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth()*a.getScaleX(), a.getHeight()*a.getScaleY());
     }
 
 	public static void fillActor(Batch batch, Actor a, Color bg, Color border, float borderSize) {
 		batch.setColor(border);
-		Draw.fillRectangle(batch, a.getX()-borderSize, a.getY()-borderSize, a.getWidth()+borderSize*2, a.getHeight()+borderSize*2);
+		Draw.fillRectangle(batch, a.getX()-borderSize, a.getY()-borderSize, a.getWidth()*a.getScaleX()+borderSize*2*a.getScaleX(), a.getHeight()*a.getScaleY()+borderSize*2*a.getScaleY());
 		batch.setColor(bg);
-		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
+		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth()*a.getScaleX(), a.getHeight()*a.getScaleY());
 	}
 
 	public static void drawArrow(Batch batch, float x, float y, float x1, float y1, int width){

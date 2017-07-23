@@ -54,7 +54,7 @@ public abstract class EnemyShip extends Ship {
     }
 
     public float getPlayerDist(){
-        Ship tanker = SpaceScreen.get().map.fighter;
+        Ship tanker = SpaceScreen.get().map.defender;
         float xDiff = tanker.getX()-getX();
         float yDiff = tanker.getY()-getY();
         return (float) Math.sqrt(xDiff*xDiff+yDiff*yDiff);
@@ -113,7 +113,7 @@ public abstract class EnemyShip extends Ship {
 
     protected void checkAggros(){
         if(!aggroed) {
-            checkAggro(SpaceScreen.get().map.fighter);
+            checkAggro(SpaceScreen.get().map.defender);
             checkAggro(SpaceScreen.get().map.tanker);
         }
     };

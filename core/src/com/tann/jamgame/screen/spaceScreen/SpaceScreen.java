@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.screen.spaceScreen.map.Map;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
@@ -20,6 +19,7 @@ import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
 import com.tann.jamgame.util.Layoo;
 import com.tann.jamgame.util.Screen;
 import com.tann.jamgame.util.Shape;
+import com.tann.jamgame.util.TextButton;
 
 
 public class SpaceScreen extends Screen {
@@ -55,10 +55,39 @@ public class SpaceScreen extends Screen {
         TankerHealth th = new TankerHealth(map.tanker);
         addActor(th);
         spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);
-//        ShipUpgradeGroup sug = new ShipUpgradeGroup();
-//        addActor(sug);
-//        sug.setPosition(getWidth()/2, getHeight()/2, Align.center);
+        showShipUpgrade();
     }
+
+    public ShipUpgradeGroup sug;
+    TextButton confirm;
+
+    private void showShipUpgrade(){
+        Layoo l = new Layoo(this);
+        sug = new ShipUpgradeGroup();
+        l.row(3);
+        l.actor(sug);
+        l.row(1);
+        confirm = new TextButton(200, 50, "Confirm");
+        l.actor(confirm);
+        l.row(3);
+        l.layoo();
+        confirm.setRunnable(()->{closeShipUpgrade(); startLevel();});
+    }
+
+    private void closeShipUpgrade() {
+        sug.remove();
+        confirm.remove();
+    }
+
+    public void refreshWeaponIcons(){
+        SpaceScreen.get().addWeaponIcons(map.defender);
+    }
+
+    private void startLevel() {
+        paused=false;
+        refreshWeaponIcons();
+    }
+
 
     Vector3 temp = new Vector3();
 
@@ -89,9 +118,12 @@ public class SpaceScreen extends Screen {
         }
     }
 
+    boolean paused=true;
+
     @Override
     public void act(float delta) {
         super.act(delta);
+        if(paused) return;
         spaceStage.act(delta);
         Ship ship = map.getControlledShip();
         temp.set(ship.getX(), ship.getY(),0);
@@ -99,7 +131,7 @@ public class SpaceScreen extends Screen {
 
         float baseZoom = ship.getBaseZoom();
 
-        float targetZoom = map.fighter.getSpeed()*.05f+baseZoom;
+        float targetZoom = map.defender.getSpeed()*.05f+baseZoom;
         spaceCam.zoom=Interpolation.linear.apply(spaceCam.zoom, targetZoom, .08f);;
         spaceCam.update();
         tickBullets();
@@ -132,17 +164,26 @@ public class SpaceScreen extends Screen {
                 map.swapShips();
                 break;
         }
-        if(map.fighter!=null){
-            map.fighter.keyPress(keycode);
+        if(map.defender !=null){
+            map.defender.keyPress(keycode);
         }
 
     }
 
+    Array<WeaponIcon> currentIcons = new Array<>();
     public void addWeaponIcons(PlayerShip ship) {
+        System.out.println("refreshing");
+        for(WeaponIcon w:currentIcons){
+            w.remove();
+            System.out.println("removing");
+        }
+        currentIcons.clear();
         Layoo l = new Layoo(this);
         for(WeaponIcon w:ship.getWeaponIcons()){
+            System.out.println("adding");
             l.actor(w);
-            l.gap(500);
+            currentIcons.add(w);
+            l.gap(1);
             l.row(1);
         }
         l.row(10);

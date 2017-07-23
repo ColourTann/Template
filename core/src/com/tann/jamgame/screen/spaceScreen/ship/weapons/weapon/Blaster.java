@@ -5,6 +5,7 @@ import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.BlasterBullet;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
+import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;
 import com.tann.jamgame.util.Particle;
 
 public class Blaster extends Weapon {
@@ -19,11 +20,12 @@ public class Blaster extends Weapon {
     @Override
     protected void internalFire() {
         Ship ship = getShip();
-        for(int i=0;i<NUM_SHOTS;i++){
+        for(int i = 0; i<NUM_SHOTS+getBonus(Upgrade.UpgradeType.Shots); i++){
             Bullet b = Pools.obtain(BlasterBullet.class);
             b.init();
             b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
-            b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation()+ Particle.rand(-ANGLE_RAND, ANGLE_RAND), Particle.rand(MIN_SPEED,MAX_SPEED));
+            b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation()+ Particle.rand(-ANGLE_RAND, ANGLE_RAND),
+                    Particle.rand(MIN_SPEED,MAX_SPEED)*(1+getBonus(Upgrade.UpgradeType.BulletSpeed)));
             b.setDrag(.90f);
             b.setLife(35);
             SpaceScreen.get().addBullet(b);
