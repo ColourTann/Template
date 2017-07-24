@@ -3,7 +3,6 @@ package com.tann.jamgame.screen.spaceScreen.shipUpgrade;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -23,8 +22,14 @@ public class UpgradePanel extends Group{
     Upgrade chosen;
     static final Interpolation terp = Interpolation.pow2Out;
     static final float intSpeed = .3f;
+    boolean locked = true;
 
-    private static final TextureRegion lock = Main.atlas.findRegion("lock");
+    public void unlock(){
+        locked =false;
+    }
+
+    private static final TextureRegion lock = Main.atlas.findRegion("upgrade/lock");
+    private static final TextureRegion unlock = Main.atlas.findRegion("upgrade/unlocked");
     public UpgradePanel(float x, float y, float boxX, float boxY, Upgrade one, Upgrade two) {
         upgrades.add(one);
         upgrades.add(two);
@@ -34,6 +39,7 @@ public class UpgradePanel extends Group{
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(locked) return true;
                 showUpgrades();
                 event.cancel();
                 return true;
@@ -79,9 +85,21 @@ public class UpgradePanel extends Group{
         batch.setColor(Colours.green);
         Draw.drawLine(batch, getX()+getWidth()/2, getY()+getHeight()/2, getX()+targetX, getY()+targetY, 2);
         Draw.fillActor(batch, this, Colours.dark, Colours.light, 4);
-        batch.setColor(chosen==null?Colours.grey:Colours.neonBlue);
-        float lockScale = .8f;
-        Draw.drawSizeCentered(batch, chosen==null?lock: chosen.tr, getX()+getWidth()/2, getY()+getHeight()/2, getWidth()*lockScale, getHeight()*lockScale);
+        TextureRegion tr;
+        float imageScale = .8f;
+        if(locked){
+            batch.setColor(Colours.grey);
+            tr = lock;
+        }
+        else if(chosen==null){
+            batch.setColor(Colours.green);
+            tr = unlock;
+        }
+        else{
+            batch.setColor(Colours.neonBlue);
+            tr = chosen.tr;
+        }
+        Draw.drawSizeCentered(batch, tr, getX()+getWidth()/2, getY()+getHeight()/2, getWidth()*imageScale, getHeight()*imageScale);
         super.draw(batch, parentAlpha);
     }
 }

@@ -24,6 +24,7 @@ public class ShipUpgradeGroup extends Group{
         addUpgradePanel(.4f, .9f, .5f, .85f, Upgrade.p2Shots, Upgrade.p2Speed);
         addUpgradePanel(.8f, .5f, .8f, .2f, Upgrade.p2Shots, Upgrade.p2Speed);
         addUpgradePanel(.5f, .5f, .8f, .7f, Upgrade.p2Shots, Upgrade.p2Speed);
+        panels.get(0).unlock();
     }
 
     private void addUpgradePanel(float shipX, float shipY, float boxX, float boxY, Upgrade one, Upgrade two){
@@ -46,6 +47,15 @@ public class ShipUpgradeGroup extends Group{
         return results;
     }
 
+    public boolean isValid(){
+        for(UpgradePanel up:panels){
+            if(up.locked==false && up.chosen==null){
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
@@ -55,5 +65,14 @@ public class ShipUpgradeGroup extends Group{
 
         Draw.drawCenteredScaled(batch, tr, getX()+getWidth()/2, getY()+getHeight()/2, shipScale, shipScale);
         super.draw(batch, parentAlpha);
+    }
+
+    public void unlockNext() {
+        for(UpgradePanel up:panels){
+            if(up.locked){
+                up.unlock();
+                return;
+            }
+        }
     }
 }

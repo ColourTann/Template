@@ -40,7 +40,14 @@ public class Map extends Group{
             p.fillRectangle((int)(Math.random()*texSize), (int)(Math.random()*texSize), 3, 3);
         }
         bg = new Texture(p);
+        setTransform(false);
+    }
 
+    public void setup() {
+        for(Ship s:ships){
+            s.destroy();
+        }
+        formations.clear();
         tanker = new Tanker();
         tanker.setPosition(700, getHeight()/2);
         addActor(tanker);
@@ -52,10 +59,10 @@ public class Map extends Group{
         control(defender);
 
         for(int i=0;i<15;i++){
-           addShip(new Speeder());
+            addShip(new Speeder());
         }
         for(int i=0;i<3;i++){
-           addShip(new Hulk());
+            addShip(new Hulk());
         }
         for(int i=0;i<10;i++){
             addShip(new Rammer());
@@ -63,7 +70,7 @@ public class Map extends Group{
         for(int i=0; i < 10; i++) {
             addShip(new Bomber());
         }
-        setTransform(false);
+
         dropZone = new DropZone(getWidth()*.98f, getHeight()*.5f, 1400);
 
         int numFormations = 1;
@@ -115,7 +122,7 @@ public class Map extends Group{
             }
         }
         if(dropZone.inside(tanker)){
-            System.out.println("you win!");
+            SpaceScreen.get().victory();
         }
         for(int i=formations.size-1;i>=0;i--){
             Formation f =formations.get(i);
@@ -151,4 +158,6 @@ public class Map extends Group{
     public Ship getControlledShip(){
         return controlledShip;
     }
+
+
 }

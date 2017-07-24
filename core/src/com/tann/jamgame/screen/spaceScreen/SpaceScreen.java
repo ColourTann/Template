@@ -52,18 +52,18 @@ public class SpaceScreen extends Screen {
         miniMap = new MiniMap(map);
         miniMap.setPosition(4,4);
         addActor(miniMap);
-        TankerHealth th = new TankerHealth(map.tanker);
-        addActor(th);
-        spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);
-        showShipUpgrade();
+        reset();
     }
 
     public ShipUpgradeGroup sug;
     TextButton confirm;
 
     private void showShipUpgrade(){
+        System.out.println("showing upgrade");
         Layoo l = new Layoo(this);
-        sug = new ShipUpgradeGroup();
+        if(sug == null){
+            sug = new ShipUpgradeGroup();
+        }
         l.row(3);
         l.actor(sug);
         l.row(1);
@@ -71,7 +71,14 @@ public class SpaceScreen extends Screen {
         l.actor(confirm);
         l.row(3);
         l.layoo();
-        confirm.setRunnable(()->{closeShipUpgrade(); startLevel();});
+        confirm.setRunnable(()->
+        {
+            if(sug.isValid()) {
+                closeShipUpgrade();
+                startLevel();
+            }
+        }
+        );
     }
 
     private void closeShipUpgrade() {
@@ -172,15 +179,12 @@ public class SpaceScreen extends Screen {
 
     Array<WeaponIcon> currentIcons = new Array<>();
     public void addWeaponIcons(PlayerShip ship) {
-        System.out.println("refreshing");
         for(WeaponIcon w:currentIcons){
             w.remove();
-            System.out.println("removing");
         }
         currentIcons.clear();
         Layoo l = new Layoo(this);
         for(WeaponIcon w:ship.getWeaponIcons()){
-            System.out.println("adding");
             l.actor(w);
             currentIcons.add(w);
             l.gap(1);
@@ -188,5 +192,21 @@ public class SpaceScreen extends Screen {
         }
         l.row(10);
         l.layoo();
+    }
+
+    public void victory() {
+        sug.unlockNext();
+        reset();
+    }
+
+    TankerHealth tankerHealth;
+    private void reset() {
+        paused=true;
+        map.setup();
+        if(tankerHealth!=null) tankerHealth.remove();
+        tankerHealth = new TankerHealth(map.tanker);
+        addActor(tankerHealth);
+        spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);
+        showShipUpgrade();
     }
 }
