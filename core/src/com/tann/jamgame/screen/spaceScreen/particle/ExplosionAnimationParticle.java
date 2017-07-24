@@ -7,7 +7,7 @@ import com.tann.jamgame.util.Particle;
 
 public class ExplosionAnimationParticle extends Particle {
 
-    static Animation animation = new Animation("effects/explosion", 10);
+    static Animation animation = new Animation("effects/explosion",  10);
     float rotation;
     public float size = 60;
     @Override

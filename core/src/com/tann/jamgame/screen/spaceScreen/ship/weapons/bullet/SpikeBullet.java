@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.particle.ExplosionAnimationParticle;
+import com.tann.jamgame.util.Animation;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
@@ -56,8 +57,7 @@ public class SpikeBullet extends Bullet {
     @Override
     public void draw(Batch batch) {
         batch.setColor(Colours.white);
-
-        Draw.drawCenteredRotatedScaled(batch, tr, x, y, size/tr.getRegionWidth(), size/tr.getRegionHeight(), 0);
+        Animation.pulseShot.draw(batch, x, y,1.7f);
     }
 
     @Override

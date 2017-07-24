@@ -60,7 +60,7 @@ public class Map extends Group{
         for(int i=0;i<15;i++){
             addShip(new Speeder());
         }
-        for(int i=0;i<3;i++){
+        for(int i=0;i<30;i++){
             addShip(new Hulk());
         }
         for(int i=0; i < 4; i++) {
