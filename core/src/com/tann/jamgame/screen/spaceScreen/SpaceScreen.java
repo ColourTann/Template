@@ -59,7 +59,6 @@ public class SpaceScreen extends Screen {
     TextButton confirm;
 
     private void showShipUpgrade(){
-        System.out.println("showing upgrade");
         Layoo l = new Layoo(this);
         if(sug == null){
             sug = new ShipUpgradeGroup();

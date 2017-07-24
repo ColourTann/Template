@@ -52,7 +52,8 @@ public class BoringBullet extends Bullet {
 
     @Override
     public void draw(Batch batch) {
-        batch.setColor(Colours.yellow);
+        batch.setColor(Colours.withAlpha(Colours.yellow, 1-(float) Math.pow(1-(life/startingLife), 7)));
+
         Draw.fillEllipse(batch, x-size/2, y-size/2, size, size);
     }
 

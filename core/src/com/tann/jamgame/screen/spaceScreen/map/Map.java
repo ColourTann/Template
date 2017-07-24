@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.screen.spaceScreen.ship.enemy.Bomber;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.Hulk;
-import com.tann.jamgame.screen.spaceScreen.ship.enemy.Rammer;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Defender;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
@@ -16,7 +16,6 @@ import com.tann.jamgame.screen.spaceScreen.ship.player.Tanker;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.Speeder;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.Formation;
-import com.tann.jamgame.screen.gameScreen.spaceScreen.ship.enemy.*;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
@@ -64,10 +63,7 @@ public class Map extends Group{
         for(int i=0;i<3;i++){
             addShip(new Hulk());
         }
-        for(int i=0;i<10;i++){
-            addShip(new Rammer());
-        }
-        for(int i=0; i < 10; i++) {
+        for(int i=0; i < 4; i++) {
             addShip(new Bomber());
         }
 
