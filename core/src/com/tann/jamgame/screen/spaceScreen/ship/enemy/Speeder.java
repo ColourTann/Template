@@ -12,7 +12,6 @@ public class Speeder extends EnemyShip{
     public Speeder() {
         super(speeder, 0.65f, 60, .04f);
         float sizeMult = 1.2f;
-        this.tr=speeder;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new DoubleShot(),0);
     }

@@ -9,6 +9,7 @@ import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.Bomber;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.Hulk;
+import com.tann.jamgame.screen.spaceScreen.ship.enemy.Spawner;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Defender;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
@@ -57,19 +58,22 @@ public class Map extends Group{
         ships.add(defender);
         control(defender);
 
-        for(int i=0;i<15;i++){
+        for(int i=0;i<1;i++){
             addShip(new Speeder());
         }
-        for(int i=0;i<30;i++){
+        for(int i=0;i<1;i++){
             addShip(new Hulk());
         }
-        for(int i=0; i < 4; i++) {
+        for(int i=0; i < 1; i++) {
             addShip(new Bomber());
+        }
+        for(int i=0; i < 30; i++) {
+            addShip(new Spawner());
         }
 
         dropZone = new DropZone(getWidth()*.98f, getHeight()*.5f, 1400);
 
-        int numFormations = 1;
+        int numFormations = 0;
         float xRand = 200;
         int offset = 0;
         for(int i=0;i<numFormations;i++){
@@ -84,7 +88,7 @@ public class Map extends Group{
         }
     }
 
-    private void addShip(Ship ship){
+    public void addShip(Ship ship){
         ships.add(ship);
         ship.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
         addActor(ship);

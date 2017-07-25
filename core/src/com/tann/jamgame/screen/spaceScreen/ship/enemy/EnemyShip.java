@@ -38,10 +38,14 @@ public abstract class EnemyShip extends Ship {
     }
 
     public void checkAggro(Ship ship) {
+        checkAggro(ship, 1);
+    }
+
+    public void checkAggro(Ship ship, float aggroMult) {
         float xDiff = ship.getX() - getX();
         float yDiff = ship.getY() - getY();
         float distance = (float) Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-        if (!aggroed && distance < 1500) {
+        if (!aggroed && distance < Ship.AGGRO_RANGE*aggroMult) {
             aggro();
         }
     }
@@ -61,9 +65,12 @@ public abstract class EnemyShip extends Ship {
     }
 
     public float getTankerTargetRotation(){
-        Ship tanker = SpaceScreen.get().map.tanker;
-        float xDiff = tanker.getX()-getX();
-        float yDiff = tanker.getY()-getY();
+        return getTargetRotation(getTanker().getX(), getTanker().getY());
+    }
+
+    public float getTargetRotation(float x, float y){
+        float xDiff = x-getX();
+        float yDiff = y-getY();
         float targetRotation = (float) Math.atan2(yDiff, xDiff);
         while(targetRotation>getRotation()+Math.PI){
             targetRotation-=Math.PI*2;
@@ -74,11 +81,10 @@ public abstract class EnemyShip extends Ship {
         return targetRotation;
     }
 
-
     public void pursueTanker(){
         checkAggros();
         if(!aggroed)return;
-        rotateTwowardsTanker();
+        rotateTowardsTanker();
         moveTowardsTanker();
     }
 
@@ -92,11 +98,15 @@ public abstract class EnemyShip extends Ship {
         accelerate(move+accel/2);
     }
 
-    protected void rotateTwowardsTanker(){
-        float rotationDelta = getTankerTargetRotation()-getRotation();
+    protected void rotateTowardsTanker(){
+      rotateTowards(getTankerTargetRotation());
+    }
+
+    protected void rotateTowards(float targetRotation){
+        float rotationDelta = targetRotation-getRotation();
         float turnAmount = Math.min(Math.abs(rotationDelta), turnSpeed);
         setRotation(getRotation()+(Math.signum(rotationDelta))*turnAmount);
-    };
+    }
 
     public void tailTanker(float dist){
         checkAggros();

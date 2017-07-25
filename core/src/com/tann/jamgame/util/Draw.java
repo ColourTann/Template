@@ -170,13 +170,13 @@ public class Draw {
 		return (float) (rad * 180f / Math.PI);
 	}
 
-	private static TextureRegion wSq;
+	private static TextureRegion whiteSquare;
 
 	public static TextureRegion getSq() {
-		if (wSq == null) {
-			wSq = Main.atlas.findRegion("pixel");
+		if (whiteSquare == null) {
+			whiteSquare = Main.atlas.findRegion("pixel");
 		}
-		return wSq;
+		return whiteSquare;
 	}
 	
 	public static Pixmap getPixmap(Texture t){

@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
-import com.tann.jamgame.screen.spaceScreen.ship.enemy.EnemyShip;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.BoringBullet;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.util.Colours;
@@ -58,7 +57,7 @@ public class Bomber extends EnemyShip {
         checkAggros();
         if(aggroed){
             charge = Math.min(charge+1, MAX_CHARGE);
-            rotateTwowardsTanker();
+            rotateTowardsTanker();
             this.accel = (float) (BASE_ACCEL + ACCEL_MULT * Math.pow((float)charge/MAX_CHARGE, 2f));
             moveTowardsTanker();
         }

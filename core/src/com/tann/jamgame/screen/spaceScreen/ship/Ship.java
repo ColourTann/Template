@@ -32,6 +32,7 @@ public abstract class Ship extends Group implements Damageable{
     static final float THRUST_FACTOR = .6f;
     protected float accel;
 
+    public static final int AGGRO_RANGE = 1500;
     protected float thrustAmount;
     protected final float maxSpeed;
     protected final float turnSpeed;
