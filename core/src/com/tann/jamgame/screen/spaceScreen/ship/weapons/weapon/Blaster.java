@@ -7,6 +7,7 @@ import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.BlasterBullet;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;
 import com.tann.jamgame.util.Particle;
+import com.tann.jamgame.util.Sounds;
 
 public class Blaster extends Weapon {
     public Blaster() {
@@ -19,6 +20,7 @@ public class Blaster extends Weapon {
 
     @Override
     protected void internalFire() {
+        Sounds.playSound(Sounds.shot, .4f, Particle.rand(.9f,1.4f));
         Ship ship = getShip();
         for(int i = 0; i<NUM_SHOTS+getBonus(Upgrade.UpgradeType.Shots); i++){
             Bullet b = Pools.obtain(BlasterBullet.class);

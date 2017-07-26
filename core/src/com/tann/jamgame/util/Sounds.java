@@ -13,11 +13,18 @@ public class Sounds {
 
 	public static AssetManager am= new AssetManager();
 
-
+    public static String[] pew;
+    public static String[] pew_littol;
+    public static String[] pow_little;
+    public static String[] shot;
 
 	public static void setup(){
 		//sfx//
 
+        pew = makeSounds("pew", 5);
+        pew_littol = makeSounds("pew_smol",1);
+        pow_little = makeSounds("pow_little",1);
+        shot = makeSounds("pow_classic", 1);
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();
@@ -115,7 +122,12 @@ public class Sounds {
 		}
 	}
 
+
+
 	static HashMap<String, Sound> soundMap = new HashMap<String, Sound>();
+    public static void playSound(String string) {
+        playSound(string, 1, 1);
+    }
 	public static void playSound(String string, float volume, float pitch) {
 		Sound s = soundMap.get(string);
 		if(s==null){
@@ -124,7 +136,9 @@ public class Sounds {
 		}
 		s.play(Slider.SFX.getValue()*2*volume, pitch, 0);
 	}
-
+    public static void playSound(String[] string) {
+        playSound(string, 1, 1);
+    }
 	public static void playSound(String[] strings, float volume, float pitch){
         playSound(strings[((int)(Math.random()* strings.length))], volume, pitch);
     }

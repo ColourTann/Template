@@ -75,8 +75,11 @@ public abstract class Ship extends Group implements Damageable{
             ep.y = getY();
             SpaceScreen.get().addParticle(ep);
         }
-
+        onDeath(); 
         remove();
+    }
+
+    protected void onDeath() {
     }
 
     @Override

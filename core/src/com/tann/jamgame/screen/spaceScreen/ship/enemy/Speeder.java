@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.DoubleShot;
+import com.tann.jamgame.util.Sounds;
 
 public class Speeder extends EnemyShip{
 
@@ -22,6 +23,11 @@ public class Speeder extends EnemyShip{
         if(getTankerDist()<700 && Math.abs(getTankerTargetRotation()-getRotation())<1){
             weapons[0].fire();
         }
+    }
+
+    @Override
+    protected void onDeath() {
+        Sounds.playSound(Sounds.pow_little, .4f, 1);
     }
 
     @Override

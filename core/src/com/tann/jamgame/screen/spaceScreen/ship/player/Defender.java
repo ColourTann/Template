@@ -17,7 +17,7 @@ public class Defender extends PlayerShip {
     public static TextureRegion defender = Main.atlas.findRegion("ship/playerFighter");
 
     public Defender() {
-        super(defender, .5f,200, .1f);
+        super(defender, .6f,200, .1f);
         setPosition(500,500);
         float sizeMult = 1.2f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);

@@ -1,6 +1,6 @@
 {
-	"speeders" : 1,
+	"speeders" : 30,
 	"hulks" : 1,
-	"bombers" : 1,
-	"carriers" : 3
+	"bombers" : 0,
+	"carriers" : 0
 }

@@ -32,6 +32,7 @@ public class Map extends Group{
     public DropZone dropZone;
     static final int texSize = 2048;
     public static final float HEIGHT = 4000;
+    static int level = 0;
     public Map() {
         setSize(13000,HEIGHT);
         Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA4444);
@@ -47,7 +48,8 @@ public class Map extends Group{
 
 
     public void setup() {
-        JsonValue levelContents = jr.parse(Gdx.files.internal("levels/0.json"));
+        JsonValue levelContents = jr.parse(Gdx.files.internal("levels/"+level+".json"));
+        level++;
         int numSpeeders = levelContents.get("speeders").asInt();
         int numHulks = levelContents.get("hulks").asInt();
         int numBombers = levelContents.get("bombers").asInt();
