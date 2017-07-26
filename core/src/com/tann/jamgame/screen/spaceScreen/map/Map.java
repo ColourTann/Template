@@ -1,20 +1,20 @@
 package com.tann.jamgame.screen.spaceScreen.map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
-import com.tann.jamgame.screen.spaceScreen.ship.enemy.Bomber;
-import com.tann.jamgame.screen.spaceScreen.ship.enemy.Hulk;
-import com.tann.jamgame.screen.spaceScreen.ship.enemy.Spawner;
+import com.tann.jamgame.screen.spaceScreen.ship.enemy.*;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Defender;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Tanker;
-import com.tann.jamgame.screen.spaceScreen.ship.enemy.Speeder;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.Formation;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
@@ -31,7 +31,7 @@ public class Map extends Group{
     public Array<Formation> formations = new Array<>();
     public DropZone dropZone;
     static final int texSize = 2048;
-    public static final float HEIGHT = 5000;
+    public static final float HEIGHT = 4000;
     public Map() {
         setSize(13000,HEIGHT);
         Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA4444);
@@ -43,7 +43,16 @@ public class Map extends Group{
         setTransform(false);
     }
 
+    private static final JsonReader jr = new JsonReader();
+
+
     public void setup() {
+        JsonValue levelContents = jr.parse(Gdx.files.internal("levels/0.json"));
+        int numSpeeders = levelContents.get("speeders").asInt();
+        int numHulks = levelContents.get("hulks").asInt();
+        int numBombers = levelContents.get("bombers").asInt();
+        int numCarriers = levelContents.get("carriers").asInt();
+
         for(Ship s:ships){
             s.destroy();
         }
@@ -58,17 +67,17 @@ public class Map extends Group{
         ships.add(defender);
         control(defender);
 
-        for(int i=0;i<1;i++){
+        for(int i=0;i<numSpeeders;i++){
             addShip(new Speeder());
         }
-        for(int i=0;i<1;i++){
+        for(int i=0;i<numHulks;i++){
             addShip(new Hulk());
         }
-        for(int i=0; i < 1; i++) {
+        for(int i=0; i < numBombers; i++) {
             addShip(new Bomber());
         }
-        for(int i=0; i < 30; i++) {
-            addShip(new Spawner());
+        for(int i=0; i < numCarriers; i++) {
+            addShip(new Carrier());
         }
 
         dropZone = new DropZone(getWidth()*.98f, getHeight()*.5f, 1400);
@@ -90,7 +99,9 @@ public class Map extends Group{
 
     public void addShip(Ship ship){
         ships.add(ship);
-        ship.setPosition((float)(Math.random()*getWidth()), (float)(Math.random()*getHeight()));
+        ship.setPosition(
+                (float)(Math.random()*getWidth()*.95f), // don't spawn past the exit
+                (float)(Math.random()* EnemyShip.AGGRO_RANGE * (Math.random()>.5?1:-1)+getHeight()/2)); // don't spawn so high up then won't aggro
         addActor(ship);
     }
 

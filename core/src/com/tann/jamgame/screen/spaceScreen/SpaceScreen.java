@@ -112,8 +112,7 @@ public class SpaceScreen extends Screen {
                 for (Ship s : map.ships) {
                     if (!s.affectedBy(bill.type) || s.dead) continue;
                     if (Shape.overlaps(bill.getShape(), s.getShape())) {
-                        bill.impact();
-                        s.damage(bill.getDamage());
+                        bill.impact(s.damage(bill.getDamage()));
                         break;
                     }
                 }

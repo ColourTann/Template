@@ -21,7 +21,7 @@ public class Hulk extends EnemyShip{
         float sizeMult = 1.85f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new SpikeLauncher(), 0);
-        setHp(25);
+        setHp(45);
     }
 
     @Override

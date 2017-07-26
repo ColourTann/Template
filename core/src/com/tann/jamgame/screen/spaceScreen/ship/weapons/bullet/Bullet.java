@@ -21,6 +21,7 @@ public abstract class Bullet{
     public float size;
     float drag=1, life=100, startingLife=100;
     boolean firstUpdate;
+    int damageDone;
     public void setDrag(float drag){
         this.drag=drag;
     }
@@ -31,7 +32,7 @@ public abstract class Bullet{
     }
 
     public void init(){
-        dead=false;x=0;y=0;dx=0;dy=0;size=0;drag=1;life=100;startingLife=100;type=null;firstUpdate=true;
+        dead=false;x=0;y=0;dx=0;dy=0;size=0;drag=1;life=100;startingLife=100;type=null;firstUpdate=true; damageDone=0;
         specificInit();
     }
 
@@ -75,9 +76,16 @@ public abstract class Bullet{
         return false;
     }
 
-    public void impact(){
-        dead=true;
+    public void impact(int damageDone){
+        consumeDamage(damageDone);
         impactEffect();
+    }
+
+    private void consumeDamage(int damageDone) {
+        this.damageDone+=damageDone;
+        if(damageDone>getDamage()/2){
+            dead=true;
+        }
     }
 
     public abstract void impactEffect();

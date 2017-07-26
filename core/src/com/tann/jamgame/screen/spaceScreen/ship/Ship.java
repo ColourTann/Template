@@ -55,12 +55,14 @@ public abstract class Ship extends Group implements Damageable{
     }
 
     int hp = 1, maxHp=1;
-    public void damage(int amount){
+    public int damage(int amount){
         flash();
-        hp -= amount;
+        int damageDone =Math.min(hp, amount);
+        hp -= damageDone;
         if(hp<=0){
             destroy();
         }
+        return damageDone;
     }
 
     public boolean dead;

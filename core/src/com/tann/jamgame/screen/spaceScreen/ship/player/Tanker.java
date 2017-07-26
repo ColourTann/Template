@@ -13,7 +13,7 @@ import com.tann.jamgame.util.Draw;
 public class Tanker extends PlayerShip {
 
     static TextureRegion tanker = Main.atlas.findRegion("ship/ss_brewballs1");;
-    static final float AUTO_ACCEL = .2f;
+    static final float AUTO_ACCEL =  .2f;
     public Tanker() {
         super(tanker, 0, 4, .004f);
         setPosition(500,500);

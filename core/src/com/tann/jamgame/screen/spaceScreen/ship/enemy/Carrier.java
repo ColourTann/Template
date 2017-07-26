@@ -9,7 +9,7 @@ import com.tann.jamgame.util.Maths;
 import com.tann.jamgame.util.Noise;
 import com.tann.jamgame.util.Particle;
 
-public class Spawner extends EnemyShip{
+public class Carrier extends EnemyShip{
     private static TextureRegion tr = Main.atlas.findRegion("ship/carrier");
     float dist = Ship.AGGRO_RANGE*.7f;
     float rot;
@@ -19,12 +19,12 @@ public class Spawner extends EnemyShip{
     static final float FREQ = .005f;
     static final float MAG = 250.1f;
     static final float ROT_SPD = .004f;
-    public Spawner() {
+    public Carrier() {
         super(tr, .3f, 20, .02f);
         float sizeMult = 1.9f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         seed = (int) (Math.random()*100);
-        setHp(30);
+        setHp(60);
     }
 
     @Override
