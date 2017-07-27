@@ -15,7 +15,7 @@ public abstract class Weapon {
     public boolean friend;
     Array<Upgrade> upgrades = new Array<>();
     public Weapon(int cooldown, int maxCharges){
-        this.cooldown=cooldown; this.maxCharges=maxCharges; this.charges=maxCharges;
+        this.cooldown=cooldown; this.maxCharges=maxCharges; this.charges=maxCharges-1;
     }
     public Weapon(int cooldown){
        this(cooldown, 1);

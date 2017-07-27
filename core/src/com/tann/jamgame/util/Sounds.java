@@ -14,17 +14,21 @@ public class Sounds {
 	public static AssetManager am= new AssetManager();
 
     public static String[] pew;
-    public static String[] pew_littol;
     public static String[] pow_little;
+    public static String[] explod_smol;
     public static String[] shot;
+    public static String[] reverse;
+    public static String[] boost;
 
 	public static void setup(){
 		//sfx//
 
         pew = makeSounds("pew", 5);
-        pew_littol = makeSounds("pew_smol",1);
-        pow_little = makeSounds("pow_little",1);
-        shot = makeSounds("pow_classic", 1);
+        pow_little = makeSounds("pow_little",2);
+        shot = makeSounds("shot", 5);
+        explod_smol = makeSounds("explod_smol", 1);
+        reverse = makeSounds("reverse", 1);
+        boost = makeSounds("boost", 3);
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();
