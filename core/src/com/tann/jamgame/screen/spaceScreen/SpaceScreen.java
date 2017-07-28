@@ -11,10 +11,9 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.screen.spaceScreen.map.Map;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.ShipUpgradeGroup;
-import com.tann.jamgame.screen.spaceScreen.ui.MiniMap;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
-import com.tann.jamgame.screen.spaceScreen.ui.TankerHealth;
+import com.tann.jamgame.screen.spaceScreen.ui.ShipHealth;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
 import com.tann.jamgame.util.Layoo;
 import com.tann.jamgame.util.Screen;
@@ -25,7 +24,6 @@ import com.tann.jamgame.util.TextButton;
 public class SpaceScreen extends Screen {
 
     public Map map;
-    public MiniMap miniMap;
     private static SpaceScreen self;
     public static SpaceScreen get(){
         if(self==null){
@@ -49,9 +47,6 @@ public class SpaceScreen extends Screen {
         map = new Map();
         spaceStage.addActor(map);
         specialStage = spaceStage;
-        miniMap = new MiniMap(map);
-        miniMap.setPosition(4,4);
-        addActor(miniMap);
         reset();
     }
 
@@ -197,14 +192,28 @@ public class SpaceScreen extends Screen {
         reset();
     }
 
-    TankerHealth tankerHealth;
+    ShipHealth tankerHealth;
+    ShipHealth playerHealth;
     private void reset() {
         paused=true;
         map.setup();
-        if(tankerHealth!=null) tankerHealth.remove();
-        tankerHealth = new TankerHealth(map.tanker);
-        addActor(tankerHealth);
+        setupHealth();
         spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);
         showShipUpgrade();
     }
+
+    private void setupHealth(){
+        if(tankerHealth !=null) tankerHealth.remove();
+        tankerHealth = new ShipHealth(map.tanker, "tanker", 500);
+
+        if(playerHealth !=null) playerHealth.remove();
+        playerHealth = new ShipHealth(map.defender, "player", 200);
+
+        Layoo l = new Layoo(this);
+        l.row(1);
+        l.add(1,playerHealth,1,tankerHealth,1);
+        l.row(.012f);
+        l.layoo();
+    }
+
 }
