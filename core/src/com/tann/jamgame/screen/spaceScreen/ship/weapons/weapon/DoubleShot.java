@@ -16,7 +16,7 @@ public class DoubleShot extends Weapon {
     @Override
     protected void internalFire() {
         Ship ship = getShip();
-        Sounds.playSound(Sounds.pew_littol, .14f, Particle.rand(.9f, .7f));
+        Sounds.playSound(Sounds.pow_little, .14f, Particle.rand(1, 1.2f));
         float dist = ship.getHeight()/2;
         float bXDiff = (float) (Math.cos(ship.getRotation()+Math.PI/2)*dist);
         float bYDiff = (float) (Math.sin(ship.getRotation()+Math.PI/2)*dist);

@@ -20,7 +20,7 @@ public class Blaster extends Weapon {
 
     @Override
     protected void internalFire() {
-        Sounds.playSound(Sounds.shot, .4f, Particle.rand(.9f,1.4f));
+        Sounds.playSound(Sounds.shot, .4f, 1);
         Ship ship = getShip();
         for(int i = 0; i<NUM_SHOTS+getBonus(Upgrade.UpgradeType.Shots); i++){
             Bullet b = Pools.obtain(BlasterBullet.class);

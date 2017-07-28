@@ -5,6 +5,7 @@ import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.SpikeBullet;
+import com.tann.jamgame.util.Sounds;
 
 public class Speedinator extends Weapon {
     public Speedinator() {
@@ -23,5 +24,6 @@ public class Speedinator extends Weapon {
         b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
         b.setup(ship.getNoseX(), ship.getNoseY(), 0, 0, ship.getRotation()+Math.PI, 22);
         SpaceScreen.get().addBullet(b);
+        Sounds.playSound(Sounds.boost);
     }
 }

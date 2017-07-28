@@ -1,6 +1,7 @@
 package com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon;
 
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
+import com.tann.jamgame.util.Sounds;
 
 public class Reversinator extends Weapon {
     public Reversinator() {
@@ -16,6 +17,7 @@ public class Reversinator extends Weapon {
         s.setRotation((float) (angle));
         s.dx= (float) (Math.cos(angle)*SPEED);
         s.dy= (float) (Math.sin(angle)*SPEED);
+        Sounds.playSound(Sounds.reverse);
     }
 
     @Override

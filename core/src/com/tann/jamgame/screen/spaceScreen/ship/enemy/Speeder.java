@@ -27,7 +27,7 @@ public class Speeder extends EnemyShip{
 
     @Override
     protected void onDeath() {
-        Sounds.playSound(Sounds.pow_little, .4f, 1);
+        Sounds.playSound(Sounds.explod_smol, .4f, 1);
     }
 
     @Override
