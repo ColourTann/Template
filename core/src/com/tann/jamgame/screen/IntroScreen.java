@@ -3,19 +3,12 @@ package com.tann.jamgame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.tann.jamgame.Main;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Fonts;
 import com.tann.jamgame.util.Screen;
@@ -23,7 +16,8 @@ import com.tann.jamgame.util.Screen;
 public class IntroScreen extends Screen {
 
 	final float INTRO_WIDTH = 300;
-	final float CAMERA_SCROLL_SPEED = 10f;
+	final float CAMERA_SCROLL_SPEED_SLOW = 10f;
+	final float CAMERA_SCROLL_SPEED_FAST = 100f;
 	final float CAMERA_DISTANCE = 100f;
 
 	Stage stage;
@@ -31,6 +25,7 @@ public class IntroScreen extends Screen {
 	Batch batch;
 	BitmapFont font;
 	String introText;
+	float scrollLimit = 0f; // When the camera is past this scroll limit, the scene is over.
 
 	static IntroScreen singleton = null;
 	public static IntroScreen get() {
@@ -42,12 +37,19 @@ public class IntroScreen extends Screen {
 	}
 
 	private void init(){
-		camera = new PerspectiveCamera(45, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage(new ScreenViewport(camera));
 		batch = stage.getBatch();
 		font = Fonts.font;
 
+		// Load the intro text and, based on its length, find out how far the camera has to scroll before we switch scenes.
 		introText = Gdx.files.internal("intro_text.txt").readString();
+		for(char c : introText.toCharArray()) {
+			if(c == '\n') {
+				scrollLimit -= 20.0f; // Approximated.  Maybe changes with camera distance.
+			}
+		}
+		System.out.println(scrollLimit);
 
 		// Start with the camera at the top of the font and at a 45 degree angle.  Move it down each step.
 		camera.position.set(0f, -CAMERA_DISTANCE, CAMERA_DISTANCE);
@@ -60,17 +62,24 @@ public class IntroScreen extends Screen {
 
 	@Override
 	public void postDraw(Batch batch) {
-		Fonts.fontSmall.setColor(Color.WHITE);
+		//Fonts.fontSmall.setColor(Color.YELLOW);
 		camera.update(true);
 		batch.setProjectionMatrix(camera.combined);
 		font.draw(batch, introText, -INTRO_WIDTH/2, 0, INTRO_WIDTH, Align.center, true);
-		Draw.fillRectangle(batch, 0, 0, 1, 1f);
 	}
 
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		camera.translate(0f, -1*CAMERA_SCROLL_SPEED*delta, 0f);
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			camera.translate(0f, -1 * CAMERA_SCROLL_SPEED_FAST * delta, 0f);
+		} else {
+			camera.translate(0f, -1 * CAMERA_SCROLL_SPEED_SLOW * delta, 0f);
+		}
+
+		if(camera.position.y < scrollLimit) {
+			System.out.println("TODO: Close intro screen and push main screen.");
+		}
 	}
 
 	@Override
@@ -85,6 +94,6 @@ public class IntroScreen extends Screen {
 
 	@Override
 	public void keyPress(int keycode) {
-
+		// No key release?
 	}
 }
