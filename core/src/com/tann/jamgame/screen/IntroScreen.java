@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Fonts;
 import com.tann.jamgame.util.Screen;
@@ -17,7 +20,7 @@ public class IntroScreen extends Screen {
 
 	final float INTRO_WIDTH = 300;
 	final float CAMERA_SCROLL_SPEED_SLOW = 10f;
-	final float CAMERA_SCROLL_SPEED_FAST = 100f;
+	final float CAMERA_SCROLL_SPEED_FAST = 1000f; //TODO return to 100
 	final float CAMERA_DISTANCE = 100f;
 
 	Stage stage;
@@ -78,7 +81,7 @@ public class IntroScreen extends Screen {
 		}
 
 		if(camera.position.y < scrollLimit) {
-			System.out.println("TODO: Close intro screen and push main screen.");
+			Main.self.setScreen(SpaceScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, .5f);
 		}
 	}
 
