@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.Blaster;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.Weapon;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.ShipUpgradeGroup;
@@ -33,8 +34,6 @@ public class Defender extends PlayerShip {
     public float getBaseZoom() {
         return 1.6f;
     }
-
-
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -68,6 +67,12 @@ public class Defender extends PlayerShip {
                 weapons[u.slot].addUpgrade(u);
             }
         }
+    }
+
+    @Override
+    protected void onDeath() {
+        super.onDeath();
+        SpaceScreen.get().defeat();
     }
 
     private void clearUpgrades() {

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.screen.spaceScreen.map.Map;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
@@ -15,10 +16,9 @@ import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.spaceScreen.ui.ShipHealth;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
-import com.tann.jamgame.util.Layoo;
-import com.tann.jamgame.util.Screen;
-import com.tann.jamgame.util.Shape;
-import com.tann.jamgame.util.TextButton;
+import com.tann.jamgame.util.*;
+
+import javax.xml.soap.Text;
 
 
 public class SpaceScreen extends Screen {
@@ -160,8 +160,10 @@ public class SpaceScreen extends Screen {
     @Override
     public void keyPress(int keycode) {
         switch(keycode){
-            case Input.Keys.TAB:
-                map.swapShips();
+            case Input.Keys.SPACE:
+                if(finished) {
+                    reset();
+                }
                 break;
         }
         if(map.defender !=null){
@@ -187,15 +189,53 @@ public class SpaceScreen extends Screen {
         l.layoo();
     }
 
+    boolean finished;
+    boolean victory;
+
+    public void defeat(){
+        finished=true;
+        paused=true;
+        showDefeatDialog();
+    }
+
+    private static final int dialogWidth = 400;
+    TextBox endBox;
+
+    private void showDefeatDialog() {
+        endBox = new TextBox("Mission failed\nPress space to restart", Fonts.font, dialogWidth, Align.center);
+        addActor(endBox);
+        endBox.setBackgroundColour(Colours.grey);
+        endBox.setPosition(getWidth()/2, getHeight()/2, Align.center);
+    }
+
+    private void showVictoryDialog() {
+        System.out.println("showing victory");
+        endBox = new TextBox("Mission success\nPress space to continue", Fonts.font, dialogWidth, Align.center);
+        addActor(endBox);
+        endBox.setBackgroundColour(Colours.grey);
+        endBox.setPosition(getWidth()/2, getHeight()/2, Align.center);
+    }
+
+
+
     public void victory() {
+        finished=true;
+        paused=true;
+        victory=true;
+        Map.nextLevel();
         sug.unlockNext();
-        reset();
+        showVictoryDialog();
     }
 
     ShipHealth tankerHealth;
     ShipHealth playerHealth;
     private void reset() {
+        finished=false;
         paused=true;
+        victory=false;
+        if(endBox!=null){
+            endBox.remove();
+        }
         map.setup();
         setupHealth();
         spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);

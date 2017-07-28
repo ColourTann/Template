@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.Blaster;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.BroadSide;
@@ -61,5 +62,11 @@ public class Tanker extends PlayerShip {
 
     public float getBaseZoom() {
         return 1.2f;
+    }
+
+    @Override
+    protected void onDeath() {
+        super.onDeath();
+        SpaceScreen.get().defeat();
     }
 }

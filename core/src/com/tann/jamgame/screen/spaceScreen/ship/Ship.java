@@ -60,23 +60,25 @@ public abstract class Ship extends Group implements Damageable{
         int damageDone =Math.min(hp, amount);
         hp -= damageDone;
         if(hp<=0){
-            destroy();
+            destroy(false);
         }
         return damageDone;
     }
 
     public boolean dead;
-    public void destroy(){
+    public void destroy(boolean admin){
         dead=true;
-        for(int i=0;i<2;i++) {
-            ExplosionParticle ep = Pools.obtain(ExplosionParticle.class);
-            ep.setup();
-            ep.x = getX();
-            ep.y = getY();
-            SpaceScreen.get().addParticle(ep);
-        }
-        onDeath(); 
         remove();
+        if(!admin) {
+            for (int i = 0; i < 2; i++) {
+                ExplosionParticle ep = Pools.obtain(ExplosionParticle.class);
+                ep.setup();
+                ep.x = getX();
+                ep.y = getY();
+                SpaceScreen.get().addParticle(ep);
+            }
+            onDeath();
+        }
     }
 
     protected void onDeath() {

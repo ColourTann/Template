@@ -49,14 +49,13 @@ public class Map extends Group{
 
     public void setup() {
         JsonValue levelContents = jr.parse(Gdx.files.internal("levels/"+level+".json"));
-        level++;
         int numSpeeders = levelContents.get("speeders").asInt();
         int numHulks = levelContents.get("hulks").asInt();
         int numBombers = levelContents.get("bombers").asInt();
         int numCarriers = levelContents.get("carriers").asInt();
 
         for(Ship s:ships){
-            s.destroy();
+            s.destroy(true);
         }
         formations.clear();
         tanker = new Tanker();
@@ -97,6 +96,10 @@ public class Map extends Group{
                 addActor(s);
             }
         }
+    }
+
+    public static void nextLevel(){
+        level++;
     }
 
     public void addShip(Ship ship){

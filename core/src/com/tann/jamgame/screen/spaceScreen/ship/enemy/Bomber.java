@@ -75,7 +75,7 @@ public class Bomber extends EnemyShip {
 			SpaceScreen.get().addBullet(b);
 		}
 		// Destroy this.
-		this.destroy();
+		this.destroy(false);
 	}
 
     @Override
