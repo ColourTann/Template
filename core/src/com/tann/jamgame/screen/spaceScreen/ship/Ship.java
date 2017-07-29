@@ -1,11 +1,12 @@
 package com.tann.jamgame.screen.spaceScreen.ship;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.Damageable;
@@ -54,7 +55,8 @@ public abstract class Ship extends Group implements Damageable{
         this.turnSpeed=turnSpeed;
     }
 
-    int hp = 1, maxHp=1;
+    protected int hp = 1;
+    protected int maxHp=1;
     public int damage(int amount){
         flash();
         int damageDone =Math.min(hp, amount);
@@ -73,6 +75,7 @@ public abstract class Ship extends Group implements Damageable{
             for (int i = 0; i < 2; i++) {
                 ExplosionParticle ep = Pools.obtain(ExplosionParticle.class);
                 ep.setup();
+                ep.radius=40 + getWidth()/2 * ((this instanceof Tanker)?2:1);
                 ep.x = getX();
                 ep.y = getY();
                 SpaceScreen.get().addParticle(ep);
@@ -86,54 +89,75 @@ public abstract class Ship extends Group implements Damageable{
 
     @Override
     public void act(float delta) {
-        super.act(delta);
-//        float mult = weapons[0].
-        flash-=.07f;
-        flash = Math.max(0, flash);
-        dx *= DRAG;
-        dy *= DRAG;
-        if(getSpeed()>maxSpeed){
-            dx *= maxSpeed/getSpeed();
-            dy *= maxSpeed/getSpeed();
-        }
-        setPosition(getX()+dx,getY()+dy);
-        float x = getX();
-        float y = getY();
-        x = Math.max(0,Math.min(SpaceScreen.get().map.getWidth(), x));
-        y = Math.max(0,Math.min(SpaceScreen.get().map.getHeight(), y));
-        setPosition(x,y);
-        for(Weapon w:weapons){
-            if(w!=null)w.update();
-        }
-        internalAct(delta);
-        thrustAmount *= THRUST_DRAG;
 
-        if(makeParticle){
-            float maxParticles =1;
-            for(int i=0;i<maxParticles;i++) {
-                EngineParticle ep = Pools.obtain(EngineParticle.class);
-                ep.setup();
-                ep.x = getButtX() + dx * 1.5f;
-                ep.y = getButtY() + dy * 1.5f;
-                float rand = 0.9f;
-                float speedRotation = (float) Math.atan2(dy, dx);
-                float angleDiff = Math.abs(Maths.angleDiff(getRotation(), speedRotation));
-                float initialMult = 0+ angleDiff*3;
+        speedFrames =Math.max(0, speedFrames -1);
+        int mult = 1;
+        if(speedFrames >0){
+            mult=2;
+        }
 
-                float faceX = (float) Math.cos(getRotation());
-                float faceY = (float) Math.sin(getRotation());
-                ep.dx = -faceX * initialMult + Particle.rand(-rand, rand);
-                ep.dy = -faceY * initialMult + Particle.rand(-rand, rand);
-                ep.x -= dx*i/maxParticles;
-                ep.y -= dy*i/maxParticles;
-                ep.col = (this instanceof PlayerShip)? Colours.blue:Colours.red;
-                SpaceScreen.get().addParticle(ep);
+        for(int xx=0;xx<mult;xx++) {
+            super.act(delta);
+            if(control) {
+                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                    rotateBy(-turnSpeed);
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                    rotateBy(+turnSpeed);
+                }
+
+                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                    accelerate(accel);
+                    makeParticle = true;
+                }
             }
+//        float mult = weapons[0].
+            flash -= .07f;
+            flash = Math.max(0, flash);
+            dx *= DRAG;
+            dy *= DRAG;
+            if (getSpeed() > maxSpeed) {
+                dx *= maxSpeed / getSpeed();
+                dy *= maxSpeed / getSpeed();
+            }
+            setPosition(getX() + dx, getY() + dy);
+            float x = getX();
+            float y = getY();
+            x = Math.max(0, Math.min(SpaceScreen.get().map.getWidth(), x));
+            y = Math.max(0, Math.min(SpaceScreen.get().map.getHeight(), y));
+            setPosition(x, y);
+            for (Weapon w : weapons) {
+                if (w != null) w.update();
+            }
+            internalAct(delta);
+            thrustAmount *= THRUST_DRAG;
+
+            if (makeParticle) {
+                float maxParticles = 1;
+                for (int i = 0; i < maxParticles; i++) {
+                    EngineParticle ep = Pools.obtain(EngineParticle.class);
+                    ep.setup();
+                    ep.x = getButtX() + dx * 1.5f;
+                    ep.y = getButtY() + dy * 1.5f;
+                    float rand = 0.9f;
+                    float speedRotation = (float) Math.atan2(dy, dx);
+                    float angleDiff = Math.abs(Maths.angleDiff(getRotation(), speedRotation));
+                    float initialMult = 0 + angleDiff * 3;
+
+                    float faceX = (float) Math.cos(getRotation());
+                    float faceY = (float) Math.sin(getRotation());
+                    ep.dx = -faceX * initialMult + Particle.rand(-rand, rand);
+                    ep.dy = -faceY * initialMult + Particle.rand(-rand, rand);
+                    ep.x -= dx * i / maxParticles;
+                    ep.y -= dy * i / maxParticles;
+                    ep.col = (this instanceof PlayerShip) ? Colours.blue : Colours.red;
+                    SpaceScreen.get().addParticle(ep);
+                }
+            }
+            makeParticle = false;
         }
-        makeParticle = false;
 
     }
-
 
     protected abstract void internalAct(float delta);
 
@@ -259,5 +283,17 @@ public abstract class Ship extends Group implements Damageable{
         batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
         Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
         super.draw(batch, parentAlpha);
+    }
+
+
+    int speedFrames;
+    int maxSpeedFrames;
+    public void speed(int frames) {
+        this.speedFrames =frames;
+        this.maxSpeedFrames =frames;
+    }
+
+    public float getWarpRatio(){
+        return speedFrames ==0?0:((float)(speedFrames)/ maxSpeedFrames);
     }
 }

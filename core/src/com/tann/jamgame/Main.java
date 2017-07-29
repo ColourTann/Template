@@ -89,8 +89,8 @@ public class Main extends ApplicationAdapter {
         jamTitle.setRunnable(()->setScreen(gameTitle, TransitionType.LEFT, Interpolation.pow2Out, .4f));
         gameTitle.setRunnable(()->setScreen(IntroScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .4f));
 
-        setScreen(jamTitle);
-//        setScreen(SpaceScreen.get());
+//        setScreen(jamTitle);
+        setScreen(SpaceScreen.get());
 //        setScreen(IntroScreen.get());
     }
 

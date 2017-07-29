@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.Blaster;
+import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.MolotovLauncher;
+import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.TimeWarp;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.Weapon;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.ShipUpgradeGroup;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;

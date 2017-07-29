@@ -19,21 +19,7 @@ public abstract class PlayerShip extends Ship {
 
     @Override
     public void act(float delta) {
-        if(control) {
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                rotateBy(-turnSpeed);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                rotateBy(+turnSpeed);
-            }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                accelerate(accel);
-                makeParticle = true;
-            }
-
-
-        }
         super.act(delta);
     }
 
@@ -81,6 +67,9 @@ public abstract class PlayerShip extends Ship {
                 break;
             case Input.Keys.X:
                 fireWeapon(1);
+                break;
+            case Input.Keys.C:
+                fireWeapon(2);
                 break;
         }
     }

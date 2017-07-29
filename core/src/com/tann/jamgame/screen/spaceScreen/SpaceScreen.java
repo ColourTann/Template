@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -122,7 +123,10 @@ public class SpaceScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-
+        if(map.defender!=null && map.defender.getWarpRatio()>0){
+            batch.setColor(Colours.withAlpha(Colours.blue, .2f));
+            Draw.fillRectangle(batch, 0, 0, SpaceScreen.get().getWidth(), SpaceScreen.get().getHeight()*map.defender.getWarpRatio());
+        }
     }
 
     @Override

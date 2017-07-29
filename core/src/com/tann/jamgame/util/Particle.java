@@ -21,7 +21,7 @@ public abstract class Particle {
 		tickLife(delta);
 		tick(delta);
 	}
-	protected void setupLife(float life){
+	public void setupLife(float life){
 		startLife=life;
 		this.life=life;
 	}

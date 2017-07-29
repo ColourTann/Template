@@ -14,8 +14,8 @@ public abstract class Bullet{
     }
     public BulletType type;
     public boolean dead;
-    float x;
-    float y;
+    public float x;
+    public float y;
     float dx;
     float dy;
     public float size;
@@ -67,6 +67,7 @@ public abstract class Bullet{
             this.life--;
             if(life<=0){
                 dead=true;
+                decayEffect();
                 Pools.free(this);
             }
             internalUpdate();
@@ -76,12 +77,16 @@ public abstract class Bullet{
         return false;
     }
 
+    protected void decayEffect() {
+    }
+
     public void impact(int damageDone){
         consumeDamage(damageDone);
         impactEffect();
     }
 
     private void consumeDamage(int damageDone) {
+        if(damageDone<=0)return;
         this.damageDone+=damageDone;
         if(damageDone>getDamage()/2){
             dead=true;

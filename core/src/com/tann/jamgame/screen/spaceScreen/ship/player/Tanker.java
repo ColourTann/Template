@@ -21,7 +21,7 @@ public class Tanker extends PlayerShip {
         super(tanker, 0, 4, .004f);
         setPosition(500,500);
         setSize(370, 70);
-        setHp(700);
+        setHp(500);
     }
 
     @Override
@@ -37,8 +37,15 @@ public class Tanker extends PlayerShip {
         super.draw(batch, parentAlpha);
     }
 
+    float ticker;
+
     @Override
     protected void internalAct(float delta) {
+        ticker += delta;
+        if(ticker>=.25f){
+            hp=Math.min(maxHp, hp+1);
+            ticker=0;
+        }
         float dxChange = (float)Math.cos(getRotation());
         float dyChange = (float)Math.sin(getRotation());
         dx += AUTO_ACCEL * dxChange;

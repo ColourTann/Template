@@ -27,7 +27,9 @@ public class Sounds {
     public static String pow_huge;
     public static String explod_bomber;
     public static String sad_long_pow;
-
+    public static String molotov_launch;
+    public static String speed;
+    public static String[] molotov_explode;
     public static void setup(){
 		//sfx//
 
@@ -40,9 +42,12 @@ public class Sounds {
         pew_smol = makeSounds("pew_smol", 1);
         explodeMedium=makeSounds("explod_medium", 4);
         explodePlayer=makeSound("sfx/explod_player.wav", Sound.class);
+        speed=makeSound("sfx/speed.wav", Sound.class);
         pow_huge = makeSound("sfx/pow_huge.wav", Sound.class);
         explod_bomber = makeSound("sfx/explod_bomber.wav", Sound.class);
         sad_long_pow = makeSound("sfx/sad_long_pow.wav", Sound.class);
+        molotov_launch = makeSound("sfx/molotov_launch.wav", Sound.class);
+        molotov_explode = makeSounds("molotov_explode", 3);
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();
@@ -161,7 +166,7 @@ public class Sounds {
             dist = Math.min(maxDist, dist);
             float volumeMult = (maxDist - dist) / maxDist;
             volume *= volumeMult;
-            float maxPan = 400;
+            float maxPan = 1400;
             if(dx <-maxPan) dx = -maxPan;
             if(dx >maxPan) dx = maxPan;
             pan = dx/maxPan;
