@@ -40,15 +40,6 @@ public class Defender extends PlayerShip {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.white);
-        Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
-//        drawThrustAt(batch, getButtX(), getButtY());
-//        batch.draw(thrust, getX()-getWidth()/2, getY()-getHeight()/2, tr.getRegionWidth(), tr.getRegionHeight()/2, thrust.getRegionWidth(), thrust.getRegionHeight(), 10, 10, Draw.rad2deg(getRotation()));
-//        Draw.drawCenteredRotatedScaled(batch, thruster[(int)(Main.ticks*10)%thruster.length], getButtX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
-        super.draw(batch, parentAlpha);
-    }
-    @Override
     public void drawMinimap(Batch batch, float x, float y) {
         batch.setColor(Colours.withAlpha(Colours.light, batch.getColor().a));
         float size = 4;

@@ -51,9 +51,11 @@ public abstract class Bullet{
             this.dx *= drag;
             this.dy *= drag;
             steps=1;
+
             if(Math.abs(this.dx)>size||Math.abs(this.dy)>size){
                 steps = (int) (Math.max(Math.abs(this.dx), Math.abs(this.dy))/size);
             }
+            if(steps > 10) steps = 10;
             if(steps<=0) steps=1;
             stepX = dx/(float)steps;
             stepY = dy/(float)steps;
@@ -106,4 +108,7 @@ public abstract class Bullet{
     public abstract void internalUpdate();
     public abstract void draw(Batch batch);
     public abstract int getDamage();
+    public boolean armed(){
+        return true;
+    }
 }

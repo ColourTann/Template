@@ -22,7 +22,7 @@ public class Upgrade {
             "Launch a rocket backwards, propelling yourself fowards\ncooldown: 1.5 seconds\ncharges: 2"
     );
 
-    public static final Upgrade p2Speed = new Upgrade(
+    public static final Upgrade p2Range = new Upgrade(
             0, UpgradeType.BulletSpeed, .25f,
             Main.atlas.findRegion("upgrade/doubleshot"),
             "Extra Range",
@@ -36,29 +36,29 @@ public class Upgrade {
             "+3 max blaster shots"
     );
 
-    public static final Upgrade p3Speed = new Upgrade(
+    public static final Upgrade p3Bullets = new Upgrade(
             0, UpgradeType.Bullets, (int)(Blaster.NUM_SHOTS*.4f),
             Main.atlas.findRegion("upgrade/doubleshot"),
             "More bullets",
             "+40% bullets per blaster shot"
     );
 
-    public static final Upgrade p3Shots = new Upgrade(
+    public static final Upgrade p3Turret = new Upgrade(
             0, UpgradeType.Tanker_Shoots, 5,
             Main.atlas.findRegion("upgrade/laser-blast"),
             "Turret",
             "Tanker shoots when you do!"
     );
 
-    public static final Upgrade p4Speed = new Upgrade(
-            0, UpgradeType.BulletSpeed, .2f,
+    public static final Upgrade p4Fire = new Upgrade(
+            1, UpgradeType.Fire, .2f,
             Main.atlas.findRegion("upgrade/doubleshot"),
-            "Turret",
-            "+20% shotgun distance"
+            "Fire",
+            "Set yourself on fire when boosting"
     );
 
-    public static final Upgrade p4Shots = new Upgrade(
-            0, UpgradeType.Bullets, 5,
+    public static final Upgrade p4Rockets = new Upgrade(
+            1, UpgradeType.Rockets, 5,
             Main.atlas.findRegion("upgrade/laser-blast"),
             "Turret",
             "+5 bullets per shotgun shot"
@@ -78,7 +78,7 @@ public class Upgrade {
             "+5 bullets per shotgun shot"
     );
 
-    public enum UpgradeType{BulletSpeed, Bullets, Max_Shots, Tanker_Shoots};
+    public enum UpgradeType{BulletSpeed, Bullets, Max_Shots, Tanker_Shoots, Rockets, Fire};
 
     protected TextureRegion tr;
     protected String text;

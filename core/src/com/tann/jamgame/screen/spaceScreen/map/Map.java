@@ -18,6 +18,7 @@ import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Tanker;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.Formation;
+import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
 import com.tann.jamgame.util.*;
 
@@ -31,7 +32,7 @@ public class Map extends Group{
     public DropZone dropZone;
     static final int texSize = 2048;
     public static final float HEIGHT = 4000;
-    public static int level = 0;
+    public static int level = 1; //todo not start level 1
     public Map() {
         setSize(13000,HEIGHT);
         Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA4444);
@@ -189,4 +190,13 @@ public class Map extends Group{
     }
 
 
+    public void flamingShip(Ship ship) {
+        for(Ship s:ships){
+            if(ship!=s && s.affectedBy(Bullet.BulletType.Friendly)){
+                if(Shape.overlaps(s.getShape(), ship.getShape())){
+                    s.damage(2);
+                }
+            }
+        }
+    }
 }

@@ -2,9 +2,11 @@ package com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
+import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.RocketBullet;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;
 
 public abstract class Weapon {
@@ -44,6 +46,20 @@ public abstract class Weapon {
         if(charges==0)return false;
         charges--;
         internalFire();
+        Ship s = getShip();
+        if(getBonus(Upgrade.UpgradeType.Fire)!=0){
+            s.ignite(50);
+        }
+        if(getBonus(Upgrade.UpgradeType.Rockets)!=0){
+            for(int i=0;i<2;i++){
+                for(int j=0;j<6;j++) {
+                    RocketBullet rb = Pools.obtain(RocketBullet.class);
+                    rb.init();
+                    rb.setup(s.getX(), s.getY(), 0, 0, s.getRotation() + Math.PI/2 * (i * 2 - 1), 3);
+                    SpaceScreen.get().addBullet(rb);
+                }
+            }
+        }
         return true;
     }
 

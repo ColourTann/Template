@@ -13,6 +13,7 @@ import com.tann.jamgame.screen.spaceScreen.Damageable;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.particle.EngineParticle;
 import com.tann.jamgame.screen.spaceScreen.particle.ExplosionParticle;
+import com.tann.jamgame.screen.spaceScreen.particle.FireParticle;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Tanker;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.Weapon;
@@ -97,6 +98,7 @@ public abstract class Ship extends Group implements Damageable{
         }
 
         for(int xx=0;xx<mult;xx++) {
+
             super.act(delta);
             if(control) {
                 if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -155,6 +157,18 @@ public abstract class Ship extends Group implements Damageable{
                 }
             }
             makeParticle = false;
+            if(fireFrames>0){
+                FireParticle fp = Pools.obtain(FireParticle.class);
+                fp.setup();
+                fp.x=getX();
+                fp.y=getY();
+                float rand = 2.5f;
+                fp.dx =Particle.rand(rand,-rand);
+                fp.dy =Particle.rand(rand,-rand);
+                SpaceScreen.get().addParticle(fp);
+                SpaceScreen.get().map.flamingShip(this);
+            }
+            fireFrames = Math.max(0, fireFrames-1);
         }
 
     }
@@ -281,6 +295,11 @@ public abstract class Ship extends Group implements Damageable{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
+        if(fireFrames>0){
+            float ratio = fireFrames/(float)maxFireFrames;
+            ratio = (float) Math.pow(1-ratio, 3);
+            batch.setColor(Colours.shiftedTowards(Colours.red, Colours.white, ratio));
+        }
         Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
         super.draw(batch, parentAlpha);
     }
@@ -295,5 +314,11 @@ public abstract class Ship extends Group implements Damageable{
 
     public float getWarpRatio(){
         return speedFrames ==0?0:((float)(speedFrames)/ maxSpeedFrames);
+    }
+    int maxFireFrames;
+    int fireFrames;
+    public void ignite(int i) {
+        maxFireFrames=i;
+        fireFrames = i;
     }
 }

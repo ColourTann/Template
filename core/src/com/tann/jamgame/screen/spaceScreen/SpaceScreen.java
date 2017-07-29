@@ -84,6 +84,7 @@ public class SpaceScreen extends Screen {
             while(!done) {
                 done = bill.update();
                 for (Ship s : map.ships) {
+                    if(!bill.armed()) break;
                     if (!s.affectedBy(bill.type) || s.dead) continue;
                     if (Shape.overlaps(bill.getShape(), s.getShape())) {
                         bill.impact(s.damage(bill.getDamage()));

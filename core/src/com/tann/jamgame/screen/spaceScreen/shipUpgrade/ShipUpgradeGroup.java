@@ -20,10 +20,11 @@ public class ShipUpgradeGroup extends Group{
         setSize(600,400);
         shipScale = getWidth()/tr.getRegionWidth()*shipProporation;
         addUpgradePanel(.4f, .1f, .2f, .15f, Upgrade.p1Reversinator, Upgrade.p1Speedinator);
-        addUpgradePanel(.1f, .5f, .2f, .8f, Upgrade.p2Shots, Upgrade.p2Speed);
-        addUpgradePanel(.4f, .9f, .5f, .85f, Upgrade.p3Shots, Upgrade.p3Speed);
-        addUpgradePanel(.8f, .5f, .8f, .2f, Upgrade.p4Shots, Upgrade.p4Speed);
+        addUpgradePanel(.1f, .5f, .2f, .8f, Upgrade.p2Shots, Upgrade.p2Range);
+        addUpgradePanel(.4f, .9f, .5f, .85f, Upgrade.p3Turret, Upgrade.p3Bullets);
+        addUpgradePanel(.8f, .5f, .8f, .2f, Upgrade.p4Rockets, Upgrade.p4Fire);
         addUpgradePanel(.5f, .5f, .8f, .7f, Upgrade.p5Shots, Upgrade.p5Speed);
+        for(int i=0;i<5;i++)unlockNext(); //todo not this
     }
 
     private void addUpgradePanel(float shipX, float shipY, float boxX, float boxY, Upgrade one, Upgrade two){
