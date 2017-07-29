@@ -1,5 +1,11 @@
 {
-	"speeders" : 30,
+	"width" : 10000,
+	"words" : [
+		"Arrow keys: move",
+		"Z: shoot",
+		"Defend the tanker"
+	],
+	"speeders" : 15,
 	"hulks" : 1,
 	"bombers" : 0,
 	"carriers" : 0

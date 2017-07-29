@@ -40,11 +40,11 @@ public class WeaponIcon extends Group{
         batch.setColor(Colours.blue);
         Draw.fillActor(batch,this);
 
-        for(int i=0;i<w.maxCharges;i++){
+        for(int i=0;i<w.getMaxCharges();i++){
             batch.setColor(w.charges>i?Colours.light:Colours.grey);
             int height = 2;
-            Draw.fillRectangle(batch, getX(), getY()+(i+1)*getHeight()/(w.maxCharges)-height, getWidth()*.1f, height);
-            Draw.fillRectangle(batch, getX()+getWidth()*.9f, getY()+(i+1)*getHeight()/(w.maxCharges)-height, getWidth()*.1f, height);
+            Draw.fillRectangle(batch, getX(), getY()+(i+1)*getHeight()/(w.getMaxCharges())-height, getWidth()*.1f, height);
+            Draw.fillRectangle(batch, getX()+getWidth()*.9f, getY()+(i+1)*getHeight()/(w.getMaxCharges())-height, getWidth()*.1f, height);
         }
         super.draw(batch, parentAlpha);
         if(w.cooldown>20) {

@@ -11,10 +11,7 @@ import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.BoringBullet;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
-import com.tann.jamgame.util.Colours;
-import com.tann.jamgame.util.Draw;
-import com.tann.jamgame.util.Particle;
-import com.tann.jamgame.util.Shape;
+import com.tann.jamgame.util.*;
 
 public class Bomber extends EnemyShip {
 	static TextureRegion bomber = Main.atlas.findRegion("ship/bomber");
@@ -22,7 +19,7 @@ public class Bomber extends EnemyShip {
 	float animationTimeAccumulator = 0f;
 
 	// Tune-ables
-	public int numBulletsOnExplosion = 150;
+	public int numBulletsOnExplosion = 220;
     private static final float BASE_ACCEL = .01f;
     private static final float ACCEL_MULT = .6f;
     private static final int MAX_CHARGE = 310;
@@ -74,8 +71,9 @@ public class Bomber extends EnemyShip {
 			b.setLife(32);
 			SpaceScreen.get().addBullet(b);
 		}
+		Sounds.playSound(Sounds.explod_bomber, .7f, 1, Maths.v.set(getX(), getY()));
 		// Destroy this.
-		this.destroy(false);
+		this.destroy(true);
 	}
 
     @Override
@@ -87,6 +85,12 @@ public class Bomber extends EnemyShip {
             Draw.drawLine(batch, getX(), getY(), tanker.getX(), tanker.getY(), 5-ratio*4);
         }
         super.draw(batch, parentAlpha);
+    }
+
+    @Override
+    protected void onDeath() {
+        super.onDeath();
+        Sounds.playSound(Sounds.pew, Maths.v.set(getX(), getY()));
     }
 
     @Override

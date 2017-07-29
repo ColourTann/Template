@@ -11,6 +11,8 @@ import com.tann.jamgame.screen.spaceScreen.shipUpgrade.ShipUpgradeGroup;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
+import com.tann.jamgame.util.Maths;
+import com.tann.jamgame.util.Sounds;
 
 public class Defender extends PlayerShip {
 
@@ -67,11 +69,17 @@ public class Defender extends PlayerShip {
                 weapons[u.slot].addUpgrade(u);
             }
         }
+        for(int i=0;i<weapons.length;i++){
+            if(weapons[i]!=null){
+                weapons[i].reset();
+            }
+        }
     }
 
     @Override
     protected void onDeath() {
         super.onDeath();
+        Sounds.playSound(Sounds.explodePlayer, Maths.v.set(getX(), getY()));
         SpaceScreen.get().defeat();
     }
 

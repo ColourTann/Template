@@ -15,7 +15,7 @@ public class Fonts {
 	public static void setup(){
         fontSmall = make("gothicsmall");
         font = make("gothicsmall");
-	    fontBig = make("gothic");
+	    fontBig = make("gothic_32");
 	}
 
 	private static BitmapFont make(String name){

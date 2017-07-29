@@ -25,7 +25,7 @@ public abstract class Ship extends Group implements Damageable{
 
     public float dx, dy;
 
-    protected Weapon[] weapons = new Weapon[3];
+    public Weapon[] weapons = new Weapon[3];
     protected TextureRegion tr;
     static final float DRAG = .95f;
     static final float THRUST_DRAG = .9f;
@@ -87,6 +87,7 @@ public abstract class Ship extends Group implements Damageable{
     @Override
     public void act(float delta) {
         super.act(delta);
+//        float mult = weapons[0].
         flash-=.07f;
         flash = Math.max(0, flash);
         dx *= DRAG;
@@ -245,11 +246,11 @@ public abstract class Ship extends Group implements Damageable{
     }
 
 
-    protected void fireWeapon(int index){
-        if(index>=weapons.length) return;
+    protected boolean fireWeapon(int index){
+        if(index>=weapons.length) return false;
         Weapon w = weapons[index];
-        if(w==null) return;
-        w.fire();
+        if(w==null) return false;
+        return w.fire();
     }
 
 

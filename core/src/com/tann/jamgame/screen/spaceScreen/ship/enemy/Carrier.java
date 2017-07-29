@@ -8,6 +8,7 @@ import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.util.Maths;
 import com.tann.jamgame.util.Noise;
 import com.tann.jamgame.util.Particle;
+import com.tann.jamgame.util.Sounds;
 
 public class Carrier extends EnemyShip{
     private static TextureRegion tr = Main.atlas.findRegion("ship/carrier");
@@ -54,6 +55,12 @@ public class Carrier extends EnemyShip{
         Speeder s = new Speeder();
         SpaceScreen.get().map.addShip(s);
         s.setPosition(getX(), getY());
+    }
+
+    @Override
+    protected void onDeath() {
+        super.onDeath();
+        Sounds.playSound(Sounds.pew, Maths.v.set(getX(), getY()));
     }
 
     @Override

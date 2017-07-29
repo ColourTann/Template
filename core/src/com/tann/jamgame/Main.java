@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -82,8 +83,15 @@ public class Main extends ApplicationAdapter {
                 return true;
             }
         });
-        //setScreen(SpaceScreen.get());
-        setScreen(IntroScreen.get());
+
+        TitleScreen jamTitle = new TitleScreen(new Texture(Gdx.files.internal("singleImages/jamlogo.png")));
+        TitleScreen gameTitle = new TitleScreen(new Texture(Gdx.files.internal("singleImages/blasterlogo.png")));
+        jamTitle.setRunnable(()->setScreen(gameTitle, TransitionType.LEFT, Interpolation.pow2Out, .4f));
+        gameTitle.setRunnable(()->setScreen(IntroScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .4f));
+
+        setScreen(jamTitle);
+//        setScreen(SpaceScreen.get());
+//        setScreen(IntroScreen.get());
     }
 
     private MainState state = MainState.Normal;
@@ -154,8 +162,6 @@ public class Main extends ApplicationAdapter {
 
         update(Gdx.graphics.getDeltaTime());
         logTime("update");
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
         logTime("draw");

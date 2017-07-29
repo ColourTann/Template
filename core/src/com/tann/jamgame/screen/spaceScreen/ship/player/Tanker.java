@@ -10,6 +10,8 @@ import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.Blaster;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.BroadSide;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
+import com.tann.jamgame.util.Maths;
+import com.tann.jamgame.util.Sounds;
 
 public class Tanker extends PlayerShip {
 
@@ -68,5 +70,7 @@ public class Tanker extends PlayerShip {
     protected void onDeath() {
         super.onDeath();
         SpaceScreen.get().defeat();
+        Sounds.playSound(Sounds.sad_long_pow, Maths.v.set(getX(), getY()));
     }
+
 }

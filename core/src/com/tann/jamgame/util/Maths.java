@@ -1,6 +1,9 @@
 package com.tann.jamgame.util;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Maths {
+    public static Vector2 v = new Vector2();
     public static float distance(float x1, float y1, float x2, float y2){
         float xDiff = x1-x2;
         float yDiff = y1-y2;

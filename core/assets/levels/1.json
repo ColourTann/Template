@@ -1,6 +1,11 @@
 {
-	"speeders" : 20,
-	"hulks" : 4,
-	"bombers" : 1,
+	"width" : 20000,
+	"words" : [
+		"X: movement ability",
+		"Z (Blaster) can hold 5 shots at a time"
+	],
+	"speeders" : 35,
+	"hulks" : 6,
+	"bombers" : 2,
 	"carriers" : 0
 }

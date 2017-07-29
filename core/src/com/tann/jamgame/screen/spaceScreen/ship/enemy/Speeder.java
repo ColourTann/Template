@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.DoubleShot;
+import com.tann.jamgame.util.Maths;
 import com.tann.jamgame.util.Sounds;
 
 public class Speeder extends EnemyShip{
@@ -11,7 +12,7 @@ public class Speeder extends EnemyShip{
     static TextureRegion speeder = Main.atlas.findRegion("ship/enemyFighter");
 
     public Speeder() {
-        super(speeder, 0.65f, 60, .04f);
+        super(speeder, 0.85f, 60, .05f);
         float sizeMult = 1.2f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new DoubleShot(),0);
@@ -27,7 +28,7 @@ public class Speeder extends EnemyShip{
 
     @Override
     protected void onDeath() {
-        Sounds.playSound(Sounds.explod_smol, .4f, 1);
+        Sounds.playSound(Sounds.explod_smol, .4f, 1, Maths.v.set(getX(), getY()));
     }
 
     @Override

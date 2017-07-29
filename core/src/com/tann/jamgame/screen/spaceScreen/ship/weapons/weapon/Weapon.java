@@ -3,19 +3,22 @@ package com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;
 
 public abstract class Weapon {
     
-    public final int cooldown, maxCharges;
+    public final int cooldown;
+    private final int base_max_charges;
     public int charges;
     int reload;
     Ship ship;
     public boolean friend;
     Array<Upgrade> upgrades = new Array<>();
     public Weapon(int cooldown, int maxCharges){
-        this.cooldown=cooldown; this.maxCharges=maxCharges; this.charges=maxCharges-1;
+        this.cooldown=cooldown; this.base_max_charges = maxCharges;
+        reset();
     }
     public Weapon(int cooldown){
        this(cooldown, 1);
@@ -26,21 +29,22 @@ public abstract class Weapon {
     }
 
     public void update(){
-        if(reload>0 && charges<maxCharges){
+        if(reload>0 && charges< getMaxCharges()){
             reload--;
         }
         if(reload==0){
-            if(charges<maxCharges){
+            if(charges< getMaxCharges()){
                 charges++;
                 reload=cooldown;
             }
         }
     }
     
-    public void fire(){
-        if(charges==0)return;
+    public boolean fire(){
+        if(charges==0)return false;
         charges--;
         internalFire();
+        return true;
     }
 
     protected abstract void internalFire();
@@ -58,7 +62,7 @@ public abstract class Weapon {
     }
 
     public float getCooldownRatio() {
-        return (float)charges/maxCharges+(1-((float)reload/cooldown))/(float)maxCharges;
+        return (float)charges/ getMaxCharges()+(1-((float)reload/cooldown))/(float) getMaxCharges();
     }
 
     public float getBonus(Upgrade.UpgradeType type){
@@ -77,5 +81,18 @@ public abstract class Weapon {
 
     public void clearUpgrades(){
         upgrades.clear();
+    }
+
+    public void reloadCharge() {
+        charges= Math.min(charges+1, getMaxCharges());
+    }
+
+    public int getMaxCharges(){
+        return (int) (base_max_charges + getBonus(Upgrade.UpgradeType.Max_Shots));
+    }
+
+    public void reset() {
+        this.charges=getMaxCharges();
+        this.reload=cooldown;
     }
 }

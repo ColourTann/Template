@@ -3,11 +3,10 @@ package com.tann.jamgame.screen.spaceScreen.ship.enemy;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.math.Vector2;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon.SpikeLauncher;
-import com.tann.jamgame.util.Animation;
-import com.tann.jamgame.util.Colours;
-import com.tann.jamgame.util.Draw;
+import com.tann.jamgame.util.*;
 
 public class Hulk extends EnemyShip{
 
@@ -21,7 +20,7 @@ public class Hulk extends EnemyShip{
         float sizeMult = 1.85f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new SpikeLauncher(), 0);
-        setHp(45);
+        setHp(38);
     }
 
     @Override
@@ -29,7 +28,9 @@ public class Hulk extends EnemyShip{
         tailTanker(dist);
         setY((float) (getY()+Math.sin(Main.ticks*1.2+seed)*2.5f));
         if(getTankerDist()<dist+50 && Math.abs(getTankerTargetRotation()-getRotation())<.4f){
-            fireWeapon(0);
+            if(fireWeapon(0)){
+                Sounds.playSound(Sounds.pew_smol, .35f, .8f, Maths.v.set(getX(), getY()));
+            }
         }
     }
 
@@ -37,6 +38,12 @@ public class Hulk extends EnemyShip{
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
         Draw.drawCenteredRotatedScaled(batch, hulk.getFrame(), getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
+    }
+
+    @Override
+    protected void onDeath() {
+        super.onDeath();
+        Sounds.playSound(Sounds.pew, Maths.v.set(getX(), getY()));
     }
 
     @Override

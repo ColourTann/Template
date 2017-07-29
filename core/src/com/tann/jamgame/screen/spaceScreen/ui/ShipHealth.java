@@ -24,7 +24,7 @@ public class ShipHealth extends Actor{
         Draw.fillActor(batch, this, Colours.green, Colours.light, 2);
         batch.setColor(Colours.red);
         Draw.fillRectangle(batch, getX(), getY(), getWidth()*(1-ship.getHealthRatio()), getHeight());
-        Fonts.draw(batch, name+ " hp", Fonts.font, Colours.dark, getX(), getY(), getWidth(), getHeight(), Align.center);
+        Fonts.draw(batch, name, Fonts.font, Colours.dark, getX(), getY(), getWidth(), getHeight(), Align.center);
         super.draw(batch, parentAlpha);
     }
 }

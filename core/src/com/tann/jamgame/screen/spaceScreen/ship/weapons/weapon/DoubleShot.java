@@ -5,6 +5,7 @@ import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.BoringBullet;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
+import com.tann.jamgame.util.Maths;
 import com.tann.jamgame.util.Particle;
 import com.tann.jamgame.util.Sounds;
 
@@ -16,7 +17,7 @@ public class DoubleShot extends Weapon {
     @Override
     protected void internalFire() {
         Ship ship = getShip();
-        Sounds.playSound(Sounds.pow_little, .14f, Particle.rand(1, 1.2f));
+        Sounds.playSound(Sounds.pow_little, .07f, Particle.rand(1, 1.2f), Maths.v.set(ship.getX(), ship.getY()));
         float dist = ship.getHeight()/2;
         float bXDiff = (float) (Math.cos(ship.getRotation()+Math.PI/2)*dist);
         float bYDiff = (float) (Math.sin(ship.getRotation()+Math.PI/2)*dist);

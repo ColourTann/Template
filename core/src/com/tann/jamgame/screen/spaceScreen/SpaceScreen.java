@@ -50,30 +50,8 @@ public class SpaceScreen extends Screen {
         reset();
     }
 
-    public ShipUpgradeGroup sug;
+    public ShipUpgradeGroup  sug = new ShipUpgradeGroup();
     TextButton confirm;
-
-    private void showShipUpgrade(){
-        Layoo l = new Layoo(this);
-        if(sug == null){
-            sug = new ShipUpgradeGroup();
-        }
-        l.row(3);
-        l.actor(sug);
-        l.row(1);
-        confirm = new TextButton(200, 50, "Confirm");
-        l.actor(confirm);
-        l.row(3);
-        l.layoo();
-        confirm.setRunnable(()->
-        {
-            if(sug.isValid()) {
-                closeShipUpgrade();
-                startLevel();
-            }
-        }
-        );
-    }
 
     private void closeShipUpgrade() {
         sug.remove();
@@ -193,8 +171,8 @@ public class SpaceScreen extends Screen {
     boolean victory;
 
     public void defeat(){
+        if(finished) return;
         finished=true;
-        paused=true;
         showDefeatDialog();
     }
 
@@ -205,7 +183,7 @@ public class SpaceScreen extends Screen {
         endBox = new TextBox("Mission failed\nPress space to restart", Fonts.font, dialogWidth, Align.center);
         addActor(endBox);
         endBox.setBackgroundColour(Colours.grey);
-        endBox.setPosition(getWidth()/2, getHeight()/2, Align.center);
+        endBox.setPosition(getWidth()/2, getHeight()/4*3, Align.center);
     }
 
     private void showVictoryDialog() {
@@ -213,14 +191,14 @@ public class SpaceScreen extends Screen {
         endBox = new TextBox("Mission success\nPress space to continue", Fonts.font, dialogWidth, Align.center);
         addActor(endBox);
         endBox.setBackgroundColour(Colours.grey);
-        endBox.setPosition(getWidth()/2, getHeight()/2, Align.center);
+        endBox.setPosition(getWidth()/2, getHeight()/4*3, Align.center);
     }
 
 
 
     public void victory() {
+        if(finished) return;
         finished=true;
-        paused=true;
         victory=true;
         Map.nextLevel();
         sug.unlockNext();
@@ -237,17 +215,45 @@ public class SpaceScreen extends Screen {
             endBox.remove();
         }
         map.setup();
+        addWeaponIcons(map.defender);
         setupHealth();
         spaceCam.position.set(map.tanker.getX(), map.tanker.getY(), 0);
         showShipUpgrade();
+        if(map.level==0){
+            paused=false;
+        }
+    }
+
+    private void showShipUpgrade(){
+        if(map.level==0){
+            return;
+        }
+        Layoo l = new Layoo(this);
+        l.row(3);
+        l.actor(sug);
+        l.row(1);
+        confirm = new TextButton(200, 50, "Confirm");
+        l.actor(confirm);
+        l.row(3);
+        l.layoo();
+        sug.toFront();
+        confirm.setRunnable(()->
+                {
+                    if(sug.isValid()) {
+                        map.defender.setUpgrades(sug);
+                        closeShipUpgrade();
+                        startLevel();
+                    }
+                }
+        );
     }
 
     private void setupHealth(){
         if(tankerHealth !=null) tankerHealth.remove();
-        tankerHealth = new ShipHealth(map.tanker, "tanker", 500);
+        tankerHealth = new ShipHealth(map.tanker, "TANKER", 500);
 
         if(playerHealth !=null) playerHealth.remove();
-        playerHealth = new ShipHealth(map.defender, "player", 200);
+        playerHealth = new ShipHealth(map.defender, "PLAYER", 200);
 
         Layoo l = new Layoo(this);
         l.row(1);

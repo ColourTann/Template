@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -18,9 +19,7 @@ import com.tann.jamgame.screen.spaceScreen.ship.player.Tanker;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.Formation;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
-import com.tann.jamgame.util.Colours;
-import com.tann.jamgame.util.Draw;
-import com.tann.jamgame.util.Particle;
+import com.tann.jamgame.util.*;
 
 public class Map extends Group{
 
@@ -32,7 +31,7 @@ public class Map extends Group{
     public DropZone dropZone;
     static final int texSize = 2048;
     public static final float HEIGHT = 4000;
-    static int level = 0;
+    public static int level = 0;
     public Map() {
         setSize(13000,HEIGHT);
         Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA4444);
@@ -49,6 +48,8 @@ public class Map extends Group{
 
     public void setup() {
         JsonValue levelContents = jr.parse(Gdx.files.internal("levels/"+level+".json"));
+        setWidth(levelContents.getInt("width"));
+
         int numSpeeders = levelContents.get("speeders").asInt();
         int numHulks = levelContents.get("hulks").asInt();
         int numBombers = levelContents.get("bombers").asInt();
@@ -67,6 +68,17 @@ public class Map extends Group{
         defender.setPosition(700, getHeight()/2+70);
         ships.add(defender);
         control(defender);
+
+        if(levelContents.has("words")){
+            JsonValue words = levelContents.get("words");
+            for(int i=0;i<words.size;i++){
+                String s = words.get(i).asString();
+                TextBox tb = new TextBox(s, Fonts.fontBig, 5000, Align.center);
+                addActor(tb);
+                tb.setPosition(tanker.getX()+1000*(i)-tb.getWidth()/2, tanker.getY()+500);
+            }
+        }
+
 
         for(int i=0;i<numSpeeders;i++){
             addShip(new Speeder());
@@ -104,8 +116,9 @@ public class Map extends Group{
 
     public void addShip(Ship ship){
         ships.add(ship);
+        float minX = 2600;
         ship.setPosition(
-                (float)(Math.random()*getWidth()*.95f), // don't spawn past the exit
+                (float)(Math.random()*(getWidth()-minX*2)*.95f)+minX,
                 (float)(Math.random()* EnemyShip.AGGRO_RANGE * (Math.random()>.5?1:-1)+getHeight()/2)); // don't spawn so high up then won't aggro
         addActor(ship);
     }

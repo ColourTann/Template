@@ -62,6 +62,6 @@ public class SpikeBullet extends Bullet {
 
     @Override
     public int getDamage() {
-        return 40;
+        return 45;
     }
 }
