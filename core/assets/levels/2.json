@@ -1,7 +1,32 @@
 {
 	"width" : 20000,
 	"speeders" : 15,
-	"hulks" : 5,
-	"bombers" : 5,
-	"carriers" : 0
+	"hulks" : 3,
+	"bombers" : 2,
+	"carriers" : 0,
+	"planet" : "planet2",
+	"drink" : "drink2",
+	"zones" : 
+	[
+		{
+			"message" : "prepare to die\nlove\nteetotallers",
+			"start" : "0.5",
+			"end" : "0.65",
+			"speeders" : 0,
+			"hulks" : 0,
+			"bombers" : 2,
+			"carriers" : 0,
+		}
+	],
+	"spiel" : "Mission 3/6
+
+Objective:
+
+[alcohol name] to be delivered to clubtopia
+
+teetotaller blockade detected
+
+use weapon upgrade to show them
+
+have fun"
 }

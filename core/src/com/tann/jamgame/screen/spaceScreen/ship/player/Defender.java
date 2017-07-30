@@ -27,7 +27,7 @@ public class Defender extends PlayerShip {
         float sizeMult = 1.2f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         addWeapon(new Blaster(),0);
-        setHp(100);
+        setHp(130);
     }
 
     @Override

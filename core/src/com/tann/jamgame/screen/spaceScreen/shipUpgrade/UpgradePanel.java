@@ -13,6 +13,7 @@ import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.InputBlocker;
+import com.tann.jamgame.util.Sounds;
 
 
 public class UpgradePanel extends Group{
@@ -40,6 +41,7 @@ public class UpgradePanel extends Group{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(locked) return true;
+                Sounds.playSound(Sounds.beep);
                 showUpgrades();
                 event.cancel();
                 return true;
@@ -69,8 +71,12 @@ public class UpgradePanel extends Group{
     }
 
     public void choose(Upgrade upgrade){
-        if(upgrade!=null){
+        if(upgrade==null){
+            Sounds.playSound(Sounds.beep_down);
+        }
+        else {
             chosen=upgrade;
+            Sounds.playSound(Sounds.beep_up);
         }
         for(Upgrade u:upgrades){
             u.getPanel().addAction(Actions.moveTo(getWidth()/2, getHeight()/2, intSpeed, terp));

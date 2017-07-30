@@ -1,7 +1,42 @@
 {
-	"width" : 20000,
-	"speeders" : 15,
-	"hulks" : 6,
-	"bombers" : 6,
-	"carriers" : 6
+	"width" : 28000,
+	"speeders" : 40,
+	"hulks" : 8,
+	"bombers" : 8,
+	"carriers" : 5,
+	"planet" : "planet4",
+	"drink" : "drink2",
+	"zones" : 
+	[
+		{
+			"message" : "prepare to die\nlove\nteetotallers",
+			"start" : "0.3",
+			"end" : "0.4",
+			"speeders" : 50,
+			"hulks" : 0,
+			"bombers" : 0,
+			"carriers" : 1,
+		},
+		{
+			"message" : "prepare to die\nlove\nteetotallers",
+			"start" : "0.7",
+			"end" : "0.8",
+			"speeders" : 5,
+			"hulks" : 2,
+			"bombers" : 2,
+			"carriers" : 1,
+		}
+
+	],
+	"spiel" : "Mission 6/6
+
+Objective:
+
+I think there might be too many
+
+final mission for us, enemies getting too numerous
+
+1.5 hypertons of [alcohol name] on board
+
+glorious defeat or embarrass teetotallers last time"
 }

@@ -4,8 +4,21 @@
 		"X: movement ability",
 		"Z (Blaster) can hold 5 shots at a time"
 	],
-	"speeders" : 35,
-	"hulks" : 6,
+	"speeders" : 22,
+	"hulks" : 3,
 	"bombers" : 2,
-	"carriers" : 0
+	"carriers" : 0,
+	"planet" : "planet1",
+	"drink" : "drink2",
+	"spiel" : "Mission 2/6
+
+Objective:
+
+5000 proof rum made to order for the sloop system
+
+teetotallers aware we use this route
+
+credits enclosed for engine upgrade
+
+do not fail"
 }

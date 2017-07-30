@@ -19,7 +19,7 @@ public class WeaponIcon extends Group{
         BitmapFont font = Fonts.font;
         TextBox keyBox = new TextBox(key, font, 9999, Align.center);
         keyBox.setTextColour(Colours.light);
-        letter = new TextBox(w.getName(), font, 9999, Align.center);
+        letter = new TextBox(w.getName(), Fonts.fontSmall, 9999, Align.center);
         letter.setTextColour(Colours.light);
         float imageSize = getWidth()*.9f;
         image = new ImageActor(w.getImage(), imageSize, imageSize);
@@ -47,8 +47,8 @@ public class WeaponIcon extends Group{
             Draw.fillRectangle(batch, getX()+getWidth()*.9f, getY()+(i+1)*getHeight()/(w.getMaxCharges())-height, getWidth()*.1f, height);
         }
         super.draw(batch, parentAlpha);
-        if(w.cooldown>20) {
 
+        if(w.cooldown>20) {
             batch.setColor(Colours.withAlpha(Colours.dark, .5f));
             Draw.fillRectangle(batch, getX(), getY()+getHeight()*w.getCooldownRatio() , getWidth(), getHeight() * (1-w.getCooldownRatio()));
         }

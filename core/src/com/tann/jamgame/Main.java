@@ -28,7 +28,7 @@ public class Main extends ApplicationAdapter {
     public static TextureAtlas atlas;
     public static Main self;
     public static boolean debug = false;
-    public static boolean showFPS = true;
+    public static boolean showFPS = false;
     public static boolean chadwick = false;
     Screen currentScreen;
     Screen previousScreen;
@@ -89,9 +89,12 @@ public class Main extends ApplicationAdapter {
         jamTitle.setRunnable(()->setScreen(gameTitle, TransitionType.LEFT, Interpolation.pow2Out, .4f));
         gameTitle.setRunnable(()->setScreen(IntroScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .4f));
 
-//        setScreen(jamTitle);
-        setScreen(SpaceScreen.get());
+//        SpaceScreen.get().map.setup();
+//        setScreen(SpaceScreen.get().map.getMissionInstruction());
+        setScreen(jamTitle, true);
+//        setScreen(SpaceScreen.get());
 //        setScreen(IntroScreen.get());
+//        setScreen(new IncomingMissionScreen());
     }
 
     private MainState state = MainState.Normal;
@@ -111,7 +114,7 @@ public class Main extends ApplicationAdapter {
     public void setScreen(final Screen screen, TransitionType type, Interpolation interp, float speed) {
         if (screen == currentScreen)
             return;
-        setScreen(screen);
+        setScreen(screen, false);
         RunnableAction ra = Actions.run(new Runnable() {
             public void run() {
                 screen.setActive(true);
@@ -136,7 +139,7 @@ public class Main extends ApplicationAdapter {
         }
     }
 
-    public void setScreen(Screen screen) {
+    public void setScreen(Screen screen, boolean activate) {
         if (previousScreen != null) {
             previousScreen.clearActions();
             previousScreen.removeFromScreen();
@@ -149,7 +152,7 @@ public class Main extends ApplicationAdapter {
         }
         currentScreen = screen;
         stage.addActor(screen);
-
+        if(activate) screen.setActive(true);
     }
 
 

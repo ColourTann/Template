@@ -32,10 +32,6 @@ public class MiniMap extends Group {
         for(Ship s:map.ships){
             s.drawMinimap(batch, s.getX()*xScale, s.getY()*yScale);
         }
-        for(Formation f:map.formations){
-            f.drawMinimap(batch, xScale, yScale);
-        }
-        map.dropZone.drawMinimap(batch, xScale, yScale);
         super.draw(batch, parentAlpha);
     }
 }

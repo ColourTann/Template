@@ -4,19 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.IncomingMissionScreen;
+import com.tann.jamgame.screen.MissionInstructionScreen;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.*;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Defender;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.player.Tanker;
-import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.BasicFormation;
 import com.tann.jamgame.screen.spaceScreen.ship.enemy.formation.Formation;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
@@ -24,15 +27,15 @@ import com.tann.jamgame.util.*;
 
 public class Map extends Group{
 
+    private static final float PLANET_SIZE = 500;
     Texture bg;
     public Defender defender;
     public Tanker tanker;
     public Array<Ship> ships = new Array<>();
     public Array<Formation> formations = new Array<>();
-    public DropZone dropZone;
     static final int texSize = 2048;
     public static final float HEIGHT = 4000;
-    public static int level = 1; //todo not start level 1
+    public static int level = 0;
     public Map() {
         setSize(13000,HEIGHT);
         Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA4444);
@@ -46,67 +49,101 @@ public class Map extends Group{
 
     private static final JsonReader jr = new JsonReader();
 
+    Array<TextBox> boxes = new Array<>();
+    ImageActor planet;
+
+    public String spiel;
+    public TextureRegion alcoholTexture;
+    public TextureRegion planetTexture;
 
     public void setup() {
-        JsonValue levelContents = jr.parse(Gdx.files.internal("levels/"+level+".json"));
+        for (TextBox tb : boxes) {
+            tb.remove();
+        }
+        boxes.clear();
+
+        JsonValue levelContents = jr.parse(Gdx.files.internal("levels/" + level + ".json"));
         setWidth(levelContents.getInt("width"));
+
+        spiel = levelContents.getString("spiel");
+        String alcoholName = levelContents.getString("drink");
+        String planetName = levelContents.getString("planet");
 
         int numSpeeders = levelContents.get("speeders").asInt();
         int numHulks = levelContents.get("hulks").asInt();
         int numBombers = levelContents.get("bombers").asInt();
         int numCarriers = levelContents.get("carriers").asInt();
 
-        for(Ship s:ships){
+
+        if (planet != null) {
+            planet.remove();
+        }
+
+        planetTexture = Main.atlas.findRegion("planet/" + planetName);
+        alcoholTexture = Main.atlas.findRegion("drink/" + alcoholName);
+        planet = new ImageActor(planetTexture);
+        planet.setSize(PLANET_SIZE, PLANET_SIZE);
+        planet.setPosition(getWidth() - planet.getWidth() / 2 - 500, getHeight() / 2 - planet.getHeight() / 2);
+        addActor(planet);
+
+        for (Ship s : ships) {
             s.destroy(true);
         }
         formations.clear();
         tanker = new Tanker();
-        tanker.setPosition(700, getHeight()/2);
+        tanker.setPosition(700, getHeight() / 2);
         addActor(tanker);
         ships.add(tanker);
         defender = new Defender();
         addActor(defender);
-        defender.setPosition(700, getHeight()/2+70);
+        defender.setPosition(700, getHeight() / 2 + 70);
         ships.add(defender);
         control(defender);
 
-        if(levelContents.has("words")){
+        if (levelContents.has("words")) {
             JsonValue words = levelContents.get("words");
-            for(int i=0;i<words.size;i++){
+            for (int i = 0; i < words.size; i++) {
                 String s = words.get(i).asString();
                 TextBox tb = new TextBox(s, Fonts.fontBig, 5000, Align.center);
                 addActor(tb);
-                tb.setPosition(tanker.getX()+1000*(i)-tb.getWidth()/2, tanker.getY()+500);
+                boxes.add(tb);
+                tb.setPosition(tanker.getX() + 1000 * (i) - tb.getWidth() / 2, tanker.getY() + 500);
             }
         }
 
-
-        for(int i=0;i<numSpeeders;i++){
+        for (int i = 0; i < numSpeeders; i++) {
             addShip(new Speeder());
         }
-        for(int i=0;i<numHulks;i++){
+        for (int i = 0; i < numHulks; i++) {
             addShip(new Hulk());
         }
-        for(int i=0; i < numBombers; i++) {
+        for (int i = 0; i < numBombers; i++) {
             addShip(new Bomber());
         }
-        for(int i=0; i < numCarriers; i++) {
+        for (int i = 0; i < numCarriers; i++) {
             addShip(new Carrier());
         }
 
-        dropZone = new DropZone(getWidth()*.98f, getHeight()*.5f, 1400);
 
-        int numFormations = 0;
-        float xRand = 200;
-        int offset = 0;
-        for(int i=0;i<numFormations;i++){
-            float x= getWidth()/(numFormations+1+offset)*(i+1+offset);
-            x += Particle.rand(-xRand, xRand);
-            Formation f = new BasicFormation(x);
-            formations.add(f);
-            for(Ship s:f.ships){
-                ships.add(s);
-                addActor(s);
+        if (levelContents.has("zones")) {
+            JsonValue zones = levelContents.get("zones");
+            for (int i = 0; i < zones.size; i++) {
+                JsonValue zone = zones.get(i);
+                String message = zone.getString("message");
+                float start = zone.getFloat("start");
+                float end = zone.getFloat("end");
+                float middle = getWidth() * start;
+                float width = (end - start) * getWidth();
+                int zoneSpeeders = zone.get("speeders").asInt();
+                int zoneHulks = zone.get("hulks").asInt();
+                int zoneBombers = zone.get("bombers").asInt();
+                int zoneCarriers = zone.get("carriers").asInt();
+                Formation f = new Formation(message, middle, width, zoneSpeeders, zoneHulks, zoneBombers, zoneCarriers);
+                formations.add(f);
+                for (Ship s : f.ships) {
+                    ships.add(s);
+                    addActor(s);
+                }
             }
         }
     }
@@ -142,7 +179,6 @@ public class Map extends Group{
         for(Formation f:formations){
             f.draw(batch);
         }
-        dropZone.draw(batch);
     }
 
     public void tick() {
@@ -151,16 +187,11 @@ public class Map extends Group{
                 ships.removeValue(ships.get(i), true);
             }
         }
-        if(dropZone.inside(tanker)){
+        if(tanker.getX() > getWidth()-550){
             SpaceScreen.get().victory();
         }
-        for(int i=formations.size-1;i>=0;i--){
-            Formation f =formations.get(i);
-            f.checkAggro(tanker);
-            f.checkAggro(defender);
-            if(f.dead){
-                formations.removeValue(f,true);
-            }
+        for (Formation f:formations){
+            f.checkTrigger();
         }
     }
 
@@ -194,9 +225,20 @@ public class Map extends Group{
         for(Ship s:ships){
             if(ship!=s && s.affectedBy(Bullet.BulletType.Friendly)){
                 if(Shape.overlaps(s.getShape(), ship.getShape())){
-                    s.damage(2);
+                    s.damage(4);
                 }
             }
         }
+    }
+
+    public Screen getMissionInstruction(){
+        Screen missionInstruction = new MissionInstructionScreen(alcoholTexture, planetTexture, spiel,
+                ()->{
+                    Main.self.setScreen(SpaceScreen.get(), true);
+                    SpaceScreen.get().start();
+                });
+        IncomingMissionScreen incoming = new IncomingMissionScreen();
+        incoming.setRunnable(()-> Main.self.setScreen(missionInstruction, Main.TransitionType.LEFT, Interpolation.pow2Out, .5f));
+        return incoming;
     }
 }

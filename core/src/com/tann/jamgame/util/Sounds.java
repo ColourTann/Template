@@ -31,6 +31,10 @@ public class Sounds {
     public static String speed;
     public static String[] molotov_explode;
     public static String[] rock_splode;
+    public static String beep;
+    public static String beep_down;
+    public static String beep_up;
+    public static String cancel;
     public static void setup(){
 		//sfx//
 
@@ -50,6 +54,10 @@ public class Sounds {
         molotov_launch = makeSound("sfx/molotov_launch.wav", Sound.class);
         molotov_explode = makeSounds("molotov_explode", 3);
         rock_splode = makeSounds("rock_splode", 3);
+        beep_up = makeSound("sfx/menu_beep_up.wav", Sound.class);
+        beep = makeSound("sfx/menu_beep_neutral.wav", Sound.class);
+        beep_down = makeSound("sfx/menu_beep_down.wav", Sound.class);
+        cancel = makeSound("sfx/cancel.wav", Sound.class);
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();
@@ -121,8 +129,12 @@ public class Sounds {
 	public static void updateMusicVolume(){
 		if(currentMusic!=null)currentMusic.setVolume(Slider.music.getValue());
 	}
-	
-	static class Fader{
+
+    public static void playSound(String beep) {
+	    playSound(beep, null);
+    }
+
+    static class Fader{
 		float startVolume;
 		float targetVolume;
 		Music music;
@@ -158,7 +170,7 @@ public class Sounds {
     static final Long diff = 60l;
 	public static void playSound(String string, float volume, float pitch, Vector2 spot) {
 
-        float pan = 1;
+        float pan = .5f;
 
         if(spot!=null) {
             float dx = spot.x - SpaceScreen.get().map.defender.getX();

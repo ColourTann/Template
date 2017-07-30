@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
+import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Fonts;
 import com.tann.jamgame.util.Screen;
@@ -19,8 +20,8 @@ import com.tann.jamgame.util.Screen;
 public class IntroScreen extends Screen {
 
 	final float INTRO_WIDTH = 300;
-	final float CAMERA_SCROLL_SPEED_SLOW = 10f;
-	final float CAMERA_SCROLL_SPEED_FAST = 1000f; //TODO return to 100
+	final float CAMERA_SCROLL_SPEED_SLOW = 15f;
+	final float CAMERA_SCROLL_SPEED_FAST = 150f; //TODO return to 100
 	final float CAMERA_DISTANCE = 100f;
 
 	Stage stage;
@@ -28,7 +29,7 @@ public class IntroScreen extends Screen {
 	Batch batch;
 	BitmapFont font;
 	String introText;
-	float scrollLimit = 0f; // When the camera is past this scroll limit, the scene is over.
+	float scrollLimit = 250f; // When the camera is past this scroll limit, the scene is over.
 
 	static IntroScreen singleton = null;
 	public static IntroScreen get() {
@@ -43,7 +44,7 @@ public class IntroScreen extends Screen {
 		camera = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage = new Stage(new ScreenViewport(camera));
 		batch = stage.getBatch();
-		font = Fonts.font;
+		font = Fonts.fontSmall;
 
 		// Load the intro text and, based on its length, find out how far the camera has to scroll before we switch scenes.
 		introText = Gdx.files.internal("intro_text.txt").readString();
@@ -68,8 +69,11 @@ public class IntroScreen extends Screen {
 		//Fonts.fontSmall.setColor(Color.YELLOW);
 		camera.update(true);
 		batch.setProjectionMatrix(camera.combined);
+		font.setColor(Colours.light);
 		font.draw(batch, introText, -INTRO_WIDTH/2, 0, INTRO_WIDTH, Align.center, true);
 	}
+
+	boolean done = false;
 
 	@Override
 	public void act(float delta) {
@@ -80,8 +84,10 @@ public class IntroScreen extends Screen {
 			camera.translate(0f, -1 * CAMERA_SCROLL_SPEED_SLOW * delta, 0f);
 		}
 
-		if(camera.position.y < scrollLimit) {
-			Main.self.setScreen(SpaceScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, .5f);
+		if(!done && camera.position.y < scrollLimit) {
+		    done = true;
+		    SpaceScreen.get().map.setup();
+			Main.self.setScreen(SpaceScreen.get().map.getMissionInstruction(), Main.TransitionType.LEFT, Interpolation.pow2Out, .5f);
 		}
 	}
 

@@ -25,7 +25,7 @@ public class Carrier extends EnemyShip{
         float sizeMult = 1.9f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         seed = (int) (Math.random()*100);
-        setHp(60);
+        setHp(55);
     }
 
     @Override

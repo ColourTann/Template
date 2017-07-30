@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 
 public class EscMenu extends Group {
-    private static int WIDTH = 300, HEIGHT = 200;
+    private static int WIDTH = 250, HEIGHT = 300;
 
     private static EscMenu self;
     public static EscMenu get(){
@@ -17,37 +18,35 @@ public class EscMenu extends Group {
 
     private EscMenu() {
         setSize(WIDTH,HEIGHT);
-        Slider.music.setSize(getWidth()*.8f, 30);
         Slider.SFX.setSize(getWidth()*.8f, 30);
         setPosition(Main.width/2-getWidth()/2, Main.height/2-getHeight()/2);
+        TextBox madeBy = new TextBox("Made by tann and jo", Fonts.font, getWidth()*.9f, Align.center);
+        TextBox attr = new TextBox("icons from game-icons.net", Fonts.font, getWidth()*.9f, Align.center);
         final Layoo l = new Layoo(this);
         l.row(1);
-        l.actor(Slider.music);
+        l.actor(madeBy);
+        l.row(1);
+        l.actor(attr);
         l.row(1);
         l.actor(Slider.SFX);
         l.row(1);
-        TextButton quit = new TextButton(110, 40, "Quit");
         TextButton restart = new TextButton(110, 40, "Restart");
-        l.add(1, quit, 1, restart, 1);
+        l.actor(restart);
         l.row(1);
         l.layoo();
-        quit.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-            }
-        });
         restart.setRunnable(new Runnable() {
             @Override
             public void run() {
+                SpaceScreen.get().map.setup();
+                SpaceScreen.get().removeEsc();
             }
         });
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.dark);
+        batch.setColor(Colours.grey);
         Draw.fillActor(batch,this);
-        Fonts.draw(batch, "Version "+Main.version, Fonts.fontSmall, Colours.light, getX(), getY(), 150, 20, Align.left);
         super.draw(batch, parentAlpha);
     }
 }

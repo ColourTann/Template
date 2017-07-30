@@ -13,8 +13,8 @@ public class Fonts {
 	public static BitmapFont fontBig;
 	
 	public static void setup(){
-        fontSmall = make("gothicsmall");
-        font = make("gothicsmall");
+        fontSmall = make("gothic_14");
+        font = make("gothic_22");
 	    fontBig = make("gothic_32");
 	}
 

@@ -52,7 +52,7 @@ public class MolotovBullet extends  Bullet{
         for(Ship s:SpaceScreen.get().map.ships){
             if(s.affectedBy(type)){
                 if(Maths.distance(s.getX(), s.getY(), x, y)<ep.radius*.6f){
-                    s.damage(100);
+                    s.damage(40);
                 }
             }
         }

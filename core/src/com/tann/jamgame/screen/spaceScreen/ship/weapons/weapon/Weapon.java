@@ -6,8 +6,10 @@ import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
+import com.tann.jamgame.screen.spaceScreen.ship.player.Defender;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.RocketBullet;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.Upgrade;
+import com.tann.jamgame.util.Sounds;
 
 public abstract class Weapon {
     
@@ -43,7 +45,12 @@ public abstract class Weapon {
     }
     
     public boolean fire(){
-        if(charges==0)return false;
+        if(charges==0){
+            if(getShip() instanceof Defender){
+                Sounds.playSound(Sounds.beep_down);
+            }
+            return false;
+        }
         charges--;
         internalFire();
         Ship s = getShip();

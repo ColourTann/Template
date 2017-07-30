@@ -1,12 +1,26 @@
 {
-	"width" : 10000,
+	"width" : 8500,
 	"words" : [
 		"Arrow keys: move",
 		"Z: shoot",
 		"Defend the tanker"
 	],
 	"speeders" : 15,
-	"hulks" : 1,
+	"hulks" : 2,
 	"bombers" : 0,
-	"carriers" : 0
+	"carriers" : 0,
+	"planet" : "planet0",
+	"drink" : "drink2",
+	"spiel" : "Mission 1/6
+
+
+Objective:
+
+planet Eivissa has made order for tequila
+
+expect minimal resistance
+
+try not to fall asleep
+
+good luck"
 }

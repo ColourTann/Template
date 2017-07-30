@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
+import com.tann.jamgame.Main;
 
 import java.util.HashMap;
 
@@ -51,14 +52,21 @@ public class TextBox extends Group{
 		this.textCol = col;
 	}
 
+	boolean flash;
+	public void flash(){
+	    flash = true;
+    }
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 //		batch.setColor(1,0,1,.5f);
 //		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		batch.setColor(bgCol);
 		Draw.fillRectangle(batch, getX()-50, getY()-50, getWidth()+100, getHeight()+100);
-		font.setColor(textCol);
-		font.draw(batch, text, getX(), getY()+getHeight(), layout.width,  align, true);
+		if(!flash || Main.ticks%1.5>.75) {
+            font.setColor(textCol);
+            font.draw(batch, text, getX(), getY() + getHeight(), layout.width, align, true);
+        }
 		super.draw(batch, parentAlpha);
 	}
 	

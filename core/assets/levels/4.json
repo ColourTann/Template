@@ -1,7 +1,45 @@
 {
-	"width" : 20000,
-	"speeders" : 25,
-	"hulks" : 3,
-	"bombers" : 3,
-	"carriers" : 4
+	"width" : 24000,
+	"speeders" : 30,
+	"hulks" : 4,
+	"bombers" : 4,
+	"carriers" : 3,
+	"words" : [
+		"C: user superweapon"
+	],
+	"planet" : "planet4",
+	"drink" : "drink2",
+	"zones" : 
+	[
+		{
+			"message" : "prepare to die\nlove\nteetotallers",
+			"start" : "0.3",
+			"end" : "0.4",
+			"speeders" : 0,
+			"hulks" : 0,
+			"bombers" : 4,
+			"carriers" : 0,
+		},
+		{
+			"message" : "prepare to die\nlove\nteetotallers",
+			"start" : "0.7",
+			"end" : "0.8",
+			"speeders" : 4,
+			"hulks" : 2,
+			"bombers" : 2,
+			"carriers" : 0,
+		}
+
+	],
+	"spiel" : "Mission 5/6
+
+Objective:
+
+they think they can stop us
+
+we have new superweapons they won't expect
+
+use them to get past blockade
+
+our customers must not be disappointed"
 }

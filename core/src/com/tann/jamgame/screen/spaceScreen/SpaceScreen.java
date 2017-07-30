@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.MissionInstructionScreen;
 import com.tann.jamgame.screen.spaceScreen.map.Map;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.ShipUpgradeGroup;
@@ -146,6 +148,18 @@ public class SpaceScreen extends Screen {
             case Input.Keys.SPACE:
                 if(finished) {
                     reset();
+                    Main.self.setScreen(map.getMissionInstruction(), true);
+                }
+                break;
+            case Input.Keys.ESCAPE:
+                if(EscMenu.get().hasParent()){
+                    removeEsc();
+                }
+                else {
+                    paused = true;
+                    Sounds.playSound(Sounds.beep_down);
+                    addActor(InputBlocker.get(() -> removeEsc()));
+                    addActor(EscMenu.get());
                 }
                 break;
         }
@@ -173,7 +187,7 @@ public class SpaceScreen extends Screen {
         sug.toFront();
     }
 
-    boolean finished;
+    public boolean finished;
     boolean victory;
 
     public void defeat(){
@@ -193,14 +207,11 @@ public class SpaceScreen extends Screen {
     }
 
     private void showVictoryDialog() {
-        System.out.println("showing victory");
         endBox = new TextBox("Mission success\nPress space to continue", Fonts.font, dialogWidth, Align.center);
         addActor(endBox);
         endBox.setBackgroundColour(Colours.grey);
         endBox.setPosition(getWidth()/2, getHeight()/4*3, Align.center);
     }
-
-
 
     public void victory() {
         if(finished) return;
@@ -268,4 +279,15 @@ public class SpaceScreen extends Screen {
         l.layoo();
     }
 
+    public void start() {
+        addWeaponIcons(map.defender);
+        setupHealth();
+    }
+
+    public void removeEsc() {
+        Sounds.playSound(Sounds.beep);
+        InputBlocker.get().remove();
+        EscMenu.get().remove();
+        paused=false;
+    }
 }

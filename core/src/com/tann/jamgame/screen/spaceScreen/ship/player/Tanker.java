@@ -29,10 +29,12 @@ public class Tanker extends PlayerShip {
         batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
         Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
         float dist = 18;
-        for(int i=-1;i<2;i++){
-            drawThrustAt(batch,
-                    (float) (getButtX() +Math.cos(getRotation()+Math.PI/2)*dist*i),
-                    (float) (getButtY() +Math.sin(getRotation()+Math.PI/2)*dist*i), 2);
+        if(!SpaceScreen.get().finished) {
+            for (int i = -1; i < 2; i++) {
+                drawThrustAt(batch,
+                        (float) (getButtX() + Math.cos(getRotation() + Math.PI / 2) * dist * i),
+                        (float) (getButtY() + Math.sin(getRotation() + Math.PI / 2) * dist * i), 2);
+            }
         }
         super.draw(batch, parentAlpha);
     }
@@ -42,9 +44,12 @@ public class Tanker extends PlayerShip {
     @Override
     protected void internalAct(float delta) {
         ticker += delta;
-        if(ticker>=.25f){
+        if(ticker>=.11f){
             hp=Math.min(maxHp, hp+1);
             ticker=0;
+        }
+        if(SpaceScreen.get().finished){
+            return;
         }
         float dxChange = (float)Math.cos(getRotation());
         float dyChange = (float)Math.sin(getRotation());
