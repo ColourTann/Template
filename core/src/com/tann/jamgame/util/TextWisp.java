@@ -15,8 +15,7 @@ public class TextWisp extends Actor {
         setPosition(x,y);
         setColor(Colours.red);
         float duration = 1;
-        float delay = 1.3f;
-        addAction(Actions.delay(delay, Actions.moveBy(0,100, duration)));
+        float delay = 1.6f;
         addAction(Actions.delay(delay, Actions.fadeOut(duration)));
     }
 

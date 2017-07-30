@@ -1,15 +1,15 @@
 {
 	"width" : 28000,
 	"speeders" : 40,
-	"hulks" : 8,
-	"bombers" : 8,
+	"hulks" : 7,
+	"bombers" : 7,
 	"carriers" : 5,
 	"planet" : "planet4",
 	"drink" : "drink2",
 	"zones" : 
 	[
 		{
-			"message" : "prepare to die\nlove\nteetotallers",
+			"message" : "There's too many of us",
 			"start" : "0.3",
 			"end" : "0.4",
 			"speeders" : 50,
@@ -18,7 +18,7 @@
 			"carriers" : 1,
 		},
 		{
-			"message" : "prepare to die\nlove\nteetotallers",
+			"message" : "they'll never make it",
 			"start" : "0.7",
 			"end" : "0.8",
 			"speeders" : 5,

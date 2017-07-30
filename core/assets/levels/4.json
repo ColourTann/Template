@@ -1,7 +1,7 @@
 {
 	"width" : 24000,
-	"speeders" : 30,
-	"hulks" : 4,
+	"speeders" : 28,
+	"hulks" : 3,
 	"bombers" : 4,
 	"carriers" : 3,
 	"words" : [
@@ -12,7 +12,7 @@
 	"zones" : 
 	[
 		{
-			"message" : "prepare to die\nlove\nteetotallers",
+			"message" : "Bombs! Target the tanker!",
 			"start" : "0.3",
 			"end" : "0.4",
 			"speeders" : 0,
@@ -21,7 +21,7 @@
 			"carriers" : 0,
 		},
 		{
-			"message" : "prepare to die\nlove\nteetotallers",
+			"message" : "Stop the evil alcohol trawlers",
 			"start" : "0.7",
 			"end" : "0.8",
 			"speeders" : 4,

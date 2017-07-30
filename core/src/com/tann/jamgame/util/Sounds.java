@@ -170,8 +170,7 @@ public class Sounds {
     static final Long diff = 60l;
 	public static void playSound(String string, float volume, float pitch, Vector2 spot) {
 
-        float pan = .5f;
-
+        float pan = 0;
         if(spot!=null) {
             float dx = spot.x - SpaceScreen.get().map.defender.getX();
             float dy = spot.y - SpaceScreen.get().map.defender.getY();
@@ -184,8 +183,8 @@ public class Sounds {
             if(dx <-maxPan) dx = -maxPan;
             if(dx >maxPan) dx = maxPan;
             pan = dx/maxPan;
-            pan += 1;
-            pan /= 2f;
+            pan *= 2;
+            pan -= 1f;
         }
 
 
@@ -197,7 +196,7 @@ public class Sounds {
 			s=get(string, Sound.class);
 			soundMap.put(string, s);
 		}
-        s.play(Slider.SFX.getValue()*2*volume, pitch, pan);
+        s.play(Slider.SFX.getValue()*2*volume, pitch, 0);
 		lastPlayed.put(string, time);
 	}
     public static void playSound(String[] string, Vector2 spot) {

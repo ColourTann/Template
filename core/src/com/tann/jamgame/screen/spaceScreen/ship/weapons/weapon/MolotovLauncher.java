@@ -34,6 +34,6 @@ public class MolotovLauncher extends Weapon {
 
     @Override
     public String getName() {
-        return "Molotov Launcher";
+        return "Molotov";
     }
 }

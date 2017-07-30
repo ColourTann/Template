@@ -17,7 +17,7 @@ public class TimeWarp extends Weapon{
 
     @Override
     public String getName() {
-        return "Martini Timespin";
+        return "Martini\nTimespin";
     }
 
     @Override

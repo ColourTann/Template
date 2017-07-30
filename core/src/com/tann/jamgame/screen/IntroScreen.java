@@ -21,7 +21,7 @@ public class IntroScreen extends Screen {
 
 	final float INTRO_WIDTH = 300;
 	final float CAMERA_SCROLL_SPEED_SLOW = 15f;
-	final float CAMERA_SCROLL_SPEED_FAST = 150f; //TODO return to 100
+	final float CAMERA_SCROLL_SPEED_FAST = 250f;
 	final float CAMERA_DISTANCE = 100f;
 
 	Stage stage;

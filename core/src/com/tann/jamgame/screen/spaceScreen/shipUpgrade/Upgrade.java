@@ -30,7 +30,7 @@ public class Upgrade {
             0, UpgradeType.BulletSpeed, .25f,
             Main.atlas.findRegion("weapon/vodkabullets"),
             "Vodka-coated Bullets",
-            "+40% blaster distance\n\nCognac causes them to explode on impact, Rum makes them home in on targets but Vodka is the most useful!",
+            "+40% blaster distance\n\nA strange but effective alteration!",
             Colours.orange
     );
 

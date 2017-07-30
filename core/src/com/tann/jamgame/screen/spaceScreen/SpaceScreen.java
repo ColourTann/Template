@@ -150,6 +150,11 @@ public class SpaceScreen extends Screen {
                     reset();
                     Main.self.setScreen(map.getMissionInstruction(), true);
                 }
+                else{
+                    if(sug!=null&&sug.hasParent()){
+                        closeUpgradesButton();
+                    }
+                }
                 break;
             case Input.Keys.ESCAPE:
                 if(EscMenu.get().hasParent()){
@@ -256,13 +261,17 @@ public class SpaceScreen extends Screen {
         sug.toFront();
         confirm.setRunnable(()->
                 {
-                    if(sug.isValid()) {
-                        map.defender.setUpgrades(sug);
-                        closeShipUpgrade();
-                        startLevel();
-                    }
+                   closeUpgradesButton();
                 }
         );
+    }
+
+    void closeUpgradesButton(){
+        if(sug.isValid()) {
+            map.defender.setUpgrades(sug);
+            closeShipUpgrade();
+            startLevel();
+        }
     }
 
     private void setupHealth(){

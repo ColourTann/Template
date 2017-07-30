@@ -18,7 +18,7 @@ public class Tanker extends PlayerShip {
     static TextureRegion tanker = Main.atlas.findRegion("ship/ss_brewballs1");;
     static final float AUTO_ACCEL =  .2f;
     public Tanker() {
-        super(tanker, 0, 4, .004f);
+        super(tanker, 0, 400, .004f);
         setPosition(500,500);
         setSize(370, 70);
         setHp(500);
@@ -53,6 +53,9 @@ public class Tanker extends PlayerShip {
         }
         float dxChange = (float)Math.cos(getRotation());
         float dyChange = (float)Math.sin(getRotation());
+        if(SpaceScreen.get().map.ships.size<4){
+            dxChange*=2;
+        }
         dx += AUTO_ACCEL * dxChange;
         dy += AUTO_ACCEL * dyChange;
     }

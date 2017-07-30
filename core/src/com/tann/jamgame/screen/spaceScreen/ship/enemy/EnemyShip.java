@@ -123,7 +123,7 @@ public abstract class EnemyShip extends Ship {
 
     protected void checkAggros(){
         if(!aggroed) {
-            checkAggro(SpaceScreen.get().map.defender,.05f);
+            checkAggro(SpaceScreen.get().map.defender,.45f);
             checkAggro(SpaceScreen.get().map.tanker);
         }
     };

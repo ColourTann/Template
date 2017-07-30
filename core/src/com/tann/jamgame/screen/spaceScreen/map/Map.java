@@ -154,10 +154,10 @@ public class Map extends Group{
 
     public void addShip(Ship ship){
         ships.add(ship);
-        float minX = 2600;
+        float minX = 2300;
         ship.setPosition(
-                (float)(Math.random()*(getWidth()-minX*2)*.95f)+minX,
-                (float)(Math.random()* EnemyShip.AGGRO_RANGE * (Math.random()>.5?1:-1)+getHeight()/2)); // don't spawn so high up then won't aggro
+                (float)(Math.random()*(getWidth()-minX*1.2f))+minX,
+                (float)(Math.random()* EnemyShip.AGGRO_RANGE*.9f * (Math.random()>.5?1:-1)+getHeight()/2)); // don't spawn so high up then won't aggro
         addActor(ship);
     }
 

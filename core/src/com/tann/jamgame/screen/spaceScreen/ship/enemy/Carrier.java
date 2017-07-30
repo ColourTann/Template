@@ -25,13 +25,14 @@ public class Carrier extends EnemyShip{
         float sizeMult = 1.9f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         seed = (int) (Math.random()*100);
-        setHp(55);
+        setHp(40);
     }
 
     @Override
     protected void internalAct(float delta) {
         if(!aggroed) {
             checkAggro(getTanker(),1.5f);
+            checkAggros();
             if(aggroed){
                 rot = (float) Math.atan2(getY()-getTanker().getY(), getX()-getTanker().getX());
             }

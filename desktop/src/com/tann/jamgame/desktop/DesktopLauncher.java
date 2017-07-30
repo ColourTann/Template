@@ -14,8 +14,8 @@ public class DesktopLauncher {
         config.foregroundFPS=60;
         config.width=Main.width;
         config.height=Main.height;
-        config.title="template";
-//        config.addIcon("icon.png", Files.FileType.Internal);
+        config.title="Super Gargle Blaster";
+        config.addIcon("icon.png", Files.FileType.Internal);
         new LwjglApplication(new Main(), config);
 	}
 }

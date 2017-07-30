@@ -1,9 +1,9 @@
 {
-	"width" : 20000,
-	"speeders" : 20,
+	"width" : 22000,
+	"speeders" : 24,
 	"hulks" : 4,
 	"bombers" : 4,
-	"carriers" : 2,
+	"carriers" : 3,
 	"planet" : "planet3",
 	"drink" : "drink2",
 	"spiel" : "Mission 4/6
