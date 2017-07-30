@@ -12,10 +12,11 @@ import com.tann.jamgame.util.*;
 public class UpgradeChoicePanel extends Group{
     Upgrade u;
     public UpgradeChoicePanel(Upgrade u) {
-        setSize(250, 300);
-        float imageSize = getWidth()*.6f;
+        setSize(290, 310);
+        float imageSize = getWidth()*.4f;
         TextBox title = new TextBox(u.title, Fonts.fontBig, getWidth()*.9f, Align.center);
         ImageActor ia = new ImageActor(u.tr, imageSize, imageSize);
+        ia.setColor(u.colour);
         TextBox tb = new TextBox(u.text, Fonts.fontSmall, getWidth()*.9f, Align.left);
         Layoo l = new Layoo(this);
         l.row(1);

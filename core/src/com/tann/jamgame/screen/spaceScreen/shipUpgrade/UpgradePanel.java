@@ -96,7 +96,7 @@ public class UpgradePanel extends Group{
             tr = unlock;
         }
         else{
-            batch.setColor(Colours.neonBlue);
+            batch.setColor(chosen.colour);
             tr = chosen.tr;
         }
         Draw.drawSizeCentered(batch, tr, getX()+getWidth()/2, getY()+getHeight()/2, getWidth()*imageScale, getHeight()*imageScale);

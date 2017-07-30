@@ -7,9 +7,7 @@ import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.particle.ExplosionAnimationParticle;
-import com.tann.jamgame.util.Colours;
-import com.tann.jamgame.util.Draw;
-import com.tann.jamgame.util.Particle;
+import com.tann.jamgame.util.*;
 
 public class RocketBullet extends Bullet {
 
@@ -48,6 +46,11 @@ public class RocketBullet extends Bullet {
         eap.x=x;
         eap.y=y;
         SpaceScreen.get().addParticle(eap);
+        explodeSounds();
+    }
+
+    private void explodeSounds(){
+        Sounds.playSound(Sounds.rock_splode, .35f, 1, Maths.v.set(x,y));
     }
 
     @Override
@@ -64,6 +67,7 @@ public class RocketBullet extends Bullet {
         angleD += Particle.rand(-.05f,.05f);
         rot+=angleD;
         this.angleD*=.9f;
+
     }
 
     @Override
@@ -73,6 +77,7 @@ public class RocketBullet extends Bullet {
         eap.x=x;
         eap.y=y;
         SpaceScreen.get().addParticle(eap);
+        explodeSounds();
     }
 
     @Override

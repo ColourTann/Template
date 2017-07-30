@@ -19,6 +19,7 @@ public class Colours {
     public static final Color dark = new Color(.01f,.05f,.08f,1);
     public static final Color green = new Color(.2f,.6f, .31f,1);
     public static final Color red = make(113,10,10);
+    public static final Color orange = make(190,90,10);
     public static final Color grey = make(70,60,65);
 
     public static final Color yellow = new Color(.7f,.6f, .1f,1);

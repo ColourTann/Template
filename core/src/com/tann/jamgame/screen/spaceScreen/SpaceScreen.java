@@ -170,6 +170,7 @@ public class SpaceScreen extends Screen {
         }
         l.row(10);
         l.layoo();
+        sug.toFront();
     }
 
     boolean finished;

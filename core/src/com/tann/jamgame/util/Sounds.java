@@ -30,6 +30,7 @@ public class Sounds {
     public static String molotov_launch;
     public static String speed;
     public static String[] molotov_explode;
+    public static String[] rock_splode;
     public static void setup(){
 		//sfx//
 
@@ -48,6 +49,7 @@ public class Sounds {
         sad_long_pow = makeSound("sfx/sad_long_pow.wav", Sound.class);
         molotov_launch = makeSound("sfx/molotov_launch.wav", Sound.class);
         molotov_explode = makeSounds("molotov_explode", 3);
+        rock_splode = makeSounds("rock_splode", 3);
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();

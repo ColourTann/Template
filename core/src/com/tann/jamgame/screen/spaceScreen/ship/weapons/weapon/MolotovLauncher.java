@@ -1,6 +1,8 @@
 package com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pools;
+import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
@@ -23,5 +25,15 @@ public class MolotovLauncher extends Weapon {
         b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation(), 15+ship.getSpeed());
         SpaceScreen.get().addBullet(b);
         Sounds.playSound(Sounds.molotov_launch, Maths.v.set(b.x,b.y));
+    }
+
+    @Override
+    public TextureRegion getImage() {
+        return Main.atlas.findRegion("weapon/molotov");
+    }
+
+    @Override
+    public String getName() {
+        return "Molotov Launcher";
     }
 }

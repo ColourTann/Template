@@ -1,11 +1,13 @@
 package com.tann.jamgame.screen.spaceScreen.ship.weapons.weapon;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.util.Maths;
 import com.tann.jamgame.util.Sounds;
 
-public class Reversinator extends Weapon {
-    public Reversinator() {
+public class VomitDrive extends Weapon {
+    public VomitDrive() {
         super(50, 1);
     }
 
@@ -23,7 +25,12 @@ public class Reversinator extends Weapon {
     }
 
     @Override
+    public TextureRegion getImage() {
+        return Main.atlas.findRegion("weapon/vomitdrive");
+    }
+
+    @Override
     public String getName() {
-        return "reversinator";
+        return "Vomit Drive";
     }
 }

@@ -52,7 +52,7 @@ public abstract class Weapon {
         }
         if(getBonus(Upgrade.UpgradeType.Rockets)!=0){
             for(int i=0;i<2;i++){
-                for(int j=0;j<6;j++) {
+                for(int j=0;j<8;j++) {
                     RocketBullet rb = Pools.obtain(RocketBullet.class);
                     rb.init();
                     rb.setup(s.getX(), s.getY(), 0, 0, s.getRotation() + Math.PI/2 * (i * 2 - 1), 3);
