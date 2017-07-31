@@ -89,6 +89,16 @@ public class Upgrade {
             Colours.blue
     );
 
+    static{
+        p2Range.joke(Main.atlas.findRegion("popular"));
+        p2Shots.joke(Main.atlas.findRegion("value"));
+    }
+
+    public TextureRegion joke;
+
+    private void joke(TextureRegion value) {
+        this.joke=value;
+    }
 
 
     public enum UpgradeType{BulletSpeed, Bullets, Max_Shots, Tanker_Shoots, Rockets, Fire};

@@ -9,10 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.jamgame.util.*;
 
+import javax.xml.soap.Text;
+
 public class UpgradeChoicePanel extends Group{
     Upgrade u;
     public UpgradeChoicePanel(Upgrade u) {
-        setSize(290, 310);
+        this.u=u;
+        setSize(270, 310);
         float imageSize = getWidth()*.4f;
         TextBox title = new TextBox(u.title, Fonts.fontBig, getWidth()*.9f, Align.center);
         ImageActor ia = new ImageActor(u.tr, imageSize, imageSize);
@@ -36,6 +39,12 @@ public class UpgradeChoicePanel extends Group{
                 return true;
             }
         });
+        if(u!=null&&u.joke!=null){
+            ImageActor jk = new ImageActor(u.joke);
+            jk.setPosition(getWidth()/2-jk.getWidth()/2, getHeight()+3);
+            addActor(jk);
+        }
+
     }
 
     @Override

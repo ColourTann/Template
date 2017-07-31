@@ -19,12 +19,12 @@ public class ShipUpgradeGroup extends Group{
     public ShipUpgradeGroup() {
         setSize(600,400);
         shipScale = getWidth()/tr.getRegionWidth()*shipProporation;
-        addUpgradePanel(.1f, .5f, .2f, .15f, Upgrade.p1Reversinator, Upgrade.p1Speedinator);
-        addUpgradePanel(.9f, .55f, .8f, .7f, Upgrade.p2Shots, Upgrade.p2Range);
-        addUpgradePanel(.8f, .45f, .5f, .85f, Upgrade.p3Turret, Upgrade.p3Bullets);
-        addUpgradePanel(.2f, .5f, .8f, .2f, Upgrade.p5Rockets, Upgrade.p5Fire);
-        addUpgradePanel(.5f, .5f, .2f, .8f, Upgrade.p4Molotov, Upgrade.p4TimeWarp);
-        for(int i=0;i<0;i++)unlockNext(); //todo not this
+        addUpgradePanel(.1f, .5f, .15f, .3f, Upgrade.p1Reversinator, Upgrade.p1Speedinator);
+        addUpgradePanel(.9f, .55f, .85f, .5f, Upgrade.p2Shots, Upgrade.p2Range);
+        addUpgradePanel(.8f, .45f, .7f, .8f, Upgrade.p3Turret, Upgrade.p3Bullets);
+        addUpgradePanel(.2f, .5f, .7f, .2f, Upgrade.p5Rockets, Upgrade.p5Fire);
+        addUpgradePanel(.5f, .5f, .15f, .7f, Upgrade.p4Molotov, Upgrade.p4TimeWarp);
+        for(int i=0;i<5;i++)unlockNext(); //todo not this
     }
 
     private void addUpgradePanel(float shipX, float shipY, float boxX, float boxY, Upgrade one, Upgrade two){
