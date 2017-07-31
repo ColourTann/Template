@@ -44,7 +44,7 @@ public class Tanker extends PlayerShip {
     @Override
     protected void internalAct(float delta) {
         ticker += delta;
-        if(ticker>=.11f){
+        if(ticker>=.15f){
             hp=Math.min(maxHp, hp+1);
             ticker=0;
         }

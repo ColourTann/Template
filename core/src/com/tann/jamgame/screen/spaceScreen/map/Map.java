@@ -187,7 +187,7 @@ public class Map extends Group{
                 ships.removeValue(ships.get(i), true);
             }
         }
-        if(tanker.getX() > getWidth()-550){
+        if(tanker.getX() > getWidth()-580){
             SpaceScreen.get().victory();
         }
         for (Formation f:formations){

@@ -17,6 +17,7 @@ public class VomitDrive extends Weapon {
     protected void internalFire() {
         Ship s = getShip();
         s.weapons[0].reloadCharge();
+        s.weapons[0].reloadCharge();
         float angle = (float) (s.getRotation()-Math.PI);
         s.setRotation((float) (angle));
         s.dx= (float) (Math.cos(angle)*SPEED);

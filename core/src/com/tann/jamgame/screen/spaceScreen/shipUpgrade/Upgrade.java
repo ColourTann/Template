@@ -13,7 +13,7 @@ public class Upgrade {
             1, vd,
             vd.getImage(),
             vd.getName(),
-            "Instantly boost in the opposite direction and reload one blaster shot.\n\nInadvisable to use at speed, when drunk or at all.",
+            "Instantly boost in the opposite direction and reload two blaster shots.\n\nInadvisable to use at speed, when drunk or at all.",
             Colours.neonBlue
     );
 
@@ -27,7 +27,7 @@ public class Upgrade {
     );
 
     public static final Upgrade p2Range = new Upgrade(
-            0, UpgradeType.BulletSpeed, .25f,
+            0, UpgradeType.BulletSpeed, .3f,
             Main.atlas.findRegion("weapon/vodkabullets"),
             "Vodka-coated Bullets",
             "+40% blaster distance\n\nA strange but effective alteration!",
@@ -46,7 +46,7 @@ public class Upgrade {
             0, UpgradeType.Bullets, (int)(Blaster.NUM_SHOTS*.4f),
             Main.atlas.findRegion("weapon/moreshots"),
             "More Bullets",
-            "+40% bullets per blaster shot\n\nLegendary rum runner Bloody Mary wired her blaster to shoot 50 bullets at a time! Unfortunately one of the blew up in the chamber once.",
+            "+40% bullets per blaster shot\n\nLegendary rum runner One-Arm Mary wired her blaster to shoot 50 bullets at a time! Unfortunately one of the blew up in the chamber once.",
             Colours.red
     );
 
@@ -54,7 +54,7 @@ public class Upgrade {
             0, UpgradeType.Tanker_Shoots, 5,
             Main.atlas.findRegion("weapon/turret"),
             "Tanker Turret",
-            "Every time you fire your blaster, a turret on the tanker also fires.\n\nHarald Bluetooth was the first man to use this ingenious system. He defended a convoy of 50 tankers single-handed!",
+            "Every time you fire your blaster, a turret on the tanker also fires.\n\nHarald Bluetooth was the first man to use this ingenious system. He defended a convoy of 8 tankers single-handed!",
             Colours.red
     );
 

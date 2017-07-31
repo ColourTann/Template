@@ -207,8 +207,6 @@ public class Main extends ApplicationAdapter {
     private static float tickMult=1;
 
     public void update(float delta) {
-        tickMult= Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)?0.2f:1;
-        delta *= tickMult;
         ticks += delta;
         Sounds.tickFaders(delta);
         stage.act(delta);
