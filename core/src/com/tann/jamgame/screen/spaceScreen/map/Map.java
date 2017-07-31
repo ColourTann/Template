@@ -56,6 +56,9 @@ public class Map extends Group{
     public TextureRegion alcoholTexture;
     public TextureRegion planetTexture;
 
+    static final float start = 700;
+    static final float end = 700;
+
     public void setup() {
         for (TextBox tb : boxes) {
             tb.remove();
@@ -83,7 +86,7 @@ public class Map extends Group{
         alcoholTexture = Main.atlas.findRegion("drink/" + alcoholName);
         planet = new ImageActor(planetTexture);
         planet.setSize(PLANET_SIZE, PLANET_SIZE);
-        planet.setPosition(getWidth() - planet.getWidth() / 2 - 500, getHeight() / 2 - planet.getHeight() / 2);
+        planet.setPosition(getWidth() - planet.getWidth() / 2 - end, getHeight() / 2 - planet.getHeight() / 2);
         addActor(planet);
 
         for (Ship s : ships) {
@@ -91,12 +94,12 @@ public class Map extends Group{
         }
         formations.clear();
         tanker = new Tanker();
-        tanker.setPosition(700, getHeight() / 2);
+        tanker.setPosition(start, getHeight() / 2);
         addActor(tanker);
         ships.add(tanker);
         defender = new Defender();
         addActor(defender);
-        defender.setPosition(700, getHeight() / 2 + 70);
+        defender.setPosition(start, getHeight() / 2 + 70);
         ships.add(defender);
         control(defender);
 
@@ -131,19 +134,13 @@ public class Map extends Group{
                 JsonValue zone = zones.get(i);
                 String message = zone.getString("message");
                 float start = zone.getFloat("start");
-                float end = zone.getFloat("end");
                 float middle = getWidth() * start;
-                float width = (end - start) * getWidth();
                 int zoneSpeeders = zone.get("speeders").asInt();
                 int zoneHulks = zone.get("hulks").asInt();
                 int zoneBombers = zone.get("bombers").asInt();
                 int zoneCarriers = zone.get("carriers").asInt();
-                Formation f = new Formation(message, middle, width, zoneSpeeders, zoneHulks, zoneBombers, zoneCarriers);
+                Formation f = new Formation(message, middle, zoneSpeeders, zoneHulks, zoneBombers, zoneCarriers);
                 formations.add(f);
-                for (Ship s : f.ships) {
-                    ships.add(s);
-                    addActor(s);
-                }
             }
         }
     }
@@ -168,8 +165,8 @@ public class Map extends Group{
         float border = Main.width*2;
         Draw.fillRectangle(batch, getX()-border, getY()-border, getWidth()+border*2, getHeight()+border*2);
         batch.setColor(Colours.white);
-        for(int x=0;x<getWidth();x+=texSize){
-            for(int y=0;y<getHeight();y+=texSize){
+        for(int x=-1000;x<getWidth()+1000;x+=texSize){
+            for(int y=-1000;y<getHeight()+1000;y+=texSize){
                 Draw.draw(batch, bg, x,y);
             }
         }
@@ -187,7 +184,7 @@ public class Map extends Group{
                 ships.removeValue(ships.get(i), true);
             }
         }
-        if(tanker.getX() > getWidth()-580){
+        if(tanker.getX() > getWidth()-end-140){
             SpaceScreen.get().victory();
         }
         for (Formation f:formations){
@@ -240,5 +237,9 @@ public class Map extends Group{
         IncomingMissionScreen incoming = new IncomingMissionScreen();
         incoming.setRunnable(()-> Main.self.setScreen(missionInstruction, Main.TransitionType.LEFT, Interpolation.pow2Out, .5f));
         return incoming;
+    }
+
+    public float getProgress() {
+        return Math.min(1,(tanker.getX()-start)/(getWidth()-start-end));
     }
 }

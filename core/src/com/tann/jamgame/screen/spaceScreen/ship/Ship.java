@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pools;
 import com.tann.jamgame.Main;
 import com.tann.jamgame.screen.spaceScreen.Damageable;
@@ -92,84 +93,83 @@ public abstract class Ship extends Group implements Damageable{
     public void act(float delta) {
 
         speedFrames =Math.max(0, speedFrames -1);
-        int mult = 1;
-        if(speedFrames >0){
-            mult=2;
-        }
 
-        for(int xx=0;xx<mult;xx++) {
+        boolean boosted = speedFrames>0;
 
-            super.act(delta);
-            if(control) {
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                    rotateBy(-turnSpeed);
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                    rotateBy(+turnSpeed);
-                }
-
-                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                    accelerate(accel);
-                    makeParticle = true;
-                }
+        super.act(delta);
+        if(control) {
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                rotateBy(-turnSpeed);
             }
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                rotateBy(+turnSpeed);
+            }
+
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                accelerate(accel*(boosted?2.3f:1));
+                makeParticle = true;
+            }
+        }
 //        float mult = weapons[0].
-            flash -= .07f;
-            flash = Math.max(0, flash);
-            dx *= DRAG;
-            dy *= DRAG;
-            if (getSpeed() > maxSpeed) {
-                dx *= maxSpeed / getSpeed();
-                dy *= maxSpeed / getSpeed();
-            }
-            setPosition(getX() + dx, getY() + dy);
-            float x = getX();
-            float y = getY();
-            x = Math.max(0, Math.min(SpaceScreen.get().map.getWidth(), x));
-            y = Math.max(0, Math.min(SpaceScreen.get().map.getHeight(), y));
-            setPosition(x, y);
-            for (Weapon w : weapons) {
-                if (w != null) w.update();
-            }
-            internalAct(delta);
-            thrustAmount *= THRUST_DRAG;
-
-            if (makeParticle) {
-                float maxParticles = 1;
-                for (int i = 0; i < maxParticles; i++) {
-                    EngineParticle ep = Pools.obtain(EngineParticle.class);
-                    ep.setup();
-                    ep.x = getButtX() + dx * 1.5f;
-                    ep.y = getButtY() + dy * 1.5f;
-                    float rand = 0.9f;
-                    float speedRotation = (float) Math.atan2(dy, dx);
-                    float angleDiff = Math.abs(Maths.angleDiff(getRotation(), speedRotation));
-                    float initialMult = 0 + angleDiff * 3;
-
-                    float faceX = (float) Math.cos(getRotation());
-                    float faceY = (float) Math.sin(getRotation());
-                    ep.dx = -faceX * initialMult + Particle.rand(-rand, rand);
-                    ep.dy = -faceY * initialMult + Particle.rand(-rand, rand);
-                    ep.x -= dx * i / maxParticles;
-                    ep.y -= dy * i / maxParticles;
-                    ep.col = (this instanceof PlayerShip) ? Colours.blue : Colours.red;
-                    SpaceScreen.get().addParticle(ep);
+        flash -= .07f;
+        flash = Math.max(0, flash);
+        dx *= DRAG;
+        dy *= DRAG;
+        if (getSpeed() > maxSpeed) {
+            dx *= maxSpeed / getSpeed();
+            dy *= maxSpeed / getSpeed();
+        }
+        setPosition(getX() + dx, getY() + dy);
+        float x = getX();
+        float y = getY();
+        x = Math.max(0, Math.min(SpaceScreen.get().map.getWidth(), x));
+        y = Math.max(0, Math.min(SpaceScreen.get().map.getHeight(), y));
+        setPosition(x, y);
+        for (Weapon w : weapons) {
+            if (w != null){
+                for(int i=0;i<(boosted?3:1);i++) {
+                    w.update();
                 }
             }
-            makeParticle = false;
-            if(fireFrames>0){
-                FireParticle fp = Pools.obtain(FireParticle.class);
-                fp.setup();
-                fp.x=getX();
-                fp.y=getY();
-                float rand = 2.5f;
-                fp.dx =Particle.rand(rand,-rand);
-                fp.dy =Particle.rand(rand,-rand);
-                SpaceScreen.get().addParticle(fp);
-                SpaceScreen.get().map.flamingShip(this);
-            }
-            fireFrames = Math.max(0, fireFrames-1);
         }
+        internalAct(delta);
+        thrustAmount *= THRUST_DRAG;
+
+        if (makeParticle) {
+            float maxParticles = 1;
+            for (int i = 0; i < maxParticles; i++) {
+                EngineParticle ep = Pools.obtain(EngineParticle.class);
+                ep.setup();
+                ep.x = getButtX() + dx * 1.5f;
+                ep.y = getButtY() + dy * 1.5f;
+                float rand = 0.9f;
+                float speedRotation = (float) Math.atan2(dy, dx);
+                float angleDiff = Math.abs(Maths.angleDiff(getRotation(), speedRotation));
+                float initialMult = 0 + angleDiff * 3;
+
+                float faceX = (float) Math.cos(getRotation());
+                float faceY = (float) Math.sin(getRotation());
+                ep.dx = -faceX * initialMult + Particle.rand(-rand, rand);
+                ep.dy = -faceY * initialMult + Particle.rand(-rand, rand);
+                ep.x -= dx * i / maxParticles;
+                ep.y -= dy * i / maxParticles;
+                ep.col = (this instanceof PlayerShip) ? Colours.blue : Colours.red;
+                SpaceScreen.get().addParticle(ep);
+            }
+        }
+        makeParticle = false;
+        if(fireFrames>0){
+            FireParticle fp = Pools.obtain(FireParticle.class);
+            fp.setup();
+            fp.x=getX();
+            fp.y=getY();
+            float rand = 2.5f;
+            fp.dx =Particle.rand(rand,-rand);
+            fp.dy =Particle.rand(rand,-rand);
+            SpaceScreen.get().addParticle(fp);
+            SpaceScreen.get().map.flamingShip(this);
+        }
+        fireFrames = Math.max(0, fireFrames-1);
 
     }
 
@@ -300,7 +300,8 @@ public abstract class Ship extends Group implements Damageable{
             ratio = (float) Math.pow(1-ratio, 3);
             batch.setColor(Colours.shiftedTowards(Colours.red, Colours.white, ratio));
         }
-        Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
+        batch.setColor(Colours.withAlpha(batch.getColor(), getColor().a));
+        Draw.drawCenteredRotatedScaled(batch, tr, getX(), getY(), getWidth()/tr.getRegionWidth()*(getWarpRatio()>0?2:1), getHeight()/tr.getRegionHeight()*(getWarpRatio()>0?2:1), getRotation());
         super.draw(batch, parentAlpha);
     }
 
@@ -320,5 +321,13 @@ public abstract class Ship extends Group implements Damageable{
     public void ignite(int i) {
         maxFireFrames=i;
         fireFrames = i;
+    }
+
+    boolean fading ;
+    public void fadeIn() {
+        fading = true;
+        setColor(1,1,1,0);
+        addAction(Actions.fadeIn(.3f));
+        addAction(Actions.after(Actions.run(()->fading=false)));
     }
 }

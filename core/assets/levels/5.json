@@ -1,5 +1,5 @@
 {
-	"width" : 28000,
+	"width" : 24000,
 	"speeders" : 40,
 	"hulks" : 7,
 	"bombers" : 7,
@@ -11,20 +11,18 @@
 		{
 			"message" : "There's too many of us",
 			"start" : "0.3",
-			"end" : "0.4",
-			"speeders" : 50,
+			"speeders" : 15,
 			"hulks" : 0,
 			"bombers" : 0,
 			"carriers" : 1,
 		},
 		{
-			"message" : "they'll never make it",
+			"message" : "you'll never make it",
 			"start" : "0.7",
-			"end" : "0.8",
-			"speeders" : 5,
+			"speeders" : 4,
 			"hulks" : 2,
-			"bombers" : 2,
-			"carriers" : 1,
+			"bombers" : 1,
+			"carriers" : 0,
 		}
 
 	],

@@ -41,7 +41,7 @@ public class Bomber extends EnemyShip {
 		this.tr = bomber;
 		setSize(64, 64);
 		// No Weapon.
-		setHp(24); // Takes a lot of hits. (35 is a lot!)
+		setHp(19); // Takes a lot of hits. (35 is a lot!)
 	}
 
 	@Override

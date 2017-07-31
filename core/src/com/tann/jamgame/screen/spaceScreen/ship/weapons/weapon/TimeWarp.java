@@ -6,12 +6,12 @@ import com.tann.jamgame.util.Sounds;
 
 public class TimeWarp extends Weapon{
     public TimeWarp() {
-        super(1000, 1);
+        super(1400, 1);
     }
 
     @Override
     protected void internalFire() {
-        getShip().speed(200);
+        getShip().speed(220);
         Sounds.playSound(Sounds.speed, null);
     }
 

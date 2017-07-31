@@ -35,12 +35,6 @@ public class Hulk extends EnemyShip{
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.shiftedTowards(Colours.white, Colours.red, flash));
-        Draw.drawCenteredRotatedScaled(batch, hulk.getFrame(), getX(), getY(), getWidth()/tr.getRegionWidth(), getHeight()/tr.getRegionHeight(), getRotation());
-    }
-
-    @Override
     protected void onDeath() {
         super.onDeath();
         Sounds.playSound(Sounds.pew, Maths.v.set(getX(), getY()));

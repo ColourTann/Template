@@ -62,6 +62,9 @@ public class SpikeBullet extends Bullet {
 
     @Override
     public int getDamage() {
+        if(type==BulletType.Friendly){
+            return SpaceScreen.get().map.defender.getWarpRatio()>0?135:45;
+        }
         return 45;
     }
 }

@@ -28,7 +28,7 @@ public class Blaster extends Weapon {
             Bullet b = Pools.obtain(BlasterBullet.class);
             b.init();
             b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
-            b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation()+ Particle.rand(-ANGLE_RAND, ANGLE_RAND),
+            b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx*(1+getBonus(Upgrade.UpgradeType.BulletSpeed)), ship.dy*(1+getBonus(Upgrade.UpgradeType.BulletSpeed)), ship.getRotation()+ Particle.rand(-ANGLE_RAND, ANGLE_RAND),
                     Particle.rand(MIN_SPEED,MAX_SPEED)*(1+getBonus(Upgrade.UpgradeType.BulletSpeed)));
             b.setDrag(.90f);
             b.setLife(35);

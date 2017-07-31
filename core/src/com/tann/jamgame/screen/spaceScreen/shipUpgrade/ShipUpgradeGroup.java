@@ -22,8 +22,8 @@ public class ShipUpgradeGroup extends Group{
         addUpgradePanel(.1f, .5f, .15f, .3f, Upgrade.p1Reversinator, Upgrade.p1Speedinator);
         addUpgradePanel(.9f, .55f, .85f, .5f, Upgrade.p2Shots, Upgrade.p2Range);
         addUpgradePanel(.8f, .45f, .7f, .8f, Upgrade.p3Turret, Upgrade.p3Bullets);
-        addUpgradePanel(.2f, .5f, .7f, .2f, Upgrade.p5Rockets, Upgrade.p5Fire);
         addUpgradePanel(.5f, .5f, .15f, .7f, Upgrade.p4Molotov, Upgrade.p4TimeWarp);
+        addUpgradePanel(.2f, .5f, .7f, .2f, Upgrade.p5Rockets, Upgrade.p5Fire);
         for(int i=0;i<0;i++)unlockNext(); //todo not this
     }
 

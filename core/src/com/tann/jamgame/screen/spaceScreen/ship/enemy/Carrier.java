@@ -25,7 +25,7 @@ public class Carrier extends EnemyShip{
         float sizeMult = 1.9f;
         setSize(tr.getRegionWidth()*sizeMult, tr.getRegionHeight()*sizeMult);
         seed = (int) (Math.random()*100);
-        setHp(40);
+        setHp(45);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Carrier extends EnemyShip{
             return;
         }
         ticks++;
-        if(ticks%60==0){
+        if(ticks%75==0){
             spawnSpeeder();
         }
         float targetX = getTanker().getX()+(float)(Math.cos(rot))*dist;

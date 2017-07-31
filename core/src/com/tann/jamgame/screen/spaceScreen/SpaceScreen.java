@@ -17,6 +17,7 @@ import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
 import com.tann.jamgame.screen.spaceScreen.shipUpgrade.ShipUpgradeGroup;
 import com.tann.jamgame.screen.spaceScreen.ship.Ship;
 import com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet.Bullet;
+import com.tann.jamgame.screen.spaceScreen.ui.MapProgress;
 import com.tann.jamgame.screen.spaceScreen.ui.ShipHealth;
 import com.tann.jamgame.screen.spaceScreen.ui.WeaponIcon;
 import com.tann.jamgame.util.*;
@@ -147,8 +148,11 @@ public class SpaceScreen extends Screen {
         switch(keycode){
             case Input.Keys.SPACE:
                 if(finished) {
+                    boolean v = victory;
                     reset();
-                    Main.self.setScreen(map.getMissionInstruction(), true);
+                    if (v) {
+                        Main.self.setScreen(map.getMissionInstruction(), true);
+                    }
                 }
                 else{
                     if(sug!=null&&sug.hasParent()){
@@ -274,16 +278,18 @@ public class SpaceScreen extends Screen {
         }
     }
 
+    MapProgress mp = new MapProgress(150);
+
     private void setupHealth(){
         if(tankerHealth !=null) tankerHealth.remove();
         tankerHealth = new ShipHealth(map.tanker, "TANKER", 500);
 
-        if(playerHealth !=null) playerHealth.remove();
-        playerHealth = new ShipHealth(map.defender, "PLAYER", 200);
+//        if(playerHealth !=null) playerHealth.remove();
+//        playerHealth = new ShipHealth(map.defender, "PLAYER", 200);
 
         Layoo l = new Layoo(this);
         l.row(1);
-        l.add(1,playerHealth,1,tankerHealth,1);
+        l.add(1,tankerHealth,1, mp, 1);
         l.row(.012f);
         l.layoo();
     }

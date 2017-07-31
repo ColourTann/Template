@@ -21,7 +21,7 @@ public class Tanker extends PlayerShip {
         super(tanker, 0, 400, .004f);
         setPosition(500,500);
         setSize(370, 70);
-        setHp(500);
+        setHp(700);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Tanker extends PlayerShip {
     @Override
     protected void internalAct(float delta) {
         ticker += delta;
-        if(ticker>=.15f){
+        if(ticker>=.2f){
             hp=Math.min(maxHp, hp+1);
             ticker=0;
         }

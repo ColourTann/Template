@@ -27,10 +27,10 @@ public class Upgrade {
     );
 
     public static final Upgrade p2Range = new Upgrade(
-            0, UpgradeType.BulletSpeed, .3f,
+            0, UpgradeType.BulletSpeed, .4f,
             Main.atlas.findRegion("weapon/vodkabullets"),
             "Vodka-coated Bullets",
-            "+40% blaster distance\n\nA strange but effective alteration!",
+            "+50% blaster distance\n\nA strange but effective alteration!",
             Colours.orange
     );
 
@@ -69,7 +69,7 @@ public class Upgrade {
 
     public static final Upgrade p4TimeWarp = new Upgrade(
             2, tw,tw.getImage(), tw.getName(),
-            "Speeds up time for you when drunk\n\nMaximum of one shot per relativistic minute. Chronic usage may induce coma.",
+            "Triple size, speed, fire rate and damage for a few seconds\n\n315% ABV. Maximum of one shot per relativistic minute. Chronic usage may induce coma.",
             Colours.yellow
     );
 

@@ -52,7 +52,7 @@ public class MolotovBullet extends  Bullet{
         for(Ship s:SpaceScreen.get().map.ships){
             if(s.affectedBy(type)){
                 if(Maths.distance(s.getX(), s.getY(), x, y)<ep.radius*.6f){
-                    s.damage(40);
+                    s.damage(100);
                 }
             }
         }
@@ -75,7 +75,7 @@ public class MolotovBullet extends  Bullet{
 
     @Override
     public void draw(Batch batch) {
-        batch.setColor(Colours.grey);
+        batch.setColor(Colours.light);
         Draw.drawCenteredRotatedScaled(batch, Draw.getSq(), x, y, WIDTH, HEIGHT, Main.ticks*ROTATION_SPEPED);
 
     }

@@ -1,9 +1,9 @@
 {
-	"width" : 24000,
+	"width" : 22000,
 	"speeders" : 28,
-	"hulks" : 3,
+	"hulks" : 4,
 	"bombers" : 4,
-	"carriers" : 3,
+	"carriers" : 2,
 	"words" : [
 		"C: user superweapon"
 	],
@@ -14,7 +14,6 @@
 		{
 			"message" : "Bombs! Target the tanker!",
 			"start" : "0.3",
-			"end" : "0.4",
 			"speeders" : 0,
 			"hulks" : 0,
 			"bombers" : 4,
@@ -22,12 +21,11 @@
 		},
 		{
 			"message" : "Stop the evil alcohol trawlers",
-			"start" : "0.7",
-			"end" : "0.8",
-			"speeders" : 4,
+			"start" : "0.8",
+			"speeders" : 0,
 			"hulks" : 2,
-			"bombers" : 2,
-			"carriers" : 0,
+			"bombers" : 0,
+			"carriers" : 1,
 		}
 
 	],

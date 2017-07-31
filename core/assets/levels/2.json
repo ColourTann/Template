@@ -1,8 +1,8 @@
 {
 	"width" : 20000,
-	"speeders" : 15,
-	"hulks" : 3,
-	"bombers" : 2,
+	"speeders" : 28,
+	"hulks" : 4,
+	"bombers" : 3,
 	"carriers" : 0,
 	"planet" : "planet2",
 	"drink" : "drink2",
@@ -11,10 +11,9 @@
 		{
 			"message" : "prepare to die\nregards\nteetotallers",
 			"start" : "0.5",
-			"end" : "0.65",
-			"speeders" : 0,
-			"hulks" : 0,
-			"bombers" : 2,
+			"speeders" : 6,
+			"hulks" : 2,
+			"bombers" : 0,
 			"carriers" : 0,
 		}
 	],

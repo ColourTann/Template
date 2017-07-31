@@ -3,6 +3,7 @@ package com.tann.jamgame.screen.spaceScreen.ship.weapons.bullet;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Shape2D;
+import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
@@ -54,6 +55,9 @@ public class BlasterBullet extends Bullet {
 
     @Override
     public int getDamage() {
+        if(type==BulletType.Friendly){
+            return SpaceScreen.get().map.defender.getWarpRatio()>0?3:1;
+        }
         return 1;
     }
 }

@@ -14,14 +14,13 @@ public class Formation {
     public Array<EnemyShip> ships = new Array<>();
     public float x;
     float alpha = .1f;
-    float width = 3500;
+    float width = 1200;
     String message;
     boolean triggered;
 
-    public Formation(String message, float middle, float width, int speeders, int hulks, int bombers, int carriers){
+    public Formation(String message, float middle, int speeders, int hulks, int bombers, int carriers){
         this.message=message;
         this.x = middle;
-        this.width=width;
         for(int i=0;i<speeders;i++){
             setupShip(new Speeder());
         }
@@ -47,6 +46,11 @@ public class Formation {
         triggered=true;
         TextWisp tw = new TextWisp(message.toUpperCase(), Fonts.fontBig, Main.width/2, Main.height/4*3);
         SpaceScreen.get().addActor(tw);
+        for (Ship s : ships) {
+            SpaceScreen.get().map.ships.add(s);
+            SpaceScreen.get().map.addActor(s);
+            s.fadeIn();
+        }
     }
 
     private void setupShip(EnemyShip s){
@@ -67,8 +71,8 @@ public class Formation {
     }
 
     public void draw(Batch batch){
-        batch.setColor(Colours.withAlpha(Colours.red, alpha));
-        Draw.fillRectangle(batch, x-width/2, 0, width, Map.HEIGHT);
+//        batch.setColor(Colours.withAlpha(Colours.red, alpha));
+//        Draw.fillRectangle(batch, x-width/2, 0, width, Map.HEIGHT);
     }
     
 }

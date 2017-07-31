@@ -92,7 +92,7 @@ public class Main extends ApplicationAdapter {
 //        SpaceScreen.get().map.setup();
 //        setScreen(SpaceScreen.get().map.getMissionInstruction());
         setScreen(jamTitle, true);
-//        setScreen(SpaceScreen.get());
+//        setScreen(SpaceScreen.get(), true);
 //        setScreen(IntroScreen.get());
 //        setScreen(new IncomingMissionScreen());
     }
