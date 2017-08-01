@@ -1,6 +1,7 @@
 package com.tann.jamgame.screen.spaceScreen.map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -28,22 +29,65 @@ import com.tann.jamgame.util.*;
 public class Map extends Group{
 
     private static final float PLANET_SIZE = 500;
-    Texture bg;
+    Texture nebula;
+    Texture stars;
     public Defender defender;
     public Tanker tanker;
     public Array<Ship> ships = new Array<>();
     public Array<Formation> formations = new Array<>();
-    static final int texSize = 2048;
+    static final int texSize = 700;
     public static final float HEIGHT = 4000;
     public static int level = 0;
     public Map() {
         setSize(13000,HEIGHT);
-        Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA4444);
-        for(int i=0;i<500;i++){
-            p.setColor(Colours.light);
-            p.fillRectangle((int)(Math.random()*texSize), (int)(Math.random()*texSize), 3, 3);
+        Pixmap p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA8888);
+
+        float amp = 1;
+        float freq=.0045f;
+        int octaves = 5;
+        for(int x=0;x<texSize;x++){
+            for(int y=0;y<texSize;y++){
+                float xSin = (float) Math.sin(((float)x/texSize)*Math.PI*2);
+                float xCos = (float) Math.cos(((float)x/texSize)*Math.PI*2);
+                float ySin = (float) Math.sin(((float)y/texSize)*Math.PI*2);
+                float yCos = (float) Math.cos(((float)y/texSize)*Math.PI*2);
+                float total =0;
+                for(int i=0;i<octaves;i++){
+                    float freqFactor = (float) Math.pow(2, i) * freq;
+                    total += (float) (Noise.noise(xSin*freqFactor*texSize/2,ySin*freqFactor*texSize/2,xCos*freqFactor*texSize/2,yCos*freqFactor*texSize/2)) * Math.pow(.5f, i);
+                }
+                float n = Math.max(-1,Math.min(1,total));
+//                float n = total;
+                n+=1;
+                n/=2;
+
+                float mult = .4f;
+
+
+                float r = (float) Math.pow(n,9)*mult;
+                float g = (float) Math.pow(n,5)*mult;
+                float b = (float) Math.pow(n,3)*mult;
+
+                r =  Math.max(0,Math.min(1,r));
+                g =  Math.max(0,Math.min(1,g));
+                b =  Math.max(0,Math.min(1,b));
+
+                p.setColor(r,g,b,1);
+                p.drawPixel(x,y);
+
+            }
         }
-        bg = new Texture(p);
+        nebula = new Texture(p);
+
+        p = new Pixmap(texSize, texSize, Pixmap.Format.RGBA8888);
+        p.setColor(new Color(1,1,1,.5f));
+        for(int i=0;i<500;i++){
+            int size = (int)(Math.random()*4);
+//            p.fillCircle((int)(Math.random()*texSize), (int)(Math.random()*texSize),  size);
+            p.fillRectangle((int)(Math.random()*texSize), (int)(Math.random()*texSize), size, size);
+        }
+        stars = new Texture(p);
+
         setTransform(false);
     }
 
@@ -165,11 +209,19 @@ public class Map extends Group{
         float border = Main.width*2;
         Draw.fillRectangle(batch, getX()-border, getY()-border, getWidth()+border*2, getHeight()+border*2);
         batch.setColor(Colours.white);
-        for(int x=-1000;x<getWidth()+1000;x+=texSize){
-            for(int y=-1000;y<getHeight()+1000;y+=texSize){
-                Draw.draw(batch, bg, x,y);
+        float scale = 5.5f;
+        for(int x=-1000;x<getWidth()+1000;x+=texSize*scale){
+            for(int y=-1000;y<getHeight()+1000;y+=texSize*scale){
+                Draw.drawScaled(batch, nebula, x,y, scale, scale);
             }
         }
+        scale = 1;
+        for(int x=-1000;x<getWidth()+1000;x+=texSize*scale){
+            for(int y=-1000;y<getHeight()+1000;y+=texSize*scale){
+                Draw.drawScaled(batch, stars, x,y, scale, scale);
+            }
+        }
+
         Main.logTime("stars");
         super.draw(batch, parentAlpha);
         Main.logTime("other");
