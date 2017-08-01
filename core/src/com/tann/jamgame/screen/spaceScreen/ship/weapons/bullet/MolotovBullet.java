@@ -48,7 +48,7 @@ public class MolotovBullet extends  Bullet{
         ep.y = y;
         ep.setupLife(1.1f);
         SpaceScreen.get().addParticle(ep);
-        Sounds.playSound(Sounds.molotov_explode, Maths.v.set(x,y));
+        Sounds.playSound(Sounds.molotov_explode, .5f, 1, Maths.v.set(x,y));
         for(Ship s:SpaceScreen.get().map.ships){
             if(s.affectedBy(type)){
                 if(Maths.distance(s.getX(), s.getY(), x, y)<ep.radius*.6f){
