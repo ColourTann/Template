@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.tann.jamgame.screen.EndScreen;
 import com.tann.jamgame.screen.IntroScreen;
 import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.util.*;
@@ -91,10 +92,11 @@ public class Main extends ApplicationAdapter {
 
 //        SpaceScreen.get().map.setup();
 //        setScreen(SpaceScreen.get().map.getMissionInstruction());
-//        setScreen(jamTitle, true);
-        setScreen(SpaceScreen.get(), true);
+        setScreen(jamTitle, true);
+//        setScreen(SpaceScreen.get(), true);
 //        setScreen(IntroScreen.get());
 //        setScreen(new IncomingMissionScreen());
+//        setScreen(new EndScreen(), true);
     }
 
     private MainState state = MainState.Normal;

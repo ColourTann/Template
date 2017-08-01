@@ -16,7 +16,7 @@ public abstract class Weapon {
     public final int cooldown;
     private final int base_max_charges;
     public int charges;
-    int reload;
+    public int reload;
     Ship ship;
     public boolean friend;
     Array<Upgrade> upgrades = new Array<>();

@@ -11,7 +11,7 @@ public class SpikeLauncher extends Weapon {
     private static final float KNOCKBACK = 35;
 
     public SpikeLauncher() {
-        super(400, 1);
+        super(200, 1);
     }
 
     @Override

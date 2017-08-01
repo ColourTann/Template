@@ -1,26 +1,26 @@
 {
 	"width" : 24000,
-	"speeders" : 40,
+	"speeders" : 34,
 	"hulks" : 7,
-	"bombers" : 7,
+	"bombers" : 5,
 	"carriers" : 5,
 	"planet" : "planet4",
-	"drink" : "drink2",
+	"drink" : "chalice",
 	"zones" : 
 	[
 		{
 			"message" : "There's too many of us",
 			"start" : "0.3",
-			"speeders" : 15,
+			"speeders" : 18,
 			"hulks" : 0,
 			"bombers" : 0,
-			"carriers" : 1,
+			"carriers" : 2,
 		},
 		{
 			"message" : "you'll never make it",
 			"start" : "0.7",
 			"speeders" : 4,
-			"hulks" : 2,
+			"hulks" : 1,
 			"bombers" : 1,
 			"carriers" : 0,
 		}
@@ -34,7 +34,7 @@ I think there might be too many
 
 final mission for us, enemies getting too numerous
 
-1.5 hypertons of [alcohol name] on board
+1.5 hypertons of king's elixir on board
 
 glorious defeat or embarrass teetotallers last time"
 }

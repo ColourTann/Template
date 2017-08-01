@@ -24,7 +24,7 @@ public class MolotovLauncher extends Weapon {
         b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
         b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation(), 15+ship.getSpeed());
         SpaceScreen.get().addBullet(b);
-        Sounds.playSound(Sounds.molotov_launch, Maths.v.set(b.x,b.y));
+        Sounds.playSound(Sounds.molotov_launch, .4f, 1, Maths.v.set(b.x,b.y) );
     }
 
     @Override

@@ -1,17 +1,17 @@
 {
 	"width" : 20000,
-	"speeders" : 28,
-	"hulks" : 4,
-	"bombers" : 3,
+	"speeders" : 33,
+	"hulks" : 5,
+	"bombers" : 2,
 	"carriers" : 0,
 	"planet" : "planet2",
-	"drink" : "drink2",
+	"drink" : "pink",
 	"zones" : 
 	[
 		{
 			"message" : "prepare to die\nregards\nteetotallers",
 			"start" : "0.5",
-			"speeders" : 6,
+			"speeders" : 4,
 			"hulks" : 2,
 			"bombers" : 0,
 			"carriers" : 0,
@@ -21,7 +21,7 @@
 
 Objective:
 
-[alcohol name] to be delivered to clubtopia
+Strawberry Megablitz to be delivered to clubtopia
 
 teetotaller blockade detected
 

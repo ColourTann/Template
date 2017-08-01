@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Screen;
+import com.tann.jamgame.util.Sounds;
 
 public class TitleScreen extends Screen {
 
@@ -42,5 +43,13 @@ public class TitleScreen extends Screen {
     @Override
     public void keyPress(int keycode) {
         r.run();
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        if(active && tr.getWidth()==434){
+            Sounds.playSound(Sounds.jingle);
+        }
+        super.setActive(active);
     }
 }

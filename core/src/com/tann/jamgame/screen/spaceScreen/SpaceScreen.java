@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
+import com.tann.jamgame.screen.EndScreen;
 import com.tann.jamgame.screen.MissionInstructionScreen;
 import com.tann.jamgame.screen.spaceScreen.map.Map;
 import com.tann.jamgame.screen.spaceScreen.ship.player.PlayerShip;
@@ -149,6 +150,12 @@ public class SpaceScreen extends Screen {
             case Input.Keys.SPACE:
                 if(finished) {
                     boolean v = victory;
+
+                    if(v && Map.level==6){
+                        Main.self.setScreen(new EndScreen(), true);
+                        return;
+                    }
+
                     reset();
                     if (v) {
                         Main.self.setScreen(map.getMissionInstruction(), true);

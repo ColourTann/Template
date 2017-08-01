@@ -20,7 +20,7 @@ public class MolotovBullet extends  Bullet{
 
     @Override
     public void specificInit() {
-        setLife(30);
+        setLife(25);
     }
 
 

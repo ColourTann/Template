@@ -23,11 +23,18 @@ public class Hulk extends EnemyShip{
         setHp(29);
     }
 
+    boolean inRange = false;
+
     @Override
     protected void internalAct(float delta) {
         tailTanker(dist);
         setY((float) (getY()+Math.sin(Main.ticks*1.2+seed)*2.5f));
         if(getTankerDist()<dist+50 && Math.abs(getTankerTargetRotation()-getRotation())<.4f){
+            if(!inRange){
+                weapons[0].charges=0;
+                weapons[0].reload=(int)(weapons[0].cooldown*.7f);
+                inRange=true;
+            }
             if(fireWeapon(0)){
                 Sounds.playSound(Sounds.pew_smol, .35f, .8f, Maths.v.set(getX(), getY()));
             }

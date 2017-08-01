@@ -35,6 +35,8 @@ public class Sounds {
     public static String beep_down;
     public static String beep_up;
     public static String cancel;
+
+    public static String jingle;
     public static void setup(){
 		//sfx//
 
@@ -58,6 +60,8 @@ public class Sounds {
         beep = makeSound("sfx/menu_beep_neutral.wav", Sound.class);
         beep_down = makeSound("sfx/menu_beep_down.wav", Sound.class);
         cancel = makeSound("sfx/cancel.wav", Sound.class);
+
+        jingle = makeSound("music/jingle.wav",Sound.class);
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();

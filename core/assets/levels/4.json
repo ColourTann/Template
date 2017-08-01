@@ -8,7 +8,7 @@
 		"C: user superweapon"
 	],
 	"planet" : "planet4",
-	"drink" : "drink2",
+	"drink" : "beer",
 	"zones" : 
 	[
 		{
@@ -22,8 +22,8 @@
 		{
 			"message" : "Stop the evil alcohol trawlers",
 			"start" : "0.8",
-			"speeders" : 0,
-			"hulks" : 2,
+			"speeders" : 5,
+			"hulks" : 3,
 			"bombers" : 0,
 			"carriers" : 1,
 		}

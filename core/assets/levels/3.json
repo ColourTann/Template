@@ -1,16 +1,16 @@
 {
 	"width" : 22000,
-	"speeders" : 28,
-	"hulks" : 4,
+	"speeders" : 36,
+	"hulks" : 5,
 	"bombers" : 4,
-	"carriers" : 3,
+	"carriers" : 2,
 	"planet" : "planet3",
-	"drink" : "drink2",
+	"drink" : "green",
 	"spiel" : "Mission 4/6
 
 Objective:
 
-[alcohol name] needed in rock festival system before summer
+watermelon wasters needed in rock festival system before summer
 
 new enemy ship fabricates fighters on battlefield
 
