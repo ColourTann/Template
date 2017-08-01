@@ -12,7 +12,7 @@ public class TimeWarp extends Weapon{
     @Override
     protected void internalFire() {
         getShip().speed(220);
-        Sounds.playSound(Sounds.speed, null);
+        Sounds.playSound(Sounds.speed, .5f, 1, null);
     }
 
     @Override
