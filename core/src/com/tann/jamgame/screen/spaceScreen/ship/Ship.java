@@ -75,7 +75,7 @@ public abstract class Ship extends Group implements Damageable{
         remove();
         if(!admin) {
             for (int i = 0; i < 2; i++) {
-                ExplosionParticle ep = Pools.obtain(ExplosionParticle.class);
+                ExplosionParticle ep = ExplosionParticle.getInstance();
                 ep.setup();
                 ep.radius=40 + getWidth()/2 * ((this instanceof Tanker)?2:1);
                 ep.x = getX();
@@ -138,7 +138,7 @@ public abstract class Ship extends Group implements Damageable{
         if (makeParticle) {
             float maxParticles = 1;
             for (int i = 0; i < maxParticles; i++) {
-                EngineParticle ep = Pools.obtain(EngineParticle.class);
+                EngineParticle ep = EngineParticle.getInstance();
                 ep.setup();
                 ep.x = getButtX() + dx * 1.5f;
                 ep.y = getButtY() + dy * 1.5f;
@@ -159,7 +159,7 @@ public abstract class Ship extends Group implements Damageable{
         }
         makeParticle = false;
         if(fireFrames>0){
-            FireParticle fp = Pools.obtain(FireParticle.class);
+            FireParticle fp = new FireParticle();
             fp.setup();
             fp.x=getX();
             fp.y=getY();

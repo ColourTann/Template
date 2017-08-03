@@ -25,7 +25,7 @@ public class Blaster extends Weapon {
         Ship ship = getShip();
         Sounds.playSound(Sounds.shot, .4f, 1, Maths.v.set(ship.getX(), ship.getY()));
         for(int i = 0; i<NUM_SHOTS+getBonus(Upgrade.UpgradeType.Bullets); i++){
-            Bullet b = Pools.obtain(BlasterBullet.class);
+            Bullet b = BlasterBullet.getInstance();
             b.init();
             b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
             b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx*(1+getBonus(Upgrade.UpgradeType.BulletSpeed)), ship.dy*(1+getBonus(Upgrade.UpgradeType.BulletSpeed)), ship.getRotation()+ Particle.rand(-ANGLE_RAND, ANGLE_RAND),
@@ -39,7 +39,7 @@ public class Blaster extends Weapon {
         if(getBonus(Upgrade.UpgradeType.Tanker_Shoots)!=0){
             for(int i = 0; i<(NUM_SHOTS+getBonus(Upgrade.UpgradeType.Bullets)); i++){
                 ship = SpaceScreen.get().map.tanker;
-                Bullet b = Pools.obtain(BlasterBullet.class);
+                Bullet b = BlasterBullet.getInstance();
                 b.init();
                 b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
                 b.setup(ship.getNoseX()-ship.getWidth()/2, ship.getNoseY(), ship.dx, ship.dy, getShip().getRotation()+ Particle.rand(-ANGLE_RAND, ANGLE_RAND),

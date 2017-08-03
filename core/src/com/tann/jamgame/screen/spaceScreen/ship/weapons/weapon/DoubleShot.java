@@ -22,7 +22,7 @@ public class DoubleShot extends Weapon {
         float bXDiff = (float) (Math.cos(ship.getRotation()+Math.PI/2)*dist);
         float bYDiff = (float) (Math.sin(ship.getRotation()+Math.PI/2)*dist);
         for(int i=0;i<2;i++){
-            Bullet b = Pools.obtain(BoringBullet.class);
+            Bullet b = BoringBullet.getInstance();
             b.init();
             b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
             int mult = i*2-1;

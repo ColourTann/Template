@@ -8,7 +8,19 @@ import com.tann.jamgame.screen.spaceScreen.particle.ExplosionAnimationParticle;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoringBullet extends Bullet {
+
+
+    private static List<BoringBullet> boringBullets = new ArrayList<>();
+    public static BoringBullet getInstance(){
+        if(boringBullets.size()>0){
+            return boringBullets.remove(0);
+        }
+        return new BoringBullet();
+    }
 
     @Override
     public void specificInit() {
@@ -31,7 +43,7 @@ public class BoringBullet extends Bullet {
 
     @Override
     public void impactEffect() {
-        ExplosionAnimationParticle eap = Pools.obtain(ExplosionAnimationParticle.class);
+        ExplosionAnimationParticle eap = ExplosionAnimationParticle.getInstance();
         eap.setup();
         eap.x=x+dx;
         eap.y=y+dy;
@@ -60,5 +72,10 @@ public class BoringBullet extends Bullet {
     @Override
     public int getDamage() {
         return 1;
+    }
+
+    @Override
+    protected void onDispose() {
+        boringBullets.add(this);
     }
 }

@@ -8,8 +8,18 @@ import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.Noise;
 import com.tann.jamgame.util.Particle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExplosionParticle extends Particle {
 
+    private static List<ExplosionParticle> explosionParticlesPool = new ArrayList<>();
+    public static ExplosionParticle getInstance(){
+        if(explosionParticlesPool.size()>0){
+            return explosionParticlesPool.remove(0);
+        }
+        return new ExplosionParticle();
+    }
 
     float offset;
     @Override
@@ -56,7 +66,10 @@ public class ExplosionParticle extends Particle {
 
             }
         }
+    }
 
-
+    @Override
+    protected void endLife() {
+        explosionParticlesPool.add(this);
     }
 }

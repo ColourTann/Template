@@ -39,7 +39,7 @@ public class MolotovBullet extends  Bullet{
     }
 
     protected void decayEffect() {
-        ExplosionParticle ep = Pools.obtain(ExplosionParticle.class);
+        ExplosionParticle ep = ExplosionParticle.getInstance();
         ep.setup();
         ep.resolution = 5;
         ep.perlinZoom = .02f;

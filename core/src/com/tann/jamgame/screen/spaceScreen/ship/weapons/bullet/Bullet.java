@@ -70,7 +70,7 @@ public abstract class Bullet{
             if(life<=0){
                 dead=true;
                 decayEffect();
-                Pools.free(this);
+                onDispose();
             }
             internalUpdate();
             firstUpdate=true;
@@ -111,4 +111,8 @@ public abstract class Bullet{
     public boolean armed(){
         return true;
     }
+    protected void onDispose(){}
+
+
+
 }

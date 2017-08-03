@@ -17,7 +17,7 @@ public class SpikeLauncher extends Weapon {
     @Override
     protected void internalFire() {
         Ship ship = getShip();
-            Bullet b = Pools.obtain(SpikeBullet.class);
+            Bullet b = new SpikeBullet();
             b.init();
             b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
             b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation(), 20);

@@ -30,10 +30,14 @@ public abstract class Particle {
 		if(life<=0){
 			dead=true;
             life=0;
-            Pools.free(this);
+            endLife();
         }
 		ratio=life/startLife;
 	}
+
+	protected void endLife(){
+
+    }
 	public static float rand(float min, float max){
 		return (float)(Math.random()*(max-min)+min);
 	}

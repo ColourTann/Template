@@ -36,7 +36,7 @@ public class SpikeBullet extends Bullet {
 
     @Override
     public void impactEffect() {
-        ExplosionAnimationParticle eap = Pools.obtain(ExplosionAnimationParticle.class);
+        ExplosionAnimationParticle eap = ExplosionAnimationParticle.getInstance();
         eap.setup();
         eap.x=x+dx;
         eap.y=y+dy;

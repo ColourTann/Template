@@ -26,7 +26,7 @@ public class BroadSide extends Weapon {
                 x += ship.getX();
                 y = (float) (Math.sin(angle) * y);
                 y += ship.getY();
-                Bullet b = Pools.obtain(BlasterBullet.class);
+                Bullet b = BlasterBullet.getInstance();
                 b.init();
                 b.type = friend ? Bullet.BulletType.Friendly : Bullet.BulletType.Enemy;
                 float angleRand = .40f;

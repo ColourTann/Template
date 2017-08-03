@@ -41,7 +41,7 @@ public class RocketBullet extends Bullet {
 
     @Override
     public void impactEffect() {
-        ExplosionAnimationParticle eap = Pools.obtain(ExplosionAnimationParticle.class);
+        ExplosionAnimationParticle eap = ExplosionAnimationParticle.getInstance();
         eap.setup();
         eap.x=x;
         eap.y=y;
@@ -72,7 +72,7 @@ public class RocketBullet extends Bullet {
 
     @Override
     protected void decayEffect() {
-        ExplosionAnimationParticle eap = Pools.obtain(ExplosionAnimationParticle.class);
+        ExplosionAnimationParticle eap = ExplosionAnimationParticle.getInstance();
         eap.setup();
         eap.x=x;
         eap.y=y;

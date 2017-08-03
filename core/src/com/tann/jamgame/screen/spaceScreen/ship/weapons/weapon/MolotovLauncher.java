@@ -19,7 +19,7 @@ public class MolotovLauncher extends Weapon {
     @Override
     protected void internalFire() {
         Ship ship = getShip();
-        Bullet b = Pools.obtain(MolotovBullet.class);
+        Bullet b = new MolotovBullet();
         b.init();
         b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
         b.setup(ship.getNoseX(), ship.getNoseY(), ship.dx, ship.dy, ship.getRotation(), 15+ship.getSpeed());

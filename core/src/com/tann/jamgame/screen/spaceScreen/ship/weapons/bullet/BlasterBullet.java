@@ -7,7 +7,19 @@ import com.tann.jamgame.screen.spaceScreen.SpaceScreen;
 import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlasterBullet extends Bullet {
+
+    private static List<BlasterBullet> blasterBullets = new ArrayList<>();
+    public static BlasterBullet getInstance(){
+        if(blasterBullets.size()>0){
+            return blasterBullets.remove(0);
+        }
+        return new BlasterBullet();
+    }
+
     @Override
     public void specificInit() {
 
@@ -59,5 +71,10 @@ public class BlasterBullet extends Bullet {
             return SpaceScreen.get().map.defender.getWarpRatio()>0?3:1;
         }
         return 1;
+    }
+
+    @Override
+    protected void onDispose() {
+        blasterBullets.add(this);
     }
 }

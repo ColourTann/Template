@@ -22,7 +22,7 @@ public class ThirdLaw extends Weapon {
         Ship s = getShip();
         s.dx+= (float) (Math.cos(s.getRotation())*SPEED);
         s.dy+= (float) (Math.sin(s.getRotation())*SPEED);
-        Bullet b = Pools.obtain(SpikeBullet.class);
+        Bullet b = new SpikeBullet();
         b.init();
         b.type = friend? Bullet.BulletType.Friendly: Bullet.BulletType.Enemy;
         b.setup(ship.getNoseX(), ship.getNoseY(), 0, 0, ship.getRotation()+Math.PI, 22);

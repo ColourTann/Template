@@ -63,7 +63,7 @@ public class Bomber extends EnemyShip {
 	protected void explode() {
 		float radiansPerBullet = (float)((Math.PI*2.0f)/(float)numBulletsOnExplosion);
 		for(int i=0; i < numBulletsOnExplosion; i++) {
-			Bullet b = Pools.obtain(BoringBullet.class);
+			Bullet b = BoringBullet.getInstance();
 			b.init();
 			b.type = Bullet.BulletType.Enemy;
 			b.setup(this.getX(), this.getY(), 0,0, i*radiansPerBullet+Particle.rand(0,.2f), Particle.rand(30,55));
