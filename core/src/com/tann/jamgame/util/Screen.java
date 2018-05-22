@@ -39,7 +39,7 @@ public abstract class Screen extends Group{
 			setPosition((float)(Math.sin(Main.ticks*shakeFrequency)*shakeMagnitude), 
 					(float) (Math.cos((Main.ticks+100)*shakeFrequency)*shakeMagnitude));
 			}
-			else{
+			else if(active && false){
 				setPosition(0,0);
 			}
 		}

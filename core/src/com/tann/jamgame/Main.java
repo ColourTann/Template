@@ -81,7 +81,7 @@ public class Main extends ApplicationAdapter {
 
         SCREEN_WIDTH = Gdx.graphics.getWidth();
         SCREEN_HEIGHT = Gdx.graphics.getHeight();
-        scale = SCREEN_HEIGHT / 180;
+        scale = 4;
         width = SCREEN_WIDTH / scale;
         height = SCREEN_HEIGHT / scale;
         Sounds.setup();
@@ -205,10 +205,10 @@ public class Main extends ApplicationAdapter {
             return;
         }
         setScreen(screen);
-        RunnableAction ra = Actions.run(new Runnable() {
-            public void run() {
-                screen.setActive(true);
-            }
+        RunnableAction ra = Actions.run(() -> {
+            screen.setActive(true);
+            System.out.println("meep");
+
         });
         switch (type) {
             case LEFT:

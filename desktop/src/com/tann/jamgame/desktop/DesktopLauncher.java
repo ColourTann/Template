@@ -28,7 +28,7 @@ public class DesktopLauncher {
     config.width=1280;
     config.height=720;
     config.samples=10;
-    config.title="Untitled Dice Game";
+    config.title="jam template";
     config.resizable = false;
 //    config.addIcon("misc/icon.png", Files.FileType.Internal);
     new LwjglApplication(new Main(), config);
