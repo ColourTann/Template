@@ -1,14 +1,25 @@
 package com.tann.jamgame;
 
+import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
+import static com.badlogic.gdx.graphics.GL20.GL_DEPTH_BUFFER_BIT;
+import static com.badlogic.gdx.graphics.GL20.GL_ONE;
+import static com.badlogic.gdx.graphics.GL20.GL_ONE_MINUS_SRC_ALPHA;
+import static com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,95 +32,178 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tann.jamgame.screen.gameScreen.GameScreen;
 import com.tann.jamgame.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends ApplicationAdapter {
-    public static int width = 1000, height = 700;
-    public static String version = "0";
+    public static int scale;
+    public static int SCREEN_WIDTH, SCREEN_HEIGHT;
+    public static int width, height;
+    public static String version = "0.3.0";
+    public static String versionName = "v" + version;
     SpriteBatch batch;
-    Stage stage;
-    OrthographicCamera orthoCam;
+    SpriteBatch bufferDrawer;
+    public static Stage stage;
+    public OrthographicCamera orthoCam;
     public static TextureAtlas atlas;
     public static Main self;
+    private static boolean showFPS = true;
+    private static boolean printCalls = false;
     public static boolean debug = false;
-    public static boolean showFPS = true;
-    public static boolean chadwick = false;
     Screen currentScreen;
     Screen previousScreen;
     public static float ticks;
-    public static int coloursUnlocked = 2;
+    public static int frames;
+
+    FrameBuffer fb;
+
+    public static Screen getCurrentScreen() {
+        return self.currentScreen;
+    }
+
+    static float noiseFromTicks = 0;
+    public static float getNoiseFromTicks() {
+        return noiseFromTicks;
+    }
 
     public enum MainState {
         Normal, Paused
     }
 
-    private static long previousTime;
-    public static void logTime(String id){
-        if(!chadwick) return;
-        long currentTime = System.currentTimeMillis();
-        if(id!=null){
-            System.out.println(id+": "+(currentTime-previousTime));
-        }
-        previousTime = System.currentTimeMillis();
-    }
-
-    public Main(){};
-
-    public Main(int width, int height){
-        Main.width = width;
-        Main.height=height;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        Main.width = width;
-        Main.height=height;
-        orthoCam.setToOrtho(false, width, height);
-        stage.getViewport().update(width, height);
-        Fonts.setup();
-    }
+    //Callbacks
 
     @Override
     public void create() {
-        Main.width = Gdx.graphics.getWidth();
-        Main.height = Gdx.graphics.getHeight();
+
+        if (printCalls) {
+            System.out.println("create");
+        }
+
+        SCREEN_WIDTH = Gdx.graphics.getWidth();
+        SCREEN_HEIGHT = Gdx.graphics.getHeight();
+        scale = SCREEN_HEIGHT / 180;
+        width = SCREEN_WIDTH / scale;
+        height = SCREEN_HEIGHT / scale;
         Sounds.setup();
-        atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("2d/atlas_image.atlas"));
         self = this;
         Draw.setup();
-        Fonts.setup();
-        stage = new Stage();
+        TextWriter.setup();
+        stage = new Stage(new FitViewport(Main.width, Main.height));
         orthoCam = (OrthographicCamera) stage.getCamera();
-        batch = (SpriteBatch) stage.getBatch();
+        batch = new SpriteBatch();
+        bufferDrawer = new SpriteBatch();
+        fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
+        fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
         Gdx.input.setInputProcessor(stage);
+
         stage.addListener(new InputListener() {
             public boolean keyDown(InputEvent event, int keycode) {
                 currentScreen.keyPress(keycode);
                 return true;
             }
         });
+
         setScreen(new GameScreen());
     }
 
+    @Override
+    public void render() {
+        frames++;
+        int sc = Main.scale;
+        update(Gdx.graphics.getDeltaTime());
+        Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT);
 
-
-
-    private MainState state = MainState.Normal;
-
-    public MainState getState() {
-        return state;
+        fb.bind();
+        fb.begin();
+        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
+        stage.draw();
+        fb.end();
+        bufferDrawer.begin();
+        Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
+        bufferDrawer.end();
     }
 
-    public void setState(MainState state) {
-        this.state = state;
+    private static final int SAMPLE_MAX = 60;
+    private final ArrayList<Long> samples = new ArrayList<>();
+    private long averageRenderTime = 0;
+    private void logRenderTime(long sample) {
+        samples.add(sample);
+        if(samples.size()>SAMPLE_MAX){
+            samples.remove(0);
+        }
+        long total = 0;
+        for(Long l:samples){
+            total += l;
+        }
+        averageRenderTime = total/samples.size();
     }
+
+    public void update(float delta) {
+        noiseFromTicks = (float) Noise.noise(Main.ticks,0);
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            delta *= .1f;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
+            delta *= 3;
+        }
+        stage.act(delta);
+        Sounds.tickFaders(delta);
+        ticks += delta;
+        TannFont.bonusSin=0;
+    }
+
+    @Override
+    public void pause() {
+        super.pause();
+        if (printCalls) {
+            System.out.println("pause");
+        }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
+        if (printCalls) {
+            System.out.println("resize");
+        }
+    }
+    private void drawFPSAndVersion() {
+        batch.setColor(Colours.blue);
+        int x = width/2-21;
+        TannFont.font.drawString(batch, versionName, x, 1);
+        x+=26;
+        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", x, 1);
+        if(debug) {
+            x += 22;
+            TannFont.font.drawString(batch, averageRenderTime + "ms", x, 1);
+            x += 18;
+            TannFont.font.drawString(batch, ((SpriteBatch) stage.getBatch()).renderCalls + "rc", x, 1);
+        }
+    }
+
+    public static float w(float factor) {
+        return Main.width / 100f * factor;
+    }
+
+    public static float h(float factor) {
+        return Main.height / 100f * factor;
+    }
+
+    // phase stuff
+
+    // screen stuff
 
     public enum TransitionType {
         LEFT, RIGHT
     }
 
-    public void setScreen(final Screen screen, TransitionType type, Interpolation interp, float speed) {
-        if (screen == currentScreen)
+    public void setScreen(final Screen screen, TransitionType type, Interpolation interp,
+        float speed) {
+        if (screen == currentScreen) {
             return;
+        }
         setScreen(screen);
         RunnableAction ra = Actions.run(new Runnable() {
             public void run() {
@@ -120,16 +214,20 @@ public class Main extends ApplicationAdapter {
             case LEFT:
                 screen.setPosition(Main.width, 0);
                 screen.addAction(Actions.sequence(Actions.moveTo(0, 0, speed, interp), ra));
-                if(previousScreen!=null)previousScreen.addAction(Actions.moveTo(-Main.width, 0, speed, interp));
+                if (previousScreen != null) {
+                    previousScreen.addAction(Actions.moveTo(-Main.width, 0, speed, interp));
+                }
                 break;
             case RIGHT:
                 screen.setPosition(-Main.width, 0);
                 screen.addAction(Actions.sequence(Actions.moveTo(0, 0, speed, interp), ra));
-                if(previousScreen!=null)previousScreen.addAction(Actions.moveTo(Main.width, 0, speed, interp));
+                if (previousScreen != null) {
+                    previousScreen.addAction(Actions.moveTo(Main.width, 0, speed, interp));
+                }
                 break;
 
         }
-        if(previousScreen!=null){
+        if (previousScreen != null) {
             previousScreen.removeFromScreen();
             previousScreen.addAction(Actions.after(Actions.removeActor()));
         }
@@ -146,82 +244,12 @@ public class Main extends ApplicationAdapter {
             previousScreen = currentScreen;
             currentScreen.setActive(false);
         }
+        screen.setActive(true);
         currentScreen = screen;
         stage.addActor(screen);
 
     }
 
+    // benchmarking
 
-    @Override
-    public void render() {
-
-
-        long startTime = System.currentTimeMillis();
-
-        update(Gdx.graphics.getDeltaTime());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
-        stage.draw();
-
-//		BulletStuff.render();
-
-        drawVersion();
-
-        if (Main.showFPS) {
-            batch.begin();
-            batch.setColor(Colours.white);
-            drawFPS(batch);
-            batch.end();
-        }
-
-        if(Main.showFPS){
-            updateFPS(System.currentTimeMillis()-startTime);
-        }
-    }
-
-    private void drawVersion() {
-        batch.begin();
-        Fonts.fontSmall.setColor(Colours.white);
-        Fonts.fontSmall.draw(batch, version, 0, Fonts.fontSmall.getLineHeight());
-        batch.end();
-    }
-
-    int sampleSize=60;
-    long[] values = new long[sampleSize];
-    int currentSample;
-    private void updateFPS(long value){
-        values[(currentSample++)%sampleSize]=value;
-    }
-
-    private void drawFPS(Batch batch) {
-        Fonts.fontSmall.setColor(Colours.white);
-
-
-        long average = 0;
-        for(long l:values){
-            average+=l;
-        }
-        average/=values.length;
-
-        Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), 0, 60);
-    }
-
-    public static float tickMult=1;
-
-    public void update(float delta) {
-        tickMult= Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)?0.2f:1;
-        delta *= tickMult;
-        ticks += delta;
-        Sounds.tickFaders(delta);
-        stage.act(delta);
-    }
-
-    public static float w(float factor){
-        return Main.width/100f*factor;
-    }
-
-    public static float h(float factor){
-        return Main.height/100f*factor;
-    }
 }

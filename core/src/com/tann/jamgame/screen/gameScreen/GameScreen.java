@@ -11,12 +11,15 @@ import com.tann.jamgame.util.Colours;
 import com.tann.jamgame.util.Draw;
 import com.tann.jamgame.util.EscMenu;
 import com.tann.jamgame.util.Screen;
+import com.tann.jamgame.util.TannFont;
 
 public class GameScreen extends Screen{
     @Override
     public void preDraw(Batch batch) {
         batch.setColor(Colours.blue);
         Draw.fillActor(batch,this);
+        batch.setColor(Colours.green);
+        TannFont.font.drawString(batch, "yeah boiee", 50, 50);
     }
 
     @Override

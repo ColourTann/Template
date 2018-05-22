@@ -33,7 +33,7 @@ public abstract class Screen extends Group{
 
 	@Override
 	public void act(float delta) {
-		if(Main.self.getState()== Main.MainState.Paused)return;
+//		if(Main.self.getState()== Main.MainState.Paused)return;
 		if(active){
 			if(shakeMagnitude>.1){
 			setPosition((float)(Math.sin(Main.ticks*shakeFrequency)*shakeMagnitude), 
