@@ -1,32 +1,33 @@
 package com.tann.jamgame.screen.gameScreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.tann.jamgame.Main;
-import com.tann.jamgame.screen.OtherScreen;
-import com.tann.jamgame.util.*;
+import com.tann.jamgame.screen.gameScreen.map.Map;
+import com.tann.jamgame.screen.gameScreen.map.Minimap;
+import com.tann.jamgame.util.EscMenu;
+import com.tann.jamgame.util.Screen;
 
 public class GameScreen extends Screen{
 
+    private Map map;
+    private Minimap minimap;
     public GameScreen() {
-        TextButton tb = new TextButton(100, 10, "another screen??");
-        addActor(tb);
-        tb.setPosition(200, 50);
-        tb.setRunnable(()->Main.self.setScreen(new OtherScreen(), Main.TransitionType.LEFT, Interpolation.pow2Out, .3f) );
+        map = Map.get();
+        addActor(map);
+        addActor(minimap = new Minimap(map));
+    }
+
+    public void init(){
+
     }
 
     @Override
     public void preDraw(Batch batch) {
-        batch.setColor(Colours.dark);
-        Draw.fillActor(batch,this);
-        batch.setColor(Colours.green);
-        TannFont.font.drawString(batch, "yeah boiee", 50, 50);
     }
 
     @Override
@@ -82,20 +83,16 @@ public class GameScreen extends Screen{
 
     @Override
     public void preTick(float delta) {
-        TextWisp textWisp = new TextWisp("WEEEEeeeeee...");
-        textWisp.setPosition(Gdx.input.getX()/Main.scale, Main.height-(Gdx.input.getY())/Main.scale);
-        addActor(textWisp);
-
     }
 
     @Override
     public void postTick(float delta) {
+        minimap.setPosition(Main.self.orthoCam.position.x-Main.width/2, Main.self.orthoCam.position.y-Main.height/2);
 
     }
 
     @Override
     public void keyPress(int keycode) {
-        System.out.println("keypress");
         switch(keycode){
             case Input.Keys.ESCAPE:
                 toggleEscMenu();

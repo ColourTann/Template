@@ -25,10 +25,10 @@ public class DesktopLauncher {
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
     config.foregroundFPS = 60;
     config.backgroundFPS = 20;
-    config.width=1280;
-    config.height=720;
+    config.width=1500;
+    config.height=800;
     config.samples=10;
-    config.title="jam template";
+    config.title="True Neutral";
     config.resizable = false;
 //    config.addIcon("misc/icon.png", Files.FileType.Internal);
     new LwjglApplication(new Main(), config);

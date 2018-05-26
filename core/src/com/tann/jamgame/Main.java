@@ -81,7 +81,7 @@ public class Main extends ApplicationAdapter {
 
         SCREEN_WIDTH = Gdx.graphics.getWidth();
         SCREEN_HEIGHT = Gdx.graphics.getHeight();
-        scale = 4;
+        scale = 2;
         width = SCREEN_WIDTH / scale;
         height = SCREEN_HEIGHT / scale;
         Sounds.setup();
@@ -104,8 +104,9 @@ public class Main extends ApplicationAdapter {
                 return true;
             }
         });
-
-        setScreen(new GameScreen());
+        GameScreen gs = new GameScreen();
+        setScreen(gs);
+        gs.init();
     }
 
     @Override
